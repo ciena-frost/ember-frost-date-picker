@@ -12,11 +12,6 @@
 # ember-frost-date-picker
 the drop-down select widget to rule them all
 
- * [Installation](#Installation)
- * [API](#API)
- * [Examples](#Examples)
- * [Contributing](#Contributing)
-
 ## Installation
 ```
 ember install ember-frost-date-picker
