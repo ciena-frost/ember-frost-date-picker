@@ -7,9 +7,6 @@ sudo: false
 branches:
   except:
   - "/^v[0-9\\.]+/"
-cache:
-  directories:
-  - node_modules
 addons:
   apt:
     sources:
