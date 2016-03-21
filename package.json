@@ -2,6 +2,7 @@
   "name": "ember-frost-date-picker",
   "version": "0.0.4",
   "description": "The default blueprint for ember-cli addons.",
+  "frostGuideDirectory": "design-patterns/date:time-input",
   "directories": {
     "doc": "doc",
     "test": "tests"
