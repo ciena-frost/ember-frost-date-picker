@@ -10,7 +10,6 @@
 [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
 
 # ember-frost-date-picker
-the drop-down select widget to rule them all
 
  * [Installation](#installation)
  * [API](#api)
