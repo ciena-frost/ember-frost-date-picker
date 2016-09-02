@@ -1,1 +1,29 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
+@import 'bower_components/pikaday/scss/pikaday';
+.frost-date-picker {
+  .frost-text-clear {
+    display: none;
+  }
+  .frost-text-input {
+    cursor: pointer;
+    color: $frost-color-grey-6;
+    &:read-only {
+      border: 1px solid #CDCDCD;
+      &:focus {
+        border: 1px solid #009EEF;
+      }
+    }
+  }
+}
+.pika-day {
+  background: initial;
+  &:hover {
+    background: #f6f9fc;
+    color: $frost-color-grey-1;
+  }
+  .is-selected & {
+    border-radius: 1px;
+    background: $frost-color-blue-1;
+  }
+  text-align: center;
+}

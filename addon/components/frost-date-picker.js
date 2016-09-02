@@ -2,27 +2,30 @@ import Ember from 'ember'
 import PikadayOptions from '../utils/pikaday-options'
 import FrostText from 'ember-frost-core/components/frost-text'
 import computed from 'ember-computed-decorators';
-
+import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 const {
   run,
   merge
 } = Ember
 
-export default FrostText.extend({
+export default FrostText.extend(PropTypeMixin, {
   classNames: ['frost-date-picker'],
   // == Pikaday Options ===========
-
-  // allow options to be provided as hash
-  options: {},
-  @computed
-  field () {
-    return this.get('element')
-  },
-  format: 'YYYY-MM-DD',
-  onSelect (date) {
-    this.set('value', moment(date).format(this.get('format')))
+  propTypes: {
+    field: PropTypes.element,
+    container: PropTypes.string,
+    readonly: PropTypes.bool,
+    options: PropTypes.object,
+    format: PropTypes.string,
+    onSelect: PropTypes.func,
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func,
+    onDraw: PropTypes.func
   },
   didInsertElement () {
+    this._super(...arguments)
+    this.set('field', this.get('element'))
+
     run.schedule('sync', this, function () {
       let options = {}
       let _assign = (el, value) => {
@@ -52,5 +55,17 @@ export default FrostText.extend({
   willDestroyElement () {
     this._super(...arguments)
     this.get('el').destroy()
+  },
+  getDefaultProps () {
+    return {
+      options: {},
+      format: 'YYYY-MM-DD',
+      onSelect: this.actions.onSelect
+    }
+  },
+  actions: {
+    onSelect (date) {
+      this.set('value', moment(date).format(this.get('format')))
+    }
   }
 })
