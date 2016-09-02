@@ -1,0 +1,37 @@
+export default [
+  'field',
+  {
+    label: 'trigger',
+    ref: 'triggerElement'
+  },
+  'bound',
+  'position',
+  'reposition',
+  {
+    label: 'container',
+    ref: 'containerElement'
+  },
+  'format',
+  'formatStrict',
+  'defaultDate',
+  'setDefaultDate',
+  'firstDay',
+  'minDate',
+  'maxDate',
+  'disableWeekends',
+  'disableDayFn',
+  'yearRange',
+  'showWeekNumber',
+  'isRTL',
+  'i18n',
+  'yearSuffix',
+  'showMonthAfterYear',
+  'showDaysInNextAndPreviousMonths',
+  'numberOfMonths',
+  'mainCalendar',
+  'theme',
+  'onSelect',
+  'onOpen',
+  'onClose',
+  'onDraw',
+]
