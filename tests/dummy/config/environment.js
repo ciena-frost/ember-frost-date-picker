@@ -38,7 +38,8 @@ module.exports = function (environment) {
     ENV.APP.rootElement = '#ember-testing'
   }
 
-  if (environment === 'production') {
+  if (environment === 'production' || environment === 'pages') {
+    ENV.locationType = 'hash'
     ENV.baseURL = '/frost-date-picker'
     ENV.isDemo = true
     ENV['ember-cli-mirage'] = {

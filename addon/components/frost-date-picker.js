@@ -28,7 +28,7 @@ export default FrostText.extend({
       let _assign = (el, value) => {
         if (value) {
           if (typeof value === 'function') {
-            options[el] = value.bind(this)
+            options[el] = run.bind(this, value)
           } else {
             options[el] = value
           }
