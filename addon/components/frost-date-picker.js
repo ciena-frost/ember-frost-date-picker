@@ -2,12 +2,18 @@ import Ember from 'ember'
 import PikadayOptions from '../utils/pikaday-options'
 import FrostText from 'ember-frost-core/components/frost-text'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
-import layout from '../templates/components/frost-date-picker';
+import layout from '../templates/components/frost-date-picker'
 
 const {
   run,
-  merge
+  merge,
+  computed
 } = Ember
+
+const {
+  moment,
+  Pikaday
+} = window
 
 export default FrostText.extend(PropTypeMixin, {
   layout,
@@ -22,10 +28,12 @@ export default FrostText.extend(PropTypeMixin, {
     onClose: PropTypes.func,
     onDraw: PropTypes.func
   },
+  field: computed(function () {
+    return this.$('input')[0]
+  }),
   didInsertElement () {
     this._super(...arguments)
     run.schedule('sync', this, function () {
-      this.set('field', this.get('element'))
       this.set(
         'value',
         this.get('value') || moment().format(this.get('format'))
@@ -51,7 +59,7 @@ export default FrostText.extend(PropTypeMixin, {
       })
       this.set(
         'el',
-        new window.Pikaday(merge(this.get('options'), options))
+        new Pikaday(merge(this.get('options'), options))
       )
     })
   },
@@ -70,6 +78,20 @@ export default FrostText.extend(PropTypeMixin, {
   actions: {
     onSelect (date) {
       this.set('value', moment(date).format(this.get('format')))
+    },
+    _onKeyPress (e) {
+      if (e.keyCode === 13) {
+        let v = this.$('input').val()
+        if (moment(v).isValid()) {
+          this.set('field.value', v)
+        } else {
+          if (this.get('onError')) {
+            this.get('onError').call(this, v)
+          }
+          let d = moment(this.get('el').getDate())
+          this.set('field.value', d.format(this.get('format')))
+        }
+      }
     }
   }
 })
