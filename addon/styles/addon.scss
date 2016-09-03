@@ -1,11 +1,24 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 @import 'bower_components/pikaday/scss/pikaday';
 .frost-date-picker {
-  .frost-text-clear {
-    display: none;
+  .frost-date-container {
+    position: absolute;
+  }
+  .calendar {
+    cursor: pointer;
+    display: inline-block;
+    fill: #BABCBE;
+    height: 20px;
+    opacity: 0.8;
+    pointer-events: none;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.2s ease;
+    width: 20px;
   }
   .frost-text-input {
-    cursor: pointer;
     color: $frost-color-grey-6;
     &:read-only {
       border: 1px solid #CDCDCD;
@@ -15,15 +28,22 @@
     }
   }
 }
-.pika-day {
-  background: initial;
-  &:hover {
-    background: #f6f9fc;
-    color: $frost-color-grey-1;
+.pika-single {
+  &.frost-theme {
+    .is-selected {
+      .pika-day {
+        background: $frost-color-blue-1;
+        border-radius: 2px;
+      }
+    }
+    .pika-day {
+      background: initial;
+      text-align: center;
+
+      &:hover {
+        background: #f6f9fc;
+        color: $frost-color-grey-1;
+      }
+    }
   }
-  .is-selected & {
-    border-radius: 1px;
-    background: $frost-color-blue-1;
-  }
-  text-align: center;
 }

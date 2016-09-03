@@ -2,14 +2,16 @@ export default [
   'field',
   {
     label: 'trigger',
-    ref: 'triggerElement'
+    ref: 'triggerElement',
+    type: 'element'
   },
   'bound',
   'position',
   'reposition',
   {
     label: 'container',
-    ref: 'containerElement'
+    ref: 'containerElement',
+    type: 'element'
   },
   'format',
   'formatStrict',
@@ -19,7 +21,11 @@ export default [
   'minDate',
   'maxDate',
   'disableWeekends',
-  'disableDayFn',
+  {
+    label: 'disableDayFn',
+    ref: 'disableDayFn',
+    type: 'callback'
+  },
   'yearRange',
   'showWeekNumber',
   'isRTL',
@@ -30,8 +36,24 @@ export default [
   'numberOfMonths',
   'mainCalendar',
   'theme',
-  'onSelect',
-  'onOpen',
-  'onClose',
-  'onDraw',
+  {
+    label: 'onSelect',
+    ref: 'onSelect',
+    type: 'callback'
+  },
+  {
+    label: 'onOpen',
+    ref: 'onOpen',
+    type: 'callback'
+  },
+  {
+    label: 'onClose',
+    ref: 'onClose',
+    type: 'callback'
+  },
+  {
+    label: 'onDraw',
+    ref: 'onDraw',
+    type: 'callback'
+  }
 ]

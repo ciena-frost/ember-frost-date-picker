@@ -1,2 +1,16 @@
-frost-date-picker testbed
-{{frost-date-picker}}
+<h2>Ember Frost Date Picker</h2>
+{{frost-date-picker
+  onSelect=(action 'onSelect')
+  onOpen=(action 'onOpen')
+  onClose=(action 'onClose')
+  onDraw=(action 'onDraw')
+  value=value}}
+  
+<p>Current value is <code>{{value}}</code></p>
+<h4>Configuration</h4>
+
+See
+<a target='_blank' href='https://github.com/dbushell/Pikaday#configuration'>
+  here
+</a>
+for more details.
