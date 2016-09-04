@@ -7,17 +7,18 @@ const {
 
 // BEGIN-SNIPPET controller
 export default Controller.extend({
-  notifications: inject.service(),
+  notificationMessages: inject.service(),
   _notify (type, msg) {
-    this.get('notifications')[type](msg, {
+    this.get('notificationMessages')[type](msg, {
       autoClear: true,
       clearDuration: 1200
     })
   },
   actions: {
-    onSelect (raw, fmt) {
-      this._notify('success', `DatePickerSelect: ${fmt}`)
-      this.set('value', fmt)
+    onSelect (pikaday) {
+      let v = pikaday.toString()
+      this._notify('success', `DatePickerSelect: ${v}`)
+      this.set('value', v)
     },
     onOpen () {
       this._notify('info', 'DatePickerOpen')

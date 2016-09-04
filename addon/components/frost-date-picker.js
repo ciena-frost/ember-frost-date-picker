@@ -77,10 +77,10 @@ export default FrostText.extend(PropTypeMixin, {
   },
   actions: {
     _onSelect (date) {
-      let fmt = moment(date).format(this.get('format'))
-      this.set('value', fmt)
+      let el = this.get('el')
+      this.set('value', el.toString())
       if (this.get('onSelect')) {
-        this.get('onSelect')(date, fmt)
+        this.get('onSelect')(el)
       }
     },
     _onKeyPress (e) {

@@ -7,17 +7,10 @@ var options = {
   loaderExclusions: [],
   enableCoverage: true,
   cliOptions: {
-    reporters: ['lcov'],
-    autostart: true,
-    lcovOptions: {
-      outputFile: 'coverage/lcov.info',
-      renamer: function (fileName) {
-        return fileName.replace('ember-frost-date-picker', 'addon') + '.js'
-      }
-    }
+    reporters: ['json'],
+    autostart: true
   }
 }
-
 if (typeof exports === 'undefined') {
   blanket.options(options)
 } else {
