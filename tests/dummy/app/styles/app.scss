@@ -35,5 +35,14 @@
     .hljs-number, .hljs-subst {
       color: #C7894F;
     }
+    .hljs-tag {
+      color: inherit;
+      .hljs-name {
+        color: #D95360;
+      }
+      .hljs-attr {
+        color: #C7894F;
+      }
+    }
   }
 }

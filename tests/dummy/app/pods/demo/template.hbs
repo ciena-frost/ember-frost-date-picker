@@ -11,21 +11,20 @@
     </div>
     <div class='item'>
       <div class='row'>
+        <!-- BEGIN-SNIPPET template -->
         <div class='item'>
-          <!-- BEGIN-SNIPPET template -->
           {{frost-date-picker
             onSelect=(action 'onSelect')
             onOpen=(action 'onOpen')
             onClose=(action 'onClose')
             onDraw=(action 'onDraw')
             onError=(action 'onError')
-            value=value
           }}
-          <!-- END-SNIPPET -->
         </div>
         <div class='item'>
           <p>Current value is <code>{{value}}</code></p>
         </div>
+        <!-- END-SNIPPET -->
       </div>
     </div>
   </div>
