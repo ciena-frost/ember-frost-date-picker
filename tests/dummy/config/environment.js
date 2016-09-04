@@ -31,7 +31,7 @@ module.exports = function (environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/'
+    ENV.rootURL = '/'
     ENV.locationType = 'none'
 
     // keep test console output quieter
@@ -43,7 +43,7 @@ module.exports = function (environment) {
 
   if (environment === 'production' || environment === 'pages') {
     ENV.locationType = 'hash'
-    ENV.baseURL = '/frost-date-picker'
+    ENV.rootURL = '/frost-date-picker'
     ENV.isDemo = true
     ENV['ember-cli-mirage'] = {
       enabled: true
