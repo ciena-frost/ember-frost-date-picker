@@ -7,9 +7,9 @@ const {
 
 // BEGIN-SNIPPET controller
 export default Controller.extend({
-  notificationMessages: inject.service(),
+  notifications: inject.service(),
   _notify (type, msg) {
-    this.get('notificationMessages')[type](msg, {
+    this.get('notifications')[type](msg, {
       autoClear: true,
       clearDuration: 1200
     })
