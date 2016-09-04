@@ -5,45 +5,32 @@ const {
   inject
 } = Ember
 
-const {
-  moment
-} = window
-
+// BEGIN-SNIPPET controller
 export default Controller.extend({
-  notifications: inject.service('notification-messages'),
+  notifications: inject.service(),
+  _notify (type, msg) {
+    this.get('notifications')[type](msg, {
+      autoClear: true,
+      clearDuration: 1200
+    })
+  },
   actions: {
-    onSelect (date) {
-      let d = moment(date).format('YYYY-MM-DD')
-      this.get('notifications').success(`DatePickerSelect: ${d}`, {
-        autoClear: true,
-        clearDuration: 1200
-      })
-      this.set('value', d)
+    onSelect (raw, fmt) {
+      this._notify('success', `DatePickerSelect: ${fmt}`)
     },
     onOpen () {
-      this.get('notifications').info('DatePickerOpen', {
-        autoClear: true,
-        clearDuration: 1200
-      })
+      this._notify('info', 'DatePickerOpen')
     },
     onClose () {
-      this.get('notifications').error('DatePickerClose', {
-        autoClear: true,
-        clearDuration: 1200
-      })
+      this._notify('error', 'DatePickerClose')
     },
     onDraw () {
-      this.get('notifications').info('DatePickerDraw', {
-        autoClear: true,
-        clearDuration: 1200
-      })
+      this._notify('info', 'DatePickerDraw')
     },
     onError (e) {
-      this.get('notifications').error(`DatePickerError ${e}`, {
-        autoClear: true,
-        clearDuration: 1200
-      })
+      this._notify('error', 'DatePickerError')
     }
   }
 
 })
+// END-SNIPPET

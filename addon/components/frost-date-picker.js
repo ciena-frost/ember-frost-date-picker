@@ -57,6 +57,7 @@ export default FrostText.extend(PropTypeMixin, {
             _assign(v, this.get(v))
         }
       })
+      options['onSelect'] = run.bind(this, this.actions._onSelect)
       this.set(
         'el',
         new Pikaday(merge(this.get('options'), options))
@@ -71,13 +72,16 @@ export default FrostText.extend(PropTypeMixin, {
     return {
       options: {},
       format: 'YYYY-MM-DD',
-      theme: 'frost-theme',
-      onSelect: this.actions.onSelect
+      theme: 'frost-theme'
     }
   },
   actions: {
-    onSelect (date) {
-      this.set('value', moment(date).format(this.get('format')))
+    _onSelect (date) {
+      let fmt = moment(date).format(this.get('format'))
+      this.set('value', fmt)
+      if (this.get('onSelect')) {
+        this.get('onSelect')(date, fmt)
+      }
     },
     _onKeyPress (e) {
       if (e.keyCode === 13) {
