@@ -1,2 +1,59 @@
-ember-frost-date-picker component
-{{yield}}
+
+{{input
+  autocapitalize=autocapitalize
+  autocorrect=autocorrect
+  autofocus=autofocus
+  class='frost-text-input'
+  classNameBindings='align'
+  disabled=disabled
+  form=form
+  hook=(concat receivedHook '-input')
+  maxlength=maxlength
+  placeholder=placeholder
+  readonly=readonly
+  required=required
+  selectionDirection=selectionDirection
+  spellcheck=spellcheck
+  tabindex=tabindex
+  title=title
+  type=type
+  value=value
+
+  change=_eventProxy.change
+  click=_eventProxy.click
+  contextMenu=_eventProxy.contextMenu
+  doubleClick=_eventProxy.doubleClick
+  drag=_eventProxy.drag
+  dragEnd=_eventProxy.dragEnd
+  dragEnter=_eventProxy.dragEnter
+  dragLeave=_eventProxy.dragLeave
+  dragOver=_eventProxy.dragOver
+  dragStart=_eventProxy.dragStart
+  drop=_eventProxy.drop
+  focusIn=_eventProxy.focusIn
+  focusOut=_eventProxy.focusOut
+  input=(action '_onInput')
+  keyDown=_eventProxy.keyDown
+  keyPress=(action '_onKeyPress')
+  key-up='keyUp'
+  mouseDown=_eventProxy.mouseDown
+  mouseEnter=_eventProxy.mouseEnter
+  mouseLeave=_eventProxy.mouseLeave
+  mouseMove=_eventProxy.mouseMove
+  mouseUp=_eventProxy.mouseUp
+  submit=_eventProxy.submit
+  touchCancel=_eventProxy.touchCancel
+  touchEnd=_eventProxy.touchEnd
+  touchMove=_eventProxy.touchMove
+  touchStart=_eventProxy.touchStart
+
+  escape-press=_eventProxy.escape-press
+  insert-newline=_eventProxy.enter
+}}
+{{! Using a div as a click target to workaround https://github.com/emberjs/ember.js/issues/13420 }}
+<div class='calendar'>
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 4 L6 4 L6 2 A2 2 0 0 1 10 2 L10 4 L22 4 L22 2 A2 2 0 0 1 26 2 L26 4 L30 4 L30 10 L2 10 M2 12 L30 12 L30 30 L2 30"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+  </svg>
+</div>

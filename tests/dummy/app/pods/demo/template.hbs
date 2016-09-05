@@ -1,2 +1,37 @@
-frost-date-picker testbed
-{{frost-date-picker}}
+<h2>Ember Frost Date Picker</h2>
+<div class='row'>
+  <div class='item'>
+    <h3>Controller</h3>
+    {{code-snippet name="controller.js"}}
+  </div>
+  <div class='item column'>
+    <div class='item'>
+      <h3>Template</h3>
+      {{code-snippet name="template.hbs"}}
+    </div>
+    <div class='item'>
+      <h3>Rendered</h3>
+
+      <div class='row'>
+        <!-- BEGIN-SNIPPET template -->
+        <div class='item'>
+          {{frost-date-picker
+            onSelect=(action 'onSelect')
+            onOpen=(action 'onOpen')
+            onClose=(action 'onClose')
+            onDraw=(action 'onDraw')
+            onError=(action 'onError')
+          }}
+        </div>
+        <!-- END-SNIPPET -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Configuration</h3>
+See
+<a target='_blank' href='https://github.com/dbushell/Pikaday#configuration'>
+  here
+</a>
+for more details.
