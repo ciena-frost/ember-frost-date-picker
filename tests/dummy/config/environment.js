@@ -3,7 +3,7 @@ module.exports = function (environment) {
     modulePrefix: 'dummy',
     podModulePrefix: 'dummy/pods',
     environment: environment,
-    rootURL: '/',
+    baseURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -31,7 +31,7 @@ module.exports = function (environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.rootURL = '/'
+    ENV.baseURL = '/'
     ENV.locationType = 'none'
 
     // keep test console output quieter
@@ -43,7 +43,7 @@ module.exports = function (environment) {
 
   if (environment === 'production' || environment === 'pages') {
     ENV.locationType = 'hash'
-    ENV.rootURL = '/frost-date-picker'
+    ENV.baseURL = '/frost-date-picker'
     ENV.isDemo = true
     ENV['ember-cli-mirage'] = {
       enabled: true
