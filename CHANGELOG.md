@@ -1,3 +1,6 @@
+# 1.0.1
+- let to var
+
 # 1.0.0
 - Included Pikaday
 - Events binded to ember run loop
