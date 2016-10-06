@@ -7,9 +7,15 @@ module.exports = {
         {name: 'ember-frost-core', target: '>=0.0.14 <2.0.0'}
       ]
     }).then(function () {
-      return self.addBowerPackagesToProject('moment').then(function () {
-        return self.addBowerPackagesToProject('pikaday')
-      })
+      return self.addBowerPackagesToProject([
+        {name: 'moment'},
+        {name: 'pikaday'}
+      ])
     })
+  },
+  normalizeEntityName: function () {
+    // this prevents an error when the entityName is
+    // not specified (since that doesn't actually matter
+    // to us
   }
 }
