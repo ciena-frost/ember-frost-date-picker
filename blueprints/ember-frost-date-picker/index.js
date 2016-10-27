@@ -4,7 +4,7 @@ module.exports = {
     var self = this
     return self.addAddonsToProject({
       packages: [
-        {name: 'ember-frost-core', target: '>=0.0.14 <2.0.0'}
+        {name: 'ember-frost-core', target: '>=0.29.0 <2.0.0'}
       ]
     }).then(function () {
       return self.addBowerPackagesToProject([
