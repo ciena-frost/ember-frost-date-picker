@@ -16,6 +16,8 @@
         <!-- BEGIN-SNIPPET template -->
         <div class='item'>
           {{frost-date-picker
+            hook='my-picker'
+            value=value
             onSelect=(action 'onSelect')
             onOpen=(action 'onOpen')
             onClose=(action 'onClose')
