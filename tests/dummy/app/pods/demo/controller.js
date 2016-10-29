@@ -14,6 +14,7 @@ export default Controller.extend({
       clearDuration: 1200
     })
   },
+  value: '2010-10-10',
   actions: {
     onSelect (pikaday) {
       let v = pikaday.toString()
