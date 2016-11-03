@@ -1,3 +1,8 @@
+# 3.0.0
+**updated** supported node version to 6
+
+
+
 # 2.0.0
 Upgraded ember to 2.8
 Added linting and badges
