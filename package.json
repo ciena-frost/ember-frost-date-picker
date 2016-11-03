@@ -17,7 +17,7 @@
   },
   "repository": "git@github.com:ciena-frost/ember-frost-date-picker.git",
   "engines": {
-    "node": ">= 5.0.0"
+    "node": ">= 6.0.0"
   },
   "author": "Seena Rowhani (https://github.com/srowhani)",
   "contributors": [
