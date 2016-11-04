@@ -1,3 +1,7 @@
+# 3.0.1
+- Fix the demo
+
+
 # 3.0.0
 **updated** supported node version to 6
 
