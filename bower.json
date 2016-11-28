@@ -6,11 +6,11 @@
     "ember-cli-test-loader": "0.2.2",
     "ember-inflector": "1.3.1",
     "ember-mocha": "0.8.11",
-    "perfect-scrollbar": ">=0.6.7 <2.0.0",
-    "sinonjs": "1.17.1",
+    "ember-mocha-adapter": "~0.3.1",
     "moment": "^2.14.1",
+    "perfect-scrollbar": ">=0.6.7 <2.0.0",
     "pikaday": "^1.4.0",
-    "ember-mocha-adapter": "~0.3.1"
+    "sinonjs": "1.17.1"
   },
   "resolutions": {
     "ember": "~2.8.0"
