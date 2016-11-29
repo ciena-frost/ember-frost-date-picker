@@ -1,3 +1,8 @@
+# 4.0.0
+upgrade to frost-core 1.0.0
+
+
+
 # 3.0.1
 - Fix the demo
 
