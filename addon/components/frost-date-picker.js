@@ -17,7 +17,6 @@ const {
 
 export default FrostText.extend(PropTypeMixin, {
   layout,
-  classNames: ['frost-date-picker'],
   // == Pikaday Options ===========
   propTypes: {
     options: PropTypes.object,
@@ -77,11 +76,12 @@ export default FrostText.extend(PropTypeMixin, {
   },
   actions: {
     _onSelect (date) {
+      let result = undefined
       let el = this.get('el')
-      this.set('value', el.toString())
       if (this.get('onSelect')) {
-        this.get('onSelect')(el)
+        result = this.get('onSelect')(el)
       }
+      this.set('value', result || el.toString())
     },
     _onKeyPress (e) {
       if (e.keyCode === 13) {
