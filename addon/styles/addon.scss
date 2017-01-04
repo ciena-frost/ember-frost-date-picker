@@ -1,12 +1,23 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 @import 'bower_components/pikaday/scss/pikaday';
 @import 'bower_components/clockpicker/dist/jquery-clockpicker.min';
+
 $hover-bg: #f6f9fc;
 
+.frost-time-picker {
+  position: relative;
+  width: 85px;
+  height: 35px;
+  .frost-text-input {
+    padding: 0 8px 0 8px;
+    text-align: center;
+    cursor: pointer;
+  }
+}
 .frost-date-picker {
   position: relative;
   width: 175px;
-
+  height: 35px;
   .frost-date-container {
     position: absolute;
   }

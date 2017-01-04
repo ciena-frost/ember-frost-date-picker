@@ -19,7 +19,6 @@ export default Controller.extend({
     onSelect (pikaday) {
       let v = pikaday.toString()
       this._notify('success', `DatePickerSelect: ${v}`)
-      this.set('value', v)
     },
     onOpen () {
       this._notify('info', 'DatePickerOpen')
