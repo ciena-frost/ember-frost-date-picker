@@ -10,7 +10,7 @@
     "moment": "^2.14.1",
     "pikaday": "^1.4.0",
     "sinonjs": "1.17.1",
-    "clockpicker": "^0.0.7"
+    "clockpicker-seconds": "^0.1.1"
   },
   "resolutions": {
     "ember": "~2.8.0"

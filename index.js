@@ -18,6 +18,6 @@ module.exports = {
     this._super.included(app)
     app.import(app.bowerDirectory + '/moment/moment.js')
     app.import(app.bowerDirectory + '/pikaday/pikaday.js')
-    app.import(app.bowerDirectory + '/clockpicker/dist/jquery-clockpicker.min.js')
+    app.import(app.bowerDirectory + '/clockpicker-seconds/dist/jquery-clockpicker.min.js')
   }
 }
