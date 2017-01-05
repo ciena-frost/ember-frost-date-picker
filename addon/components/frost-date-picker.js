@@ -2,6 +2,7 @@ import Ember from 'ember'
 import PikadayOptions from '../utils/pikaday-options'
 import FrostText from 'ember-frost-core/components/frost-text'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+import SpreadMixin from 'ember-spread'
 import layout from '../templates/components/frost-date-picker'
 
 const {
@@ -15,7 +16,7 @@ const {
   Pikaday
 } = window
 
-export default FrostText.extend(PropTypeMixin, {
+export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   layout,
   // == Pikaday Options ===========
   propTypes: {
@@ -25,7 +26,8 @@ export default FrostText.extend(PropTypeMixin, {
     onSelect: PropTypes.func,
     onOpen: PropTypes.func,
     onClose: PropTypes.func,
-    onDraw: PropTypes.func
+    onDraw: PropTypes.func,
+    hideIcon: PropTypes.bool
   },
   field: computed(function () {
     return this.$('input')[0]
@@ -71,15 +73,17 @@ export default FrostText.extend(PropTypeMixin, {
     return {
       options: {},
       format: 'YYYY-MM-DD',
-      theme: 'frost-theme'
+      theme: 'frost-theme',
+      hideIcon: false
     }
   },
   actions: {
     _onSelect (date) {
+      const onSelect = this.get('onSelect')
       let result = undefined
       let el = this.get('el')
-      if (this.get('onSelect')) {
-        result = this.get('onSelect')(el)
+      if (onSelect) {
+        result = onSelect(el.toString())
       }
       this.set('value', result || el.toString())
     },

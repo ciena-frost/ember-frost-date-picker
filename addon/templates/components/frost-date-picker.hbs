@@ -50,6 +50,7 @@
   escape-press=_eventProxy.escape-press
   insert-newline=_eventProxy.enter
 }}
+{{#unless hideIcon}}
 {{! Using a div as a click target to workaround https://github.com/emberjs/ember.js/issues/13420 }}
 <div class='calendar' data-test={{hook (concat hook '-cal')}}>
   <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -57,3 +58,4 @@
     <path d="M0 0h24v24H0z" fill="none"/>
   </svg>
 </div>
+{{/unless}}

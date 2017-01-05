@@ -1,0 +1,20 @@
+{{! Template for the frost-date-time-picker component }}
+<div style='display: flex; flex-direction: row'>
+  <div class='calendar-icon' data-test={{hook (concat hook '-cal')}}>
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 4 L6 4 L6 2 A2 2 0 0 1 10 2 L10 4 L22 4 L22 2 A2 2 0 0 1 26 2 L26 4 L30 4 L30 10 L2 10 M2 12 L30 12 L30 30 L2 30"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+  </div>
+  {{frost-date-picker
+    value=dateValue
+    onSelect=(action 'dateSelected')
+    readonly=true
+    options=(hash
+      hideIcon=true
+    )
+  }}
+  {{frost-time-picker
+    onSelect=(action 'timeSelected')
+  }}
+</div>

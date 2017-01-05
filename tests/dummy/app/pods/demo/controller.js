@@ -16,9 +16,8 @@ export default Controller.extend({
   },
   value: '2010-10-10',
   actions: {
-    onSelect (pikaday) {
-      let v = pikaday.toString()
-      this._notify('success', `DatePickerSelect: ${v}`)
+    onSelect (date) {
+      this._notify('success', `DatePickerSelect: ${date}`)
     },
     onOpen () {
       this._notify('info', 'DatePickerOpen')
@@ -30,7 +29,7 @@ export default Controller.extend({
       this._notify('info', 'DatePickerDraw')
     },
     onError (e) {
-      this._notify('error', 'DatePickerError')
+      this._notify('error', 'DatePickerError: ' + e)
     }
   }
 

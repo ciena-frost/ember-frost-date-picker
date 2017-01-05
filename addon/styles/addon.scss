@@ -3,7 +3,31 @@
 @import 'bower_components/clockpicker-seconds/dist/jquery-clockpicker.min';
 
 $hover-bg: #f6f9fc;
+.frost-date-time-picker {
+  border-bottom: 1px solid $frost-color-lgrey-2;
+  border-top: 1px solid $frost-color-lgrey-2;
 
+  display: inline-block;
+  .calendar-icon {
+    width: 25px;
+    padding: 5px 1px 0 0;
+    fill: $frost-color-grey-4;
+  }
+  .frost-date-picker {
+    border-right: 1px solid $frost-color-lgrey-2;
+    width: 120px;
+    .frost-text-input {
+      &:read-only {
+        border: none;
+      }
+      text-align: center;
+      padding: 0 5px 0 5px;
+      color: initial;
+      cursor: pointer;
+
+    }
+  }
+}
 .frost-time-picker {
   position: relative;
   width: 85px;
@@ -12,6 +36,9 @@ $hover-bg: #f6f9fc;
     padding: 0 8px 0 8px;
     text-align: center;
     cursor: pointer;
+    &:focus {
+      border: 1px solid $frost-color-blue-1;
+    }
   }
 }
 .frost-date-picker {
@@ -28,7 +55,6 @@ $hover-bg: #f6f9fc;
     width: 20px;
     height: 15px;
     transform: translateY(50%);
-    transition: opacity .2s ease;
     cursor: pointer;
     opacity: .8;
     fill: $frost-color-grey-6;

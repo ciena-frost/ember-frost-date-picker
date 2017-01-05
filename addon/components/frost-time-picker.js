@@ -25,12 +25,13 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     autoclose: PropTypes.bool,
     validator: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
+    onError: PropTypes.func
   },
 
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
-      value: '00:00',
+      value: '00:00:00',
       readonly: true,
       placement: 'right',
       donetext: 'Done',
@@ -44,14 +45,23 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
 
   // == Functions =============================================================
   isValid () {
-    return /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(this.get('value'))
+    const regex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
+    return regex.test(this.get('value'))
   },
   // == DOM Events ============================================================
   change () {
     if (this.isValid()) {
+      const onSelect = this.get('onSelect')
       const value = this.$('input').val()
       this.set('value', value)
-      this.get('onSelect')(value)
+      if (onSelect) {
+        onSelect(value)
+      }
+    } else {
+      const onError = this.get('onError')
+      if (onError) {
+        onError(new Error('Invalid input'))
+      }
     }
   },
   // == Lifecycle Hooks =======================================================
