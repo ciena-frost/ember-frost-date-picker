@@ -26,7 +26,8 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     autoclose: PropTypes.bool,
     validator: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
-    onError: PropTypes.func
+    onError: PropTypes.func,
+    INVALID_TIME_ERROR: PropTypes.string
   },
 
   /** @returns {Object} the default property values when not provided by consumer */
@@ -37,8 +38,8 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       placement: 'right',
       donetext: 'Done',
       autoclose: true,
-      isValid: this.get('isValid'),
-      hook: 'my-time-picker'
+      hook: 'my-time-picker',
+      INVALID_TIME_ERROR: 'Invalid Time Format, default is HH:mm:ss'
     }
   },
 
@@ -46,13 +47,17 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
 
   // == Functions =============================================================
   isValid (value) {
+    if (this.validator) {
+      if (!this.validator(value)) {
+        return false
+      }
+    }
     const regex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
     return regex.test(value)
   },
   // == DOM Events ============================================================
   change () {
     const value = this.$('input').val()
-
     if (this.isValid(value)) {
       const onSelect = this.get('onSelect')
       this.set('value', value)
@@ -61,8 +66,11 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       }
     } else {
       const onError = this.get('onError')
+      const e = Error(this.get('INVALID_TIME_ERROR'))
       if (onError) {
-        onError(new Error('Invalid input'))
+        onError(e)
+      } else {
+        console.warn(e)
       }
     }
   },

@@ -25,6 +25,8 @@ export default Component.extend({
   propTypes: {
     defaultDate: PropTypes.string,
     defaultTime: PropTypes.string,
+    dateValidator: PropTypes.func,
+    timeValidator: PropTypes.func,
     onSelect: PropTypes.func.isRequired
   },
 

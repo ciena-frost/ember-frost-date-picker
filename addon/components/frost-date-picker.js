@@ -27,7 +27,10 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     onOpen: PropTypes.func,
     onClose: PropTypes.func,
     onDraw: PropTypes.func,
-    hideIcon: PropTypes.bool
+    validator: PropTypes.func,
+    hideIcon: PropTypes.bool,
+    currentDate: PropTypes.string,
+    INVALID_DATE_ERROR: PropTypes.string
   },
   field: computed(function () {
     return this.$('input')[0]
@@ -39,6 +42,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
         'value',
         this.get('value') || moment().format(this.get('format'))
       )
+      this.set('currentDate', this.get('value'))
       let options = {}
       let _assign = (el, value, type) => {
         if (value) {
@@ -69,33 +73,63 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     this._super(...arguments)
     this.get('el').destroy()
   },
+  isValid (v) {
+    if (this.validator) {
+      debugger
+
+      if (!this.validator(v)) {
+        return false
+      }
+    }
+    return moment(v).isValid()
+  },
   getDefaultProps () {
     return {
       options: {},
       format: 'YYYY-MM-DD',
       theme: 'frost-theme',
-      hideIcon: false
+      hideIcon: false,
+      INVALID_DATE_ERROR: 'Invalid Date Format, default is YYYY-MM-DD'
     }
   },
   actions: {
     _onSelect (date) {
-      const onSelect = this.get('onSelect')
+      const input = this.$('.frost-text-input')
       let el = this.get('el')
       let value = el.toString()
-      this.set('value', value)
+      if (this.isValid(value)) {
+        const onSelect = this.get('onSelect')
+        this.set('value', value)
+        this.set('currentDate', value)
+        input.removeClass('error-invalid')
 
-      if (onSelect) {
-        onSelect(value)
+        if (onSelect) {
+          onSelect(value, el)
+        }
+      } else {
+        const onError = this.get('onError')
+        const e = Error(this.get('INVALID_DATE_ERROR'))
+        this.set('field.value', this.get('currentDate'))
+        input.addClass('error-invalid')
+        if (onError) {
+          onError(e)
+        } else {
+          console.warn(e)
+        }
       }
     },
     _onKeyPress (e) {
       if (e.keyCode === 13) {
         let v = this.$('input').val()
-        if (moment(v).isValid()) {
+        if (this.isValid(v)) {
           this.set('field.value', v)
         } else {
-          if (this.get('onError')) {
-            this.get('onError').call(this, v)
+          const onError = this.get('onError')
+          const e = Error(this.get('INVALID_DATE_ERROR'))
+          if (onError) {
+            onError(e)
+          } else {
+            console.warn(e)
           }
           let d = moment(this.get('el').getDate())
           this.set('field.value', d.format(this.get('format')))

@@ -9,6 +9,7 @@ var Router = Ember.Router.extend({
 Router.map(function () {
   this.route('demo', { path: '/' })
   this.route('date-time');
+  this.route('range-picker');
 })
 
 export default Router
