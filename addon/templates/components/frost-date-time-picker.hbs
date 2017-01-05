@@ -7,14 +7,15 @@
     </svg>
   </div>
   {{frost-date-picker
-    value=dateValue
-    onSelect=(action 'dateSelected')
+    value=defaultDate
+    onSelect=(action 'didChange')
     readonly=true
     options=(hash
       hideIcon=true
     )
   }}
   {{frost-time-picker
-    onSelect=(action 'timeSelected')
+    value=defaultTime
+    onSelect=(action 'didChange')
   }}
 </div>

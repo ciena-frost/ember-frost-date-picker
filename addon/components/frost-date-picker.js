@@ -80,12 +80,13 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   actions: {
     _onSelect (date) {
       const onSelect = this.get('onSelect')
-      let result = undefined
       let el = this.get('el')
+      let value = el.toString()
+      this.set('value', value)
+
       if (onSelect) {
-        result = onSelect(el.toString())
+        onSelect(value)
       }
-      this.set('value', result || el.toString())
     },
     _onKeyPress (e) {
       if (e.keyCode === 13) {

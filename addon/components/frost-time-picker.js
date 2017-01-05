@@ -17,7 +17,8 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
 
   // == PropTypes =============================================================
   propTypes: {
-    value: PropTypes.string,
+    options: PropTypes.object,
+    format: PropTypes.string,
     readonly: PropTypes.bool,
     placement: PropTypes.string,
     align: PropTypes.string,
@@ -31,7 +32,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
-      value: '00:00:00',
+      format: 'HH:mm:ss',
       readonly: true,
       placement: 'right',
       donetext: 'Done',
@@ -44,15 +45,16 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Computed Properties ===================================================
 
   // == Functions =============================================================
-  isValid () {
+  isValid (value) {
     const regex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
-    return regex.test(this.get('value'))
+    return regex.test(value)
   },
   // == DOM Events ============================================================
   change () {
-    if (this.isValid()) {
+    const value = this.$('input').val()
+
+    if (this.isValid(value)) {
       const onSelect = this.get('onSelect')
-      const value = this.$('input').val()
       this.set('value', value)
       if (onSelect) {
         onSelect(value)
@@ -68,6 +70,10 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   didInsertElement () {
     this._super(...arguments)
     scheduleOnce('sync', this, function () {
+      this.set(
+        'value',
+        this.get('value') || moment().format(this.get('format'))
+      )
       this.$().clockpicker({
         placement: this.get('placement'),
         donetext: this.get('donetext'),

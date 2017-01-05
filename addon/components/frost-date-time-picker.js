@@ -23,49 +23,33 @@ export default Component.extend({
    * passed in/overwritten.
    */
   propTypes: {
-    // options
+    defaultDate: PropTypes.string,
+    defaultTime: PropTypes.string,
     onSelect: PropTypes.func.isRequired
-    // state
   },
 
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
-    return {
-      // options
-
-      // state
-    }
+    return {}
   },
 
   // == Computed Properties ===================================================
 
   // == Functions =============================================================
-  _onSelect (date, time) {
-    if (date && time) {
-      const onSelect = this.get('onSelect')
-      if (onSelect) {
-        onSelect({
-          date,
-          time
-        })
-      }
-    }
-  },
-  // == DOM Events ============================================================
-
-  // == Lifecycle Hooks =======================================================
-
   // == Actions ===============================================================
   actions: {
-    dateSelected (date) {
-      this.set('date', date)
-      const time = this.get('time')
-      this.get('_onSelect').call(this, date, time)
-    },
-    timeSelected (time) {
-      this.set('time', time)
-      const date = this.get('date')
-      this.get('_onSelect').call(this, date, time)
+    didChange () {
+      const date = this.get('defaultDate')
+      const time = this.get('defaultTime')
+      if (date && time) {
+        const onSelect = this.get('onSelect')
+        if (onSelect) {
+          onSelect({
+            date,
+            time
+          })
+        }
+      }
     }
   }
 })
