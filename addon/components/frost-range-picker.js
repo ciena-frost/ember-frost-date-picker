@@ -28,6 +28,7 @@ export default Component.extend({
    * passed in/overwritten.
    */
   propTypes: {
+    isVertical: PropTypes.bool,
     startingDate: PropTypes.string,
     startingTime: PropTypes.string,
     startTitle: PropTypes.string,
@@ -44,10 +45,9 @@ export default Component.extend({
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
-      startTitle: 'From',
-      endTitle: 'To',
       startValidator: this.get('isValid'),
-      endValidator: this.get('isValid')
+      endValidator: this.get('isValid'),
+      isVertical: false
     }
   },
 
@@ -81,9 +81,13 @@ export default Component.extend({
         Error('End is before start')
     }
   },
+  // == Computed Properties ===================================================
 
-  // == DOM Events ============================================================
-
+  @readOnly
+  @computed('isVertical')
+  layoutStyle (isVertical) {
+    return isVertical ? 'column' : 'row'
+  },
   // == Lifecycle Hooks =======================================================
   init () {
     this._super(...arguments)

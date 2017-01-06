@@ -18,13 +18,31 @@ $hover-bg: #f6f9fc;
   }
 }
 .frost-range-picker {
-  .starting-date {
-    margin-bottom: 25px;
+  display: inline-block;
+  .column {
+    .start-date {
+      margin-bottom: 12.5px;
+    }
+    .end-date {
+      margin-top: 12.5px;
+    }
+  }
+  .row {
+    .start-date {
+      margin-right: 12.5px;
+    }
+    .end-date {
+      margin-left: 12.5px;
+    }
+  }
+  .seperator {
+    font-size: 40px;
+    color: $frost-color-grey-4;
   }
   &.has-errored {
     .frost-date-time-picker {
       border-bottom: 1px solid $frost-color-danger;
-      border-top: 1px solid $frost-color-danger;  
+      border-top: 1px solid $frost-color-danger;
     }
   }
 }
