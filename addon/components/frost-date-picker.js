@@ -95,7 +95,6 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   },
   actions: {
     _onSelect (date) {
-      const input = this.$('.frost-text-input')
       let el = this.get('el')
       let value = el.toString()
       this.set('value', value)

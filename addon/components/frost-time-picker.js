@@ -1,16 +1,20 @@
 /**
  * Component definition for the frost-time-picker component
  */
-
+import Ember from 'ember'
 import PropTypesMixin, {PropTypes} from 'ember-prop-types'
-import computed, {readOnly} from 'ember-computed-decorators'
 import FrostText from 'ember-frost-core/components/frost-text'
 import SpreadMixin from 'ember-spread'
+
 const {
   run: {
     scheduleOnce
   }
 } = Ember
+
+const {
+  moment
+} = window
 
 export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
@@ -27,7 +31,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     autoclose: PropTypes.bool,
     validator: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
-    onError: PropTypes.func,
+    onError: PropTypes.func
   },
 
   /** @returns {Object} the default property values when not provided by consumer */

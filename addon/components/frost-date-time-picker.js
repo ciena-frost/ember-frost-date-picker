@@ -1,14 +1,12 @@
 /**
  * Component definition for the frost-date-time-picker component
  */
-
-import {PropTypes} from 'ember-prop-types'
-import computed, {readOnly} from 'ember-computed-decorators'
+import PropTypesMixin, {PropTypes} from 'ember-prop-types'
+import SpreadMixin from 'ember-spread'
 import {Component} from 'ember-frost-core'
-
 import layout from '../templates/components/frost-date-time-picker'
 
-export default Component.extend({
+export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 
   // == Keyword Properties ====================================================

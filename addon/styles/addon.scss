@@ -12,87 +12,111 @@ $hover-bg: #f6f9fc;
     display: flex;
     flex-direction: column;
   }
+
   .row {
     display: flex;
     flex-direction: row;
   }
+
 }
+
 .frost-range-picker {
   display: inline-block;
+
   .column {
     .start-date {
       margin-bottom: 12.5px;
     }
+
     .end-date {
       margin-top: 12.5px;
     }
+
   }
+
   .row {
     .start-date {
       margin-right: 12.5px;
     }
+
     .end-date {
       margin-left: 12.5px;
     }
+
   }
+
   .seperator {
-    font-size: 40px;
     color: $frost-color-grey-4;
+    font-size: 40px;
   }
-  &.has-errored {
-    .frost-date-time-picker {
-      border-bottom: 1px solid $frost-color-danger;
-      border-top: 1px solid $frost-color-danger;
-    }
-  }
-}
-.frost-date-time-picker {
-  border-bottom: 1px solid $frost-color-lgrey-2;
-  border-top: 1px solid $frost-color-lgrey-2;
-  padding: 5px;
-  display: inline-block;
 
   &.has-errored {
-    border-bottom: 1px solid $frost-color-danger;
-    border-top: 1px solid $frost-color-danger;
+    .frost-date-time-picker {
+      border-top: 1px solid $frost-color-danger;
+      border-bottom: 1px solid $frost-color-danger;
+    }
+
   }
+}
+
+.frost-date-time-picker {
+  display: inline-block;
+  padding: 5px;
+  border-top: 1px solid $frost-color-lgrey-2;
+  border-bottom: 1px solid $frost-color-lgrey-2;
+
+  &.has-errored {
+    border-top: 1px solid $frost-color-danger;
+    border-bottom: 1px solid $frost-color-danger;
+  }
+
   .calendar-icon {
     width: 25px;
     padding: 5px 1px 0 0;
     fill: $frost-color-grey-4;
   }
+
   .frost-date-picker {
-    border-right: 1px solid $frost-color-lgrey-2;
     width: 120px;
+    border-right: 1px solid $frost-color-lgrey-2;
+
     .frost-text-input {
       &:read-only {
-        border: none;
+        border: 0;
       }
-      text-align: center;
-      padding: 0 5px 0 5px;
-      color: initial;
-      cursor: pointer;
 
+      padding: 0 5px;
+      color: initial;
+      text-align: center;
+      cursor: pointer;
     }
+
   }
+
 }
+
 .frost-time-picker {
   position: relative;
   width: 85px;
   height: 35px;
+
   .frost-text-input {
-    padding: 0 8px 0 8px;
-    text-align: center;
-    cursor: pointer;
     &:focus {
       border: 1px solid $frost-color-blue-1;
     }
+
+    padding: 0 8px;
+    text-align: center;
+    cursor: pointer;
   }
+
 }
+
 .frost-date-picker {
   position: relative;
   width: 175px;
   height: 35px;
+
   .frost-date-container {
     position: absolute;
   }

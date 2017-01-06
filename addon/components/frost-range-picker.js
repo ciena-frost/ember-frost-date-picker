@@ -1,18 +1,25 @@
 /**
  * Component definition for the frost-range-picker component
  */
-
-import {PropTypes} from 'ember-prop-types'
+import Ember from 'ember'
+import PropTypesMixin, {PropTypes} from 'ember-prop-types'
+import SpreadMixin from 'ember-spread'
 import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
 
 import layout from '../templates/components/frost-range-picker'
+
 const {
   run: {
     bind
   }
 } = Ember
-export default Component.extend({
+
+const {
+  moment
+} = window
+
+export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 
   // == Keyword Properties ====================================================
@@ -76,9 +83,9 @@ export default Component.extend({
     }
     return {
       isValid: validDate,
-      error: validDate ?
-        null :
-        Error('End is before start')
+      error: validDate
+        ? null
+        : Error('End is before start')
     }
   },
   // == Computed Properties ===================================================
