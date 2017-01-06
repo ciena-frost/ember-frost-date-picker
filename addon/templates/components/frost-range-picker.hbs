@@ -7,10 +7,11 @@
     {{frost-date-time-picker
       defaultDate=startingDate
       defaultTime=startingTime
-      dateValidator=startingDateValidator
-      timeValidator=startingTimeValidator
+      dateValidator=startValidator
+      timeValidator=startValidator
+      onSelect=(action 'onSelect')
+      onError=(action 'onError')
     }}
-    {{log startingDate}}
   </div>
   <div class='item starting-date'>
     <div class='title'>
@@ -19,9 +20,10 @@
     {{frost-date-time-picker
       defaultDate=endingDate
       defaultTime=endingTime
-      dateValidator=endingDateValidator
-      timeValidator=endingTimeValidator
+      dateValidator=endValidator
+      timeValidator=endValidator
+      onSelect=(action 'onSelect')
+      onError=(action 'onError')
     }}
   </div>
-
 </div>

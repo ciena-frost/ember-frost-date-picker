@@ -1,2 +1,5 @@
-{{outlet}}
-{{frost-range-picker}}
+<h2> range picker </h2>
+{{frost-range-picker
+  onError=(action 'log')
+  onSelect=(action 'log')
+}}

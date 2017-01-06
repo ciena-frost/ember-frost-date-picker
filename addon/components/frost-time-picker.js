@@ -22,12 +22,12 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     readonly: PropTypes.bool,
     placement: PropTypes.string,
     align: PropTypes.string,
+    timeRegex: PropTypes.object,
     donetext: PropTypes.string,
     autoclose: PropTypes.bool,
     validator: PropTypes.func,
     onSelect: PropTypes.func.isRequired,
     onError: PropTypes.func,
-    INVALID_TIME_ERROR: PropTypes.string
   },
 
   /** @returns {Object} the default property values when not provided by consumer */
@@ -39,7 +39,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       donetext: 'Done',
       autoclose: true,
       hook: 'my-time-picker',
-      INVALID_TIME_ERROR: 'Invalid Time Format, default is HH:mm:ss'
+      timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
     }
   },
 
@@ -48,17 +48,22 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Functions =============================================================
   isValid (value) {
     if (this.validator) {
-      if (!this.validator(value)) {
-        return false
+      let result = this.validator(value)
+      if (!result.isValid) {
+        return result
       }
     }
-    const regex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
-    return regex.test(value)
+    const regex = this.get('timeRegex')
+    return {
+      isValid: regex.test(value),
+      error: Error('Time does not match intended format')
+    }
   },
   // == DOM Events ============================================================
   change () {
     const value = this.$('input').val()
-    if (this.isValid(value)) {
+    let result = this.isValid(value)
+    if (result.isValid) {
       const onSelect = this.get('onSelect')
       this.set('value', value)
       if (onSelect) {
@@ -66,7 +71,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       }
     } else {
       const onError = this.get('onError')
-      const e = Error(this.get('INVALID_TIME_ERROR'))
+      const e = result.error
       if (onError) {
         onError(e)
       } else {
@@ -90,9 +95,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     })
   },
   willDestroyElement () {
+    this.$().clockpicker('remove')
     this._super(...arguments)
-    scheduleOnce('sync', this, function () {
-      this.$().clockpicker('remove')
-    })
   }
 })

@@ -21,6 +21,12 @@ $hover-bg: #f6f9fc;
   .starting-date {
     margin-bottom: 25px;
   }
+  &.has-errored {
+    .frost-date-time-picker {
+      border-bottom: 1px solid $frost-color-danger;
+      border-top: 1px solid $frost-color-danger;  
+    }
+  }
 }
 .frost-date-time-picker {
   border-bottom: 1px solid $frost-color-lgrey-2;
@@ -28,6 +34,10 @@ $hover-bg: #f6f9fc;
   padding: 5px;
   display: inline-block;
 
+  &.has-errored {
+    border-bottom: 1px solid $frost-color-danger;
+    border-top: 1px solid $frost-color-danger;
+  }
   .calendar-icon {
     width: 25px;
     padding: 5px 1px 0 0;
@@ -39,9 +49,6 @@ $hover-bg: #f6f9fc;
     .frost-text-input {
       &:read-only {
         border: none;
-      }
-      &.error-invalid {
-        border: 1px solid $frost-color-danger;
       }
       text-align: center;
       padding: 0 5px 0 5px;

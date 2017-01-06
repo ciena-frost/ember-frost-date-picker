@@ -14,7 +14,7 @@ export default Component.extend({
   // == Keyword Properties ====================================================
 
   layout,
-
+  classNameBindings: ['error:has-errored'],
   // == PropTypes =============================================================
 
   /**
@@ -40,17 +40,25 @@ export default Component.extend({
   // == Functions =============================================================
   // == Actions ===============================================================
   actions: {
-    didChange () {
+    onSelect () {
       const date = this.get('defaultDate')
       const time = this.get('defaultTime')
-      if (date && time) {
-        const onSelect = this.get('onSelect')
-        if (onSelect) {
-          onSelect({
-            date,
-            time
-          })
-        }
+
+      const onSelect = this.get('onSelect')
+      if (onSelect) {
+        onSelect({
+          date,
+          time
+        })
+      }
+      this.set('error', null)
+    },
+    onError (e) {
+      const onError = this.get('onError')
+      if (onError) {
+        this.set('error', onError(e))
+      } else {
+        this.set('error', e)
       }
     }
   }

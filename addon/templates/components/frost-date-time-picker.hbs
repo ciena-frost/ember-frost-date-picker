@@ -8,14 +8,16 @@
   </div>
   {{frost-date-picker
     value=defaultDate
-    onSelect=(action 'didChange')
+    onSelect=(action 'onSelect')
+    onError=(action 'onError')
     readonly=true
     hideIcon=true
     validator=dateValidator
   }}
   {{frost-time-picker
     value=defaultTime
-    onSelect=(action 'didChange')
+    onSelect=(action 'onSelect')
+    onError=(action 'onError')
     validator=timeValidator
   }}
 </div>

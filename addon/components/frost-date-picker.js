@@ -73,15 +73,16 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     this._super(...arguments)
     this.get('el').destroy()
   },
-  isValid (v) {
+  isValid (value) {
     if (this.validator) {
-      debugger
-
-      if (!this.validator(v)) {
-        return false
+      let result = this.validator(value)
+      if (!result.isValid) {
+        return result
       }
     }
-    return moment(v).isValid()
+    return {
+      isValid: moment(value).isValid()
+    }
   },
   getDefaultProps () {
     return {
@@ -89,7 +90,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       format: 'YYYY-MM-DD',
       theme: 'frost-theme',
       hideIcon: false,
-      INVALID_DATE_ERROR: 'Invalid Date Format, default is YYYY-MM-DD'
+      GENERIC_ERROR: 'Invalid Date Format, default is YYYY-MM-DD'
     }
   },
   actions: {
@@ -97,42 +98,23 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       const input = this.$('.frost-text-input')
       let el = this.get('el')
       let value = el.toString()
-      if (this.isValid(value)) {
+      this.set('value', value)
+      let result = this.isValid(value)
+      if (result.isValid) {
         const onSelect = this.get('onSelect')
-        this.set('value', value)
         this.set('currentDate', value)
-        input.removeClass('error-invalid')
 
         if (onSelect) {
           onSelect(value, el)
         }
       } else {
         const onError = this.get('onError')
-        const e = Error(this.get('INVALID_DATE_ERROR'))
+        const e = result.error || Error(this.get('GENERIC_ERROR'))
         this.set('field.value', this.get('currentDate'))
-        input.addClass('error-invalid')
         if (onError) {
           onError(e)
         } else {
           console.warn(e)
-        }
-      }
-    },
-    _onKeyPress (e) {
-      if (e.keyCode === 13) {
-        let v = this.$('input').val()
-        if (this.isValid(v)) {
-          this.set('field.value', v)
-        } else {
-          const onError = this.get('onError')
-          const e = Error(this.get('INVALID_DATE_ERROR'))
-          if (onError) {
-            onError(e)
-          } else {
-            console.warn(e)
-          }
-          let d = moment(this.get('el').getDate())
-          this.set('field.value', d.format(this.get('format')))
         }
       }
     }

@@ -18,6 +18,7 @@ export default Component.extend({
   // == Keyword Properties ====================================================
 
   layout,
+  classNameBindings: ['error:has-errored'],
 
   // == PropTypes =============================================================
 
@@ -28,53 +29,93 @@ export default Component.extend({
    */
   propTypes: {
     startingDate: PropTypes.string,
-    startingDateTitle: PropTypes.string,
-    startingDateValidator: PropTypes.func,
     startingTime: PropTypes.string,
-    startingTimeValidator: PropTypes.func,
+    startTitle: PropTypes.string,
     endingDate: PropTypes.string,
-    endingDateTitle: PropTypes.string,
-    endingDateValidator: PropTypes.string,
     endingTime: PropTypes.string,
-    endingTimeValidator: PropTypes.func
+    endTitle: PropTypes.string,
+    startValidator: PropTypes.func,
+    endValidator: PropTypes.func,
+    onSelect: PropTypes.func.isRequired,
+    onError: PropTypes.func,
+    validator: PropTypes.func
   },
 
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
-      startingDateTitle: 'From',
-      endingDateTitle: 'To',
-      startingDateValidator: this.get('isStartDateValid'),
-      endingDateValidator: this.get('isEndDateValid')
+      startTitle: 'From',
+      endTitle: 'To',
+      startValidator: this.get('isValid'),
+      endValidator: this.get('isValid')
     }
   },
 
   // == Functions =============================================================
-  isStartDateValid (start) {
-    return start <= this.get('endingDate')
-      && this.get('startingTime') <= this.get('endingTime')
+  isValid (value) {
+    if (this.validator) {
+      let result = this.validator(value)
+      if (!result.isValid) {
+        return result
+      }
+    }
+    let start = moment(this.get('startingDate'))
+    let end = moment(this.get('endingDate'))
+
+    let st = this.get('startingTime').split(':')
+    let et = this.get('endingTime').split(':')
+
+    start.hours(st[0]).minutes(st[1]).seconds(st[2])
+    end.hours(et[0]).minutes(et[1]).seconds(et[2])
+
+    let validDate = end.isSameOrAfter(start)
+
+    if (validDate) {
+      this.set('start', start)
+      this.set('end', end)
+    }
+    return {
+      isValid: validDate,
+      error: validDate ?
+        null :
+        Error('End is before start')
+    }
   },
-  isEndDateValid (end) {
-    return this.get('startingDate') <= end
-      && this.get('startingTime') <= this.get('endingTime')
-  },
+
   // == DOM Events ============================================================
 
   // == Lifecycle Hooks =======================================================
   init () {
     this._super(...arguments)
 
+    // bind context to both functions
     this.set(
-      'startingDateValidator',
-      bind(this, this.startingDateValidator)
+      'startValidator',
+      bind(this, this.startValidator)
     )
     this.set(
-      'endingDateValidator',
-      bind(this, this.endingDateValidator)
+      'endValidator',
+      bind(this, this.endValidator)
     )
   },
-  // == Actions ===============================================================
-
   actions: {
+    onSelect () {
+      const onSelect = this.get('onSelect')
+      if (onSelect) {
+        onSelect({
+          start: this.get('start'),
+          end: this.get('end')
+        })
+      }
+      this.set('error', null)
+    },
+    onError (e) {
+      const onError = this.get('onError')
+      this.set('error', true)
+      if (onError) {
+        onError(e)
+      }
+      return false
+    }
   }
 })
