@@ -3,7 +3,10 @@
 
 .dummy-body {
   margin-left: 20px;
-
+  .my-seperator {
+    font-size: 40px;
+    transform: translateY(25%);
+  }
   .chip {
     display: inline-block;
     padding: 0 25px;
@@ -16,7 +19,7 @@
   .row {
    display: flex;
    flex-direction: row;
-   
+
    .column {
      display: flex;
      flex-direction: column;

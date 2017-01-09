@@ -21,6 +21,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   // == Pikaday Options ===========
   propTypes: {
     options: PropTypes.object,
+    hook: PropTypes.string,
     format: PropTypes.string,
     theme: PropTypes.string,
     onSelect: PropTypes.func,
@@ -29,7 +30,6 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     onDraw: PropTypes.func,
     validator: PropTypes.func,
     hideIcon: PropTypes.bool,
-    currentDate: PropTypes.string,
     GENERIC_ERROR: PropTypes.string
   },
   field: computed(function () {
@@ -42,7 +42,6 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
         'value',
         this.get('value') || moment().format(this.get('format'))
       )
-      this.set('currentDate', this.get('value'))
       let options = {}
       let _assign = (el, value, type) => {
         if (value) {
@@ -75,8 +74,14 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   },
   isValid (value) {
     if (this.validator) {
-      let result = this.validator(value)
-      if (!result.isValid) {
+      let result = this.validator(value) || false
+      if (result === false) {
+        return {
+          isValid: false,
+          error: 'Validation error'
+        }
+      }
+      if (result.isValid === false) {
         return result
       }
     }
@@ -86,11 +91,12 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   },
   getDefaultProps () {
     return {
+      hook: 'date-picker',
       options: {},
       format: 'YYYY-MM-DD',
       theme: 'frost-theme',
       hideIcon: false,
-      GENERIC_ERROR: 'Invalid Date Format, default is YYYY-MM-DD'
+      GENERIC_ERROR: 'Invalid Date Format'
     }
   },
   actions: {
@@ -101,7 +107,6 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       let result = this.isValid(value)
       if (result.isValid) {
         const onSelect = this.get('onSelect')
-        this.set('currentDate', value)
 
         if (onSelect) {
           onSelect(value, el)
@@ -109,12 +114,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       } else {
         const onError = this.get('onError')
         const e = result.error || Error(this.get('GENERIC_ERROR'))
-        this.set('field.value', this.get('currentDate'))
-        if (onError) {
-          onError(e)
-        } else {
-          console.warn(e)
-        }
+        onError ? onError(e) : console.warn(e)
       }
     }
   }

@@ -35,7 +35,9 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
    * passed in/overwritten.
    */
   propTypes: {
+    hook: PropTypes.string,
     isVertical: PropTypes.bool,
+    seperator: PropTypes.object,
     startingDate: PropTypes.string,
     startingTime: PropTypes.string,
     startTitle: PropTypes.string,
@@ -52,6 +54,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
+      hook: 'range-picker',
       startValidator: this.get('isValid'),
       endValidator: this.get('isValid'),
       isVertical: false
@@ -60,12 +63,6 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
 
   // == Functions =============================================================
   isValid (value) {
-    if (this.validator) {
-      let result = this.validator(value)
-      if (!result.isValid) {
-        return result
-      }
-    }
     let start = moment(this.get('startingDate'))
     let end = moment(this.get('endingDate'))
 
@@ -75,17 +72,25 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     start.hours(st[0]).minutes(st[1]).seconds(st[2])
     end.hours(et[0]).minutes(et[1]).seconds(et[2])
 
+    this.set('start', start)
+    this.set('end', end)
+
+    if (this.validator) {
+      if (this.validator(start, end) === false) {
+        return {
+          isValid: false,
+          error: Error('Validation Error')
+        }
+      }
+    }
+
     let validDate = end.isSameOrAfter(start)
 
-    if (validDate) {
-      this.set('start', start)
-      this.set('end', end)
-    }
     return {
       isValid: validDate,
       error: validDate
         ? null
-        : Error('End is before start')
+        : Error('Invalid time range')
     }
   },
   // == Computed Properties ===================================================

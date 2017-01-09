@@ -29,7 +29,6 @@ describeComponent(
     })
 
     describe('after render', function () {
-
       beforeEach(function () {
         this.setProperties({
           myHook: 'myThing'

@@ -8,6 +8,7 @@
   </div>
   {{frost-date-picker
     value=defaultDate
+    format=dateFormat
     onSelect=(action 'onSelect')
     onError=(action 'onError')
     readonly=true
@@ -16,6 +17,7 @@
   }}
   {{frost-time-picker
     value=defaultTime
+    format=timeFormat
     onSelect=(action 'onSelect')
     onError=(action 'onError')
     validator=timeValidator

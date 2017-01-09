@@ -21,6 +21,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
 
   // == PropTypes =============================================================
   propTypes: {
+    hook: PropTypes.string,
     options: PropTypes.object,
     format: PropTypes.string,
     readonly: PropTypes.bool,
@@ -42,7 +43,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       placement: 'right',
       donetext: 'Done',
       autoclose: true,
-      hook: 'my-time-picker',
+      hook: 'time-picker',
       timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
     }
   },
@@ -51,13 +52,19 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
 
   // == Functions =============================================================
   isValid (value) {
+    const regex = this.get('timeRegex')
+
     if (this.validator) {
       let result = this.validator(value)
-      if (!result.isValid) {
+      if (result === false) {
+        return {
+          isValid: false,
+          error: 'Validation error'
+        }
+      } else if (result.isValid === false) {
         return result
       }
     }
-    const regex = this.get('timeRegex')
     return {
       isValid: regex.test(value),
       error: Error('Time does not match intended format')
@@ -66,16 +73,17 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == DOM Events ============================================================
   change () {
     const value = this.$('input').val()
+
+    this.set('value', value)
     let result = this.isValid(value)
     if (result.isValid) {
       const onSelect = this.get('onSelect')
-      this.set('value', value)
       if (onSelect) {
         onSelect(value)
       }
     } else {
       const onError = this.get('onError')
-      const e = result.error
+      const e = result.error || 'Invalid input'
       if (onError) {
         onError(e)
       } else {

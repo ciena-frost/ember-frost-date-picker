@@ -21,16 +21,22 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
    * passed in/overwritten.
    */
   propTypes: {
+    hook: PropTypes.string,
+    dateFormat: PropTypes.string,
+    timeFormat: PropTypes.string,
     defaultDate: PropTypes.string,
     defaultTime: PropTypes.string,
     dateValidator: PropTypes.func,
     timeValidator: PropTypes.func,
-    onSelect: PropTypes.func
+    onSelect: PropTypes.func,
+    onError: PropTypes.func
   },
 
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
-    return {}
+    return {
+      hook: 'date-time-picker'
+    }
   },
 
   // == Computed Properties ===================================================

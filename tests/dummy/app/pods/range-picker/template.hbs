@@ -1,5 +1,48 @@
 <h2> range picker </h2>
-{{frost-range-picker
-  onError=(action 'log')
-  onSelect=(action 'log')
-}}
+<div class='row'>
+  <div class='item'>
+    <h3>Controller</h3>
+    {{code-snippet name="range_controller.js"}}
+  </div>
+  <div class='item column'>
+    <div class='item'>
+      <h3>Template</h3>
+      {{code-snippet name="range_template.hbs"}}
+    </div>
+    <div class='item'>
+      <h3>Rendered</h3>
+
+      <div class='row'>
+        <!-- BEGIN-SNIPPET range_template -->
+        <div class='item'>
+          {{frost-range-picker
+            onSelect=(action 'onSelect')
+            onError=(action 'onError')
+            isVertical=false
+            startingDate='2012-12-12'
+            startingTime='00:00:01'
+            startTitle= 'Custom Start'
+            endingDate='2017-01-01'
+            endingTime='00:00:00'
+            endTitle='Custom End'
+            seperator=(component 'my-seperator')
+            validator=(action 'myCustomValidator')
+          }}
+        </div>
+        <!-- END-SNIPPET -->
+      </div>
+      <div class='row'>
+        <h4>isInverted</h4>
+        {{frost-checkbox
+          onInput=(action 'toggleInverted')
+        }}
+        {{isInverted}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+{{link-to 'date' 'demo'}}
+{{link-to 'datetime' 'date-time'}}
+</p>

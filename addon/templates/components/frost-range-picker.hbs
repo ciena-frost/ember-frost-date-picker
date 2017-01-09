@@ -13,11 +13,7 @@
       onError=(action 'onError')
     }}
   </div>
-  {{#if (eq layoutStyle 'row')}}
-    <div class='seperator'>
-      -
-    </div>
-  {{/if}}
+  {{component seperator}}
   <div class='item end-date'>
     <div class='title'>
       {{endTitle}}

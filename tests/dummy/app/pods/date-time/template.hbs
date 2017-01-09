@@ -1,5 +1,36 @@
 <h2>datetime</h2>
-<p>see logs</p>
-{{frost-date-time-picker
-  onSelect=(action 'datetimeChanged')
-}}
+<div class='row'>
+  <div class='item'>
+    <h3>Controller</h3>
+    {{code-snippet name="date_time_controller.js"}}
+  </div>
+  <div class='item column'>
+    <div class='item'>
+      <h3>Template</h3>
+      {{code-snippet name="date_time_template.hbs"}}
+    </div>
+    <div class='item'>
+      <h3>Rendered</h3>
+
+      <div class='row'>
+        <!-- BEGIN-SNIPPET date_time_template -->
+        <div class='item'>
+          {{frost-date-time-picker
+            onSelect=(action 'onSelect')
+            onError=(action 'onError')
+            dateValidator=(action 'myCustomDateValidator')
+            timeValidator=(action 'myCustomTimeValidator')
+            dateFormat='YYYY-MM-DD'
+            timeFormat='HH:mm:ss'
+          }}
+        </div>
+        <!-- END-SNIPPET -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>
+{{link-to 'date' 'demo'}}
+{{link-to 'range-picker' 'range-picker'}}
+</p>
