@@ -30,7 +30,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     validator: PropTypes.func,
     hideIcon: PropTypes.bool,
     currentDate: PropTypes.string,
-    INVALID_DATE_ERROR: PropTypes.string
+    GENERIC_ERROR: PropTypes.string
   },
   field: computed(function () {
     return this.$('input')[0]
