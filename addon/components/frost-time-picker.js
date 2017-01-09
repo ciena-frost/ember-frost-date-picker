@@ -30,7 +30,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     donetext: PropTypes.string,
     autoclose: PropTypes.bool,
     validator: PropTypes.func,
-    onSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func,
     onError: PropTypes.func
   },
 

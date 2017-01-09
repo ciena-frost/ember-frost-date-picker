@@ -25,7 +25,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     defaultTime: PropTypes.string,
     dateValidator: PropTypes.func,
     timeValidator: PropTypes.func,
-    onSelect: PropTypes.func.isRequired
+    onSelect: PropTypes.func
   },
 
   /** @returns {Object} the default property values when not provided by consumer */

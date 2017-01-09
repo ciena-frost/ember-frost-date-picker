@@ -44,7 +44,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     endTitle: PropTypes.string,
     startValidator: PropTypes.func,
     endValidator: PropTypes.func,
-    onSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func,
     onError: PropTypes.func,
     validator: PropTypes.func
   },

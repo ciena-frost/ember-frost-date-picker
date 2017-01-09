@@ -10,45 +10,45 @@ import wait from 'ember-test-helpers/wait'
 import {afterEach, beforeEach, describe} from 'mocha'
 import sinon from 'sinon'
 
-import {integration} from 'ember-frost-date-picker/tests/helpers/ember-test-utils/describe-component'
+describeComponent(
+  'frost-range-picker',
+  'Integration: EmberFrostRangePickerComponent',
+  {
+    integration: true
+  },
+  function () {
+    let sandbox
 
-describeComponent(...integration('frost-range-picker'), function () {
-  let sandbox
-
-  beforeEach(function () {
-    sandbox = sinon.sandbox.create()
-    initializeHook()
-  })
-
-  afterEach(function () {
-    sandbox.restore()
-  })
-
-  it('should have real tests', function () {
-    expect(true).to.equal(false)
-  })
-
-  describe('after render', function () {
     beforeEach(function () {
-      this.setProperties({
-        myHook: 'myThing'
+      sandbox = sinon.sandbox.create()
+      initializeHook()
+    })
+
+    afterEach(function () {
+      sandbox.restore()
+    })
+
+    describe('after render', function () {
+      beforeEach(function () {
+        this.setProperties({
+          myHook: 'myThing'
+        })
+
+        this.render(hbs`
+          {{frost-range-picker
+            hook=myHook
+          }}
+        `)
+
+        return wait()
       })
 
-      this.render(hbs`
-        {{frost-range-picker
-          hook=myHook
-        }}
-      `)
+      it('should have an element', function () {
+        expect(this.$()).to.have.length(1)
+      })
 
-      return wait()
-    })
-
-    it('should have an element', function () {
-      expect(this.$()).to.have.length(1)
-    })
-
-    it('should be accessible via the hook', function () {
-      expect($hook('myThing')).to.have.length(1)
+      it('should be accessible via the hook', function () {
+        expect($hook('myThing')).to.have.length(1)
+      })
     })
   })
-})
