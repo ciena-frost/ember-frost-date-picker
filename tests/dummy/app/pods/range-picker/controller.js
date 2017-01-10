@@ -7,7 +7,6 @@ const {
 // BEGIN-SNIPPET range_controller
 export default Ember.Controller.extend({
   notificationMessages: service(),
-  isInverted: false,
 
   actions: {
     onSelect (result) {
@@ -22,9 +21,6 @@ export default Ember.Controller.extend({
         autoClear: true,
         clearDuration: 1200
       })
-    },
-    toggleInverted () {
-      this.toggleProperty('isInverted')
     },
     myCustomValidator (start, end) {
       if (this.get('isInverted')) {
