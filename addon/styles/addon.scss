@@ -45,15 +45,14 @@ $hover-bg: #f6f9fc;
 
   }
 
-  .seperator {
+  .separator {
     color: $frost-color-grey-4;
     font-size: 40px;
   }
 
   &.has-errored {
     .frost-date-time-picker {
-      border-top: 1px solid $frost-color-danger;
-      border-bottom: 1px solid $frost-color-danger;
+      border: 1px solid $frost-color-danger;
     }
 
   }
@@ -61,23 +60,21 @@ $hover-bg: #f6f9fc;
 
 .frost-date-time-picker {
   display: inline-block;
-  padding: 5px;
-  border-top: 1px solid $frost-color-lgrey-2;
-  border-bottom: 1px solid $frost-color-lgrey-2;
+  border: 1px solid $frost-color-lgrey-2;
 
   &.has-errored {
-    border-top: 1px solid $frost-color-danger;
-    border-bottom: 1px solid $frost-color-danger;
+    border: 1px solid $frost-color-danger;
   }
 
   .calendar-icon {
-    width: 25px;
-    padding: 5px 1px 0 0;
+    cursor: pointer;
+    width: 20px;
+    padding: 9px 1px 0 2px;
     fill: $frost-color-grey-4;
   }
 
   .frost-date-picker {
-    width: 120px;
+    width: 105px;
     border-right: 1px solid $frost-color-lgrey-2;
 
     .frost-text-input {

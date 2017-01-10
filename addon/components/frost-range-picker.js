@@ -37,12 +37,12 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   propTypes: {
     hook: PropTypes.string,
     isVertical: PropTypes.bool,
-    seperator: PropTypes.object,
-    startingDate: PropTypes.string,
-    startingTime: PropTypes.string,
+    separator: PropTypes.object,
+    startDate: PropTypes.string,
+    startTime: PropTypes.string,
     startTitle: PropTypes.string,
-    endingDate: PropTypes.string,
-    endingTime: PropTypes.string,
+    endDate: PropTypes.string,
+    endTime: PropTypes.string,
     endTitle: PropTypes.string,
     startValidator: PropTypes.func,
     endValidator: PropTypes.func,
@@ -63,11 +63,11 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
 
   // == Functions =============================================================
   isValid (value) {
-    let start = moment(this.get('startingDate'))
-    let end = moment(this.get('endingDate'))
+    let start = moment(this.get('startDate'))
+    let end = moment(this.get('endDate'))
 
-    let st = this.get('startingTime').split(':')
-    let et = this.get('endingTime').split(':')
+    let st = this.get('startTime').split(':')
+    let et = this.get('endTime').split(':')
 
     start.hours(st[0]).minutes(st[1]).seconds(st[2])
     end.hours(et[0]).minutes(et[1]).seconds(et[2])

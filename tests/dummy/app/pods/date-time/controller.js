@@ -1,11 +1,11 @@
 import Ember from 'ember'
 const {
-  inject: {service}
+  inject
 } = Ember
 
 // BEGIN-SNIPPET date_time_controller
 export default Ember.Controller.extend({
-  notificationMessages: service(),
+  notificationMessages: inject.service(),
 
   actions: {
     onSelect (datetime) {

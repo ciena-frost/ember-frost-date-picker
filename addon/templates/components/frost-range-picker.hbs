@@ -5,22 +5,22 @@
       {{startTitle}}
     </div>
     {{frost-date-time-picker
-      defaultDate=startingDate
-      defaultTime=startingTime
+      defaultDate=startDate
+      defaultTime=startTime
       dateValidator=startValidator
       timeValidator=startValidator
       onSelect=(action 'onSelect')
       onError=(action 'onError')
     }}
   </div>
-  {{component seperator}}
+  {{component separator}}
   <div class='item end-date'>
     <div class='title'>
       {{endTitle}}
     </div>
     {{frost-date-time-picker
-      defaultDate=endingDate
-      defaultTime=endingTime
+      defaultDate=endDate
+      defaultTime=endTime
       dateValidator=endValidator
       timeValidator=endValidator
       onSelect=(action 'onSelect')

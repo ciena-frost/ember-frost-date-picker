@@ -2,12 +2,12 @@ import Ember from 'ember'
 
 const {
   Controller,
-  inject: {service}
+  inject
 } = Ember
 
 // BEGIN-SNIPPET date_controller
 export default Controller.extend({
-  notificationMessages: service(),
+  notificationMessages: inject.service(),
   _notify (type, msg) {
     this.get('notificationMessages')[type](msg, {
       autoClear: true,

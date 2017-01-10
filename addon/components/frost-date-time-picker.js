@@ -64,6 +64,9 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
       } else {
         this.set('error', e)
       }
+    },
+    focusDatePicker () {
+      this.$('.frost-date-picker input').click()
     }
   }
 })

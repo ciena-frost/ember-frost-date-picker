@@ -1,12 +1,12 @@
 import Ember from 'ember'
 
 const {
-  inject: {service}
+  inject
 } = Ember
 
 // BEGIN-SNIPPET range_controller
 export default Ember.Controller.extend({
-  notificationMessages: service(),
+  notificationMessages: inject.service(),
 
   actions: {
     onSelect (result) {
