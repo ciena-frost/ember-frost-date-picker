@@ -76,22 +76,13 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     this.set('end', end)
 
     if (this.validator) {
-      if (this.validator(start, end) === false) {
-        return {
-          isValid: false,
-          error: Error('Validation Error')
-        }
+      let result = this.validator(start, end)
+      if (result !== undefined) {
+        return result
       }
     }
 
-    let validDate = end.isSameOrAfter(start)
-
-    return {
-      isValid: validDate,
-      error: validDate
-        ? null
-        : Error('Invalid time range')
-    }
+    return end.isSameOrAfter(start)
   },
   // == Computed Properties ===================================================
 

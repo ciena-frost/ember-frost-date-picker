@@ -74,20 +74,12 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   },
   isValid (value) {
     if (this.validator) {
-      let result = this.validator(value) || false
-      if (result === false) {
-        return {
-          isValid: false,
-          error: 'Validation error'
-        }
-      }
-      if (result.isValid === false) {
+      let result = this.validator(value)
+      if (result !== undefined) {
         return result
       }
     }
-    return {
-      isValid: moment(value).isValid()
-    }
+    return moment(value).isValid()
   },
   getDefaultProps () {
     return {
@@ -104,8 +96,8 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       let el = this.get('el')
       let value = el.toString()
       this.set('value', value)
-      let result = this.isValid(value)
-      if (result.isValid) {
+
+      if (this.isValid(value)) {
         const onSelect = this.get('onSelect')
 
         if (onSelect) {
@@ -113,7 +105,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
         }
       } else {
         const onError = this.get('onError')
-        const e = result.error || Error(this.get('GENERIC_ERROR'))
+        const e = Error(this.get('GENERIC_ERROR'))
         onError ? onError(e) : console.warn(e)
       }
     }

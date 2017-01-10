@@ -11,9 +11,8 @@
     </div>
     <div class='item'>
       <h3>Rendered</h3>
-
+      <!-- BEGIN-SNIPPET range_template -->
       <div class='row'>
-        <!-- BEGIN-SNIPPET range_template -->
         <div class='item'>
           {{frost-range-picker
             onSelect=(action 'onSelect')
@@ -29,20 +28,21 @@
             validator=(action 'myCustomValidator')
           }}
         </div>
-        <!-- END-SNIPPET -->
       </div>
       <div class='row'>
-        <h4>isInverted</h4>
-        {{frost-checkbox
-          onInput=(action 'toggleInverted')
-        }}
-        {{isInverted}}
+        <div class='item'>
+          <h3>Validation Test</h3>
+          {{frost-checkbox
+            onInput=(action 'toggleInverted')
+          }}
+          {{if
+            isInverted
+            'end should be before start'
+            'start should be before end'
+          }}
+        </div>
       </div>
     </div>
+    <!-- END-SNIPPET -->
   </div>
 </div>
-
-<p>
-{{link-to 'date' 'demo'}}
-{{link-to 'datetime' 'date-time'}}
-</p>

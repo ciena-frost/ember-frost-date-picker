@@ -7,7 +7,24 @@ var Router = Ember.Router.extend({
 })
 
 Router.map(function () {
-  this.route('demo', { path: '/' })
+  this.nav('application', {
+    path: '/'
+  }, function () {
+    this.category('Components', function () {
+      this.column('Available Components', function () {
+        this.app('Base Usage', {
+          route: 'base'
+        })
+        this.app('DateTime Component', {
+          route: 'date-time'
+        })
+        this.app('RangePicker Component', {
+          route: 'range-picker'
+        })
+      })
+    })
+  })
+  this.route('base', { path: '/' })
   this.route('date-time')
   this.route('range-picker')
 })

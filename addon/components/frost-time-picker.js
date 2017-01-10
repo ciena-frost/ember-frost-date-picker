@@ -8,7 +8,8 @@ import SpreadMixin from 'ember-spread'
 
 const {
   run: {
-    scheduleOnce
+    scheduleOnce,
+    bind
   }
 } = Ember
 
@@ -44,7 +45,8 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       donetext: 'Done',
       autoclose: true,
       hook: 'time-picker',
-      timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/
+      timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
+      GENERIC_ERROR: 'Invalid Time Input'
     }
   },
 
@@ -55,41 +57,34 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     const regex = this.get('timeRegex')
 
     if (this.validator) {
-      let result = this.validator(value)
-      if (result === false) {
-        return {
-          isValid: false,
-          error: 'Validation error'
-        }
-      } else if (result.isValid === false) {
+      const result = this.validator(value)
+      if (result !== undefined) {
         return result
       }
     }
-    return {
-      isValid: regex.test(value),
-      error: Error('Time does not match intended format')
-    }
+    return regex.test(value)
   },
   // == DOM Events ============================================================
-  change () {
-    const value = this.$('input').val()
-
-    this.set('value', value)
-    let result = this.isValid(value)
-    if (result.isValid) {
+  afterDone () {
+    const value = this.get('value')
+    if (this.isValid(value)) {
       const onSelect = this.get('onSelect')
       if (onSelect) {
         onSelect(value)
       }
     } else {
       const onError = this.get('onError')
-      const e = result.error || 'Invalid input'
+      const e = this.get('GENERIC_ERROR')
       if (onError) {
         onError(e)
       } else {
         console.warn(e)
       }
     }
+  },
+  change () {
+    const value = this.$('input').val()
+    this.set('value', value)
   },
   // == Lifecycle Hooks =======================================================
   didInsertElement () {
@@ -102,7 +97,9 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       this.$().clockpicker({
         placement: this.get('placement'),
         donetext: this.get('donetext'),
-        autoclose: this.get('autoclose')
+        autoclose: this.get('autoclose'),
+        format: this.get('format'),
+        afterDone: bind(this, this.afterDone)
       })
     })
   },

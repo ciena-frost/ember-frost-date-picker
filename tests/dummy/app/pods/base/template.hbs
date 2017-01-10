@@ -16,7 +16,7 @@
           <h3>Date</h3>
           {{frost-date-picker
             hook='my-picker'
-            value=value
+            value=myDate
             onSelect=(action 'onSelect')
             onOpen=(action 'onOpen')
             onClose=(action 'onClose')
@@ -25,22 +25,17 @@
           }}
           <h3>Time</h3>
           {{frost-time-picker
+            value=myTime
             onSelect=(action 'onSelect')
           }}
+        </div>
+        <div class='item'>
+          <h3>Current Values</h3>
+          Date: {{myDate}}
+          Time: {{myTime}}
         </div>
         <!-- END-SNIPPET -->
       </div>
     </div>
   </div>
 </div>
-
-<h3>Configuration</h3>
-See
-<a target='_blank' href='https://github.com/dbushell/Pikaday#configuration'>
-  here
-</a>
-for more details.
-<p>
-{{link-to 'datetime' 'date-time'}}
-{{link-to 'range-picker' 'range-picker'}}
-</p>
