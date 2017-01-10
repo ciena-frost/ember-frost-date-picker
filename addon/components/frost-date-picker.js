@@ -2,6 +2,7 @@ import Ember from 'ember'
 import PikadayOptions from '../utils/pikaday-options'
 import FrostText from 'ember-frost-core/components/frost-text'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+import SpreadMixin from 'ember-spread'
 import layout from '../templates/components/frost-date-picker'
 
 const {
@@ -15,18 +16,21 @@ const {
   Pikaday
 } = window
 
-export default FrostText.extend(PropTypeMixin, {
+export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   layout,
-  classNames: ['frost-date-picker'],
   // == Pikaday Options ===========
   propTypes: {
     options: PropTypes.object,
+    hook: PropTypes.string,
     format: PropTypes.string,
     theme: PropTypes.string,
     onSelect: PropTypes.func,
     onOpen: PropTypes.func,
     onClose: PropTypes.func,
-    onDraw: PropTypes.func
+    onDraw: PropTypes.func,
+    validator: PropTypes.func,
+    hideIcon: PropTypes.bool,
+    GENERIC_ERROR: PropTypes.string
   },
   field: computed(function () {
     return this.$('input')[0]
@@ -68,33 +72,41 @@ export default FrostText.extend(PropTypeMixin, {
     this._super(...arguments)
     this.get('el').destroy()
   },
+  isValid (value) {
+    if (this.validator) {
+      let result = this.validator(value)
+      if (result !== undefined) {
+        return result
+      }
+    }
+    return moment(value).isValid()
+  },
   getDefaultProps () {
     return {
+      hook: 'date-picker',
       options: {},
       format: 'YYYY-MM-DD',
-      theme: 'frost-theme'
+      theme: 'frost-theme',
+      hideIcon: false,
+      GENERIC_ERROR: 'Invalid Date Format'
     }
   },
   actions: {
     _onSelect (date) {
       let el = this.get('el')
-      this.set('value', el.toString())
-      if (this.get('onSelect')) {
-        this.get('onSelect')(el)
-      }
-    },
-    _onKeyPress (e) {
-      if (e.keyCode === 13) {
-        let v = this.$('input').val()
-        if (moment(v).isValid()) {
-          this.set('field.value', v)
-        } else {
-          if (this.get('onError')) {
-            this.get('onError').call(this, v)
-          }
-          let d = moment(this.get('el').getDate())
-          this.set('field.value', d.format(this.get('format')))
+      let value = el.toString()
+      this.set('value', value)
+
+      if (this.isValid(value)) {
+        const onSelect = this.get('onSelect')
+
+        if (onSelect) {
+          onSelect(value, el)
         }
+      } else {
+        const onError = this.get('onError')
+        const e = Error(this.get('GENERIC_ERROR'))
+        onError ? onError(e) : console.warn(e)
       }
     }
   }

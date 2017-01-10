@@ -16,7 +16,12 @@ module.exports = {
   },
   included: function (app) {
     this._super.included(app)
-    app.import(app.bowerDirectory + '/moment/moment.js')
-    app.import(app.bowerDirectory + '/pikaday/pikaday.js')
+    ;[
+      'moment/moment.js',
+      'pikaday/pikaday.js',
+      'clockpicker-seconds/dist/jquery-clockpicker.min.js'
+    ].forEach(file => {
+      app.import(`${app.bowerDirectory}/${file}`)
+    })
   }
 }

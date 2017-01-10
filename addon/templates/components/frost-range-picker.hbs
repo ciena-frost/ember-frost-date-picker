@@ -1,0 +1,30 @@
+{{! Template for the frost-range-picker component }}
+<div class='{{layoutStyle}}'>
+  <div class='item start-date'>
+    <div class='title'>
+      {{startTitle}}
+    </div>
+    {{frost-date-time-picker
+      defaultDate=startDate
+      defaultTime=startTime
+      dateValidator=startValidator
+      timeValidator=startValidator
+      onSelect=(action 'onSelect')
+      onError=(action 'onError')
+    }}
+  </div>
+  {{component separator}}
+  <div class='item end-date'>
+    <div class='title'>
+      {{endTitle}}
+    </div>
+    {{frost-date-time-picker
+      defaultDate=endDate
+      defaultTime=endTime
+      dateValidator=endValidator
+      timeValidator=endValidator
+      onSelect=(action 'onSelect')
+      onError=(action 'onError')
+    }}
+  </div>
+</div>

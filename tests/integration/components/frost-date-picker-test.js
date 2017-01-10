@@ -39,14 +39,6 @@ describeComponent(
       initializeHook()
     })
 
-    it('renders', function () {
-      this.render(hbs`
-      {{frost-date-picker
-        hook='my-picker'
-      }}`)
-      expect($hook('my-picker')).to.have.length(1)
-    })
-
     it('opens on click', function (done) {
       this.render(hbs`
       {{frost-date-picker
@@ -71,9 +63,11 @@ describeComponent(
       }}`)
       run.later(() => {
         $hook('my-picker-input').click()
-        expect(onDrawCalled.callCount, 'onDraw called').to.equal(1)
-        expect(onOpenCalled.callCount, 'onOpen called').to.equal(1)
-        done()
+        run.later(() => {
+          expect(onDrawCalled.callCount, 'onDraw called').to.equal(1)
+          expect(onOpenCalled.callCount, 'onOpen called').to.equal(1)
+          done()
+        })
       })
     })
 

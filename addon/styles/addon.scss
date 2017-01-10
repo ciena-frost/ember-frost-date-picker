@@ -1,24 +1,129 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 @import 'bower_components/pikaday/scss/pikaday';
+@import 'bower_components/clockpicker-seconds/dist/jquery-clockpicker.min';
 
 $hover-bg: #f6f9fc;
 
+.frost-date-picker,
+.frost-time-picker,
+.frost-date-time-picker,
+.frost-range-picker {
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+
+}
+
+.frost-range-picker {
+  display: inline-block;
+
+  .column {
+    .start-date {
+      margin-bottom: 12.5px;
+    }
+
+    .end-date {
+      margin-top: 12.5px;
+    }
+
+  }
+
+  .row {
+    .start-date {
+      margin-right: 12.5px;
+    }
+
+    .end-date {
+      margin-left: 12.5px;
+    }
+
+  }
+
+  .separator {
+    color: $frost-color-grey-4;
+    font-size: 40px;
+  }
+
+  &.has-errored {
+    .frost-date-time-picker {
+      border: 1px solid $frost-color-danger;
+    }
+
+  }
+}
+
+.frost-date-time-picker {
+  display: inline-block;
+  border: 1px solid $frost-color-lgrey-2;
+
+  &.has-errored {
+    border: 1px solid $frost-color-danger;
+  }
+
+  .calendar-icon {
+    width: 20px;
+    padding: 9px 1px 0 2px;
+    cursor: pointer;
+    fill: $frost-color-grey-4;
+  }
+
+  .frost-date-picker {
+    width: 105px;
+    border-right: 1px solid $frost-color-lgrey-2;
+
+    .frost-text-input {
+      &:read-only {
+        border: 0;
+      }
+
+      padding: 0 5px;
+      color: initial;
+      text-align: center;
+      cursor: pointer;
+    }
+
+  }
+
+}
+
+.frost-time-picker {
+  position: relative;
+  width: 85px;
+  height: 35px;
+
+  .frost-text-input {
+    &:focus {
+      border: 1px solid $frost-color-blue-1;
+    }
+
+    padding: 0 8px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+}
+
 .frost-date-picker {
+  position: relative;
   width: 175px;
+  height: 35px;
 
   .frost-date-container {
     position: absolute;
   }
 
   .calendar {
-    display: inline-block;
     position: absolute;
-    top: 50%;
     right: 5px;
     width: 20px;
-    height: 20px;
-    transform: translateY(-50%);
-    transition: opacity .2s ease;
+    height: 15px;
+    transform: translateY(50%);
     cursor: pointer;
     opacity: .8;
     fill: $frost-color-grey-6;
