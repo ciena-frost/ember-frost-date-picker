@@ -1,3 +1,20 @@
+# 5.0.0
+- `frost-date-time-picker`
+- `frost-range-picker`
+- `frost-time-picker`
+-  validation (wip)
+- scss changes
+
+# TODO
+- [x] testing
+- [ ] coverage
+- [x] lint fix
+- [x] validation
+- [x] datetime
+- [x] rangepicker
+- [x] timepicker
+- [x] update demo
+
 # 4.0.0
 upgrade to frost-core 1.0.0
 
