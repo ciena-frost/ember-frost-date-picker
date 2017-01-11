@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "ember build",
+    "publish": ".scripts/deploy.sh",
     "test": "npm run lint && COVERAGE=true ember test",
     "lint": "npm run eslint && npm run sass-lint && npm run md-lint",
     "eslint": "eslint *.js addon app blueprints config tests --fix",
