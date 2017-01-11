@@ -22,6 +22,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
    */
   propTypes: {
     hook: PropTypes.string,
+    readonly: PropTypes.bool,
     dateFormat: PropTypes.string,
     timeFormat: PropTypes.string,
     defaultDate: PropTypes.string,
@@ -35,7 +36,10 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
-      hook: 'date-time-picker'
+      hook: 'date-time-picker',
+      readonly: false,
+      dateFormat: 'YYYY-MM-DD',
+      timeFormat: 'HH:mm:ss'
     }
   },
 

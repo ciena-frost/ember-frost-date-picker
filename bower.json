@@ -8,7 +8,7 @@
     "ember-mocha": "0.8.11",
     "ember-mocha-adapter": "~0.3.1",
     "moment": "^2.14.1",
-    "pikaday": "^1.4.0",
+    "pikaday": "~1.5.1",
     "sinonjs": "1.17.1",
     "clockpicker-seconds": "~0.1.4"
   },

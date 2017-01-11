@@ -36,6 +36,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
    */
   propTypes: {
     hook: PropTypes.string,
+    timeRegex: PropTypes.object,
     isVertical: PropTypes.bool,
     separator: PropTypes.object,
     startDate: PropTypes.string,
@@ -55,6 +56,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   getDefaultProps () {
     return {
       hook: 'range-picker',
+      timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
       startValidator: this.get('isValid'),
       endValidator: this.get('isValid'),
       isVertical: false
@@ -62,15 +64,31 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   },
 
   // == Functions =============================================================
+  validTime (value) {
+    const regex = this.get('timeRegex')
+    return regex.test(value)
+  },
   isValid (value) {
-    let start = moment(this.get('startDate'))
-    let end = moment(this.get('endDate'))
+    const start = moment(this.get('startDate'))
+    const end = moment(this.get('endDate'))
 
-    let st = this.get('startTime').split(':')
-    let et = this.get('endTime').split(':')
+    const startTime = this.get('startTime')
+    const endTime = this.get('endTime')
 
-    start.hours(st[0]).minutes(st[1]).seconds(st[2])
-    end.hours(et[0]).minutes(et[1]).seconds(et[2])
+    if (!this.validTime(startTime) || !this.validTime(endTime)) {
+      return false
+    }
+
+    let st = startTime.split(':')
+    let et = endTime.split(':')
+    start
+      .hours(st[0])
+      .minutes(st[1])
+      .seconds(st[2])
+    end
+      .hours(et[0])
+      .minutes(et[1])
+      .seconds(et[2])
 
     this.set('start', start)
     this.set('end', end)
