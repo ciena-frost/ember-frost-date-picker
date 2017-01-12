@@ -40,7 +40,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   getDefaultProps () {
     return {
       format: 'HH:mm:ss',
-      readonly: true,
+      readonly: false,
       placement: 'right',
       donetext: 'Done',
       autoclose: true,
@@ -53,16 +53,21 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Computed Properties ===================================================
 
   // == Functions =============================================================
-  isValid (value) {
+  testRegex (value) {
     const regex = this.get('timeRegex')
-
+    return regex.test(value)
+  },
+  isValid (value) {
     if (this.validator) {
       const result = this.validator(value)
       if (result !== undefined) {
         return result
       }
     }
-    return regex.test(value)
+    return this.testRegex(value)
+  },
+  syncTask (cb) {
+    scheduleOnce('sync', this, cb)
   },
   // == DOM Events ============================================================
   afterDone () {
@@ -75,6 +80,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
         this.set('previousValue', value)
       }
     } else {
+      this.set('value', previousValue)
       const onError = this.get('onError')
       const e = this.get('GENERIC_ERROR')
       if (onError) {
@@ -88,20 +94,33 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     const value = this.$('input').val()
     this.set('value', value)
   },
+  focusOut () {
+    this.syncTask(function () {
+      this.$().clockpicker('hide')
+    })
+  },
+  keyPress (e) {
+    if (e.keyCode === 13) {
+      this.syncTask(function () {
+        this.$().clockpicker('hide')
+      })
+    }
+  },
   // == Lifecycle Hooks =======================================================
   didInsertElement () {
     this._super(...arguments)
-    scheduleOnce('sync', this, function () {
-      const value = this.get('value') || moment().format(this.get('format'))
+    this.syncTask(function () {
+      const format = this.get('format')
+      const value = this.get('value') || moment().format(format)
 
       this.set('value', value)
       this.set('previousValue', value)
 
       this.$().clockpicker({
+        format,
         placement: this.get('placement'),
         donetext: this.get('donetext'),
         autoclose: this.get('autoclose'),
-        format: this.get('format'),
         afterDone: bind(this, this.afterDone)
       })
     })

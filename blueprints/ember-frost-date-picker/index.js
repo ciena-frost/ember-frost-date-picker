@@ -11,7 +11,8 @@ module.exports = {
     }).then(function () {
       return self.addBowerPackagesToProject([
         {name: 'moment'},
-        {name: 'pikaday'}
+        {name: 'pikaday', target: '~1.5.1'},
+        {name: 'clockpicker-seconds', target: '~0.1.6'}
       ])
     })
   },
