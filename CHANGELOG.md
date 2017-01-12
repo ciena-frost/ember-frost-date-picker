@@ -1,3 +1,13 @@
+# 5.0.1
+- [x] Accessibility
+    - [x] bump and pin pikaday to ~1.5.1 (newly added kb features)
+    - [x] https://github.com/srowhani/clockpicker-seconds/issues/1
+- [x] Styling fixes to account for accessibility
+- [x] Fix calendar icon positioning
+- [x] Improve validation to account for kb inputs
+
+Closes #19 #20 
+
 # 5.0.0
 - `frost-date-time-picker`
 - `frost-range-picker`

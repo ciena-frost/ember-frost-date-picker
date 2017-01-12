@@ -1,6 +1,6 @@
 {
   "name": "ember-frost-date-picker",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "dependencies": {
     "abbrev": {
       "version": "1.0.9",
@@ -1527,9 +1527,9 @@
       "dev": true
     },
     "caniuse-db": {
-      "version": "1.0.30000604",
+      "version": "1.0.30000607",
       "from": "caniuse-db@>=1.0.30000604 <2.0.0",
-      "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000604.tgz",
+      "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000607.tgz",
       "dev": true
     },
     "cardinal": {
@@ -4892,9 +4892,9 @@
       "resolved": "https://registry.npmjs.org/load-json-file/-/load-json-file-1.1.0.tgz"
     },
     "load-plugin": {
-      "version": "2.0.0",
+      "version": "2.1.0",
       "from": "load-plugin@>=2.0.0 <3.0.0",
-      "resolved": "https://registry.npmjs.org/load-plugin/-/load-plugin-2.0.0.tgz",
+      "resolved": "https://registry.npmjs.org/load-plugin/-/load-plugin-2.1.0.tgz",
       "dev": true,
       "dependencies": {
         "resolve-from": {
@@ -7602,9 +7602,9 @@
       "dev": true
     },
     "postcss": {
-      "version": "5.2.9",
+      "version": "5.2.10",
       "from": "postcss@>=5.2.2 <6.0.0",
-      "resolved": "https://registry.npmjs.org/postcss/-/postcss-5.2.9.tgz",
+      "resolved": "https://registry.npmjs.org/postcss/-/postcss-5.2.10.tgz",
       "dev": true,
       "dependencies": {
         "supports-color": {
