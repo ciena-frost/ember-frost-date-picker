@@ -7,6 +7,9 @@ import {Component} from 'ember-frost-core'
 import layout from '../templates/components/frost-date-time-picker'
 import computed from 'ember-computed-decorators'
 
+const {
+  moment
+} = window
 export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 
@@ -24,7 +27,6 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   propTypes: {
     hook: PropTypes.string,
     readonly: PropTypes.bool,
-    format: PropTypes.string,
     dateFormat: PropTypes.string,
     timeFormat: PropTypes.string,
     defaultDate: PropTypes.string,
@@ -40,7 +42,6 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     return {
       hook: 'date-time-picker',
       readonly: false,
-      format: 'YYYY-MM-DDThh:mm:ssTZD',
       dateFormat: 'YYYY-MM-DD',
       timeFormat: 'HH:mm:ss'
     }
@@ -49,24 +50,21 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Computed Properties ===================================================
   @computed('defaultDate', 'defaultTime')
   value: {
-    get(date, time) {
+    get (date, time) {
       if (!date || !time) {
-        return
+        return 'Invalid Date'
       }
 
       const d = moment(date)
       const s = time.split(':')
-      const format = this.get('format')
+
       d
         .hours(s[0])
         .minutes(s[1])
         .seconds(s[2])
-        .format(format)
       return d
     },
-    set (value, date, time) {
-      return value
-    }
+    set: value => value
   },
   // == Functions =============================================================
   // == Actions ===============================================================

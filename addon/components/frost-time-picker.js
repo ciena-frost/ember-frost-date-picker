@@ -5,6 +5,7 @@ import Ember from 'ember'
 import PropTypesMixin, {PropTypes} from 'ember-prop-types'
 import FrostText from 'ember-frost-core/components/frost-text'
 import SpreadMixin from 'ember-spread'
+import computed from 'ember-computed-decorators'
 
 const {
   run: {
@@ -17,6 +18,10 @@ const {
   moment
 } = window
 
+const {
+  max,
+  min
+} = Math
 export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 
@@ -51,7 +56,26 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   },
 
   // == Computed Properties ===================================================
+  @computed('value')
+  currentValue: {
+    get (value) {
+      if (!value) {
+        return ''
+      }
+      const d = moment()
+      const s = value.split(':')
+      const format = this.get('format')
 
+      return d
+        .hours(max(0, Math.min(23, +s[0] || 0)))
+        .minutes(max(0, min(59, +s[1] || 0)))
+        .seconds(max(0, min(59, +s[2] || 0)))
+        .format(format)
+    },
+    set (value) {
+      return value
+    }
+  },
   // == Functions =============================================================
   testRegex (value) {
     const regex = this.get('timeRegex')
@@ -72,7 +96,9 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == DOM Events ============================================================
   afterDone () {
     const previousValue = this.get('previousValue')
-    const value = this.get('value')
+    const value = this.get('currentValue')
+    this.set('value', value)
+
     if (value === previousValue) {
       return
     }
@@ -113,7 +139,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     this._super(...arguments)
     this.syncTask(function () {
       const format = this.get('format')
-      const value = this.get('value') || moment().format(format)
+      const value = this.get('currentValue') || moment().format(format)
 
       this.setProperties({
         value,

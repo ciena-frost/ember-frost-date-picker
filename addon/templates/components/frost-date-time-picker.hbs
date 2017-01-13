@@ -2,7 +2,7 @@
 <div class='row'>
   {{frost-date-picker
     hook=(concat hook '-date')
-    value=defaultDate
+    currentValue=defaultDate
     format=dateFormat
     onSelect=(action 'onSelect')
     onError=(action 'onError')
@@ -12,7 +12,7 @@
   }}
   {{frost-time-picker
     hook=(concat hook '-time')
-    value=defaultTime
+    currentValue=defaultTime
     format=timeFormat
     onSelect=(action 'onSelect')
     onError=(action 'onError')

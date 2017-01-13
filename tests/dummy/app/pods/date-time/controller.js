@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
       this._notify(e, 'error')
     },
     myCustomDateValidator (date) {
-      if (date == '2012-12-12') {
+      if (date === '2012-12-12') {
         this.set('error', 'myCustomDateValidator Error')
         return false
       }
