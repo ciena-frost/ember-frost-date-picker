@@ -6,26 +6,33 @@ const {
 // BEGIN-SNIPPET date_time_controller
 export default Ember.Controller.extend({
   notificationMessages: inject.service(),
-
+  myValue: 'hi',
+  _notify (msg, type) {
+    this.get('notificationMessages')[type](msg, {
+      autoClear: true,
+      clearDuration: 1200
+    })
+    console.info(msg)
+  },
   actions: {
-    onSelect (datetime) {
-      let str = JSON.stringify(datetime, null, ' ')
-      this.get('notificationMessages').success(str, {
-        autoClear: true,
-        clearDuration: 1200
-      })
+    onSelect (date) {
+      this._notify(date, 'success')
     },
     onError (error) {
-      this.get('notificationMessages').error(error, {
-        autoClear: true,
-        clearDuration: 1200
-      })
+      const e = this.get('error') || error
+      this._notify(e, 'error')
     },
     myCustomDateValidator (date) {
-      return date !== '2012-12-12'
+      if (date == '2012-12-12') {
+        this.set('error', 'myCustomDateValidator Error')
+        return false
+      }
     },
     myCustomTimeValidator (time) {
-      return time !== '00:00:00'
+      if (time === '00:00:00') {
+        this.set('error', 'myCustomTimeValidator Error')
+        return false
+      }
     }
   }
 })

@@ -73,14 +73,15 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   afterDone () {
     const previousValue = this.get('previousValue')
     const value = this.get('value')
+    if (value === previousValue) {
+      return
+    }
     if (this.isValid(value)) {
       const onSelect = this.get('onSelect')
-      if (onSelect && value !== previousValue) {
+      if (onSelect) {
         onSelect(value)
-        this.set('previousValue', value)
       }
     } else {
-      this.set('value', previousValue)
       const onError = this.get('onError')
       const e = this.get('GENERIC_ERROR')
       if (onError) {
@@ -89,6 +90,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
         console.warn(e)
       }
     }
+    this.set('previousValue', value)
   },
   change () {
     const value = this.$('input').val()
@@ -113,8 +115,10 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       const format = this.get('format')
       const value = this.get('value') || moment().format(format)
 
-      this.set('value', value)
-      this.set('previousValue', value)
+      this.setProperties({
+        value,
+        previousValue: value
+      })
 
       this.$().clockpicker({
         format,

@@ -1,6 +1,7 @@
 {{! Template for the frost-date-time-picker component }}
 <div class='row'>
   {{frost-date-picker
+    hook=(concat hook '-date')
     value=defaultDate
     format=dateFormat
     onSelect=(action 'onSelect')
@@ -10,6 +11,7 @@
     validator=dateValidator
   }}
   {{frost-time-picker
+    hook=(concat hook '-time')
     value=defaultTime
     format=timeFormat
     onSelect=(action 'onSelect')

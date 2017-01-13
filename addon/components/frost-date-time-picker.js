@@ -5,6 +5,7 @@ import PropTypesMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
 import {Component} from 'ember-frost-core'
 import layout from '../templates/components/frost-date-time-picker'
+import computed from 'ember-computed-decorators'
 
 export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
@@ -23,6 +24,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   propTypes: {
     hook: PropTypes.string,
     readonly: PropTypes.bool,
+    format: PropTypes.string,
     dateFormat: PropTypes.string,
     timeFormat: PropTypes.string,
     defaultDate: PropTypes.string,
@@ -38,26 +40,42 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     return {
       hook: 'date-time-picker',
       readonly: false,
+      format: 'YYYY-MM-DDThh:mm:ssTZD',
       dateFormat: 'YYYY-MM-DD',
       timeFormat: 'HH:mm:ss'
     }
   },
 
   // == Computed Properties ===================================================
+  @computed('defaultDate', 'defaultTime')
+  value: {
+    get(date, time) {
+      if (!date || !time) {
+        return
+      }
 
+      const d = moment(date)
+      const s = time.split(':')
+      const format = this.get('format')
+      d
+        .hours(s[0])
+        .minutes(s[1])
+        .seconds(s[2])
+        .format(format)
+      return d
+    },
+    set (value, date, time) {
+      return value
+    }
+  },
   // == Functions =============================================================
   // == Actions ===============================================================
   actions: {
     onSelect () {
-      const date = this.get('defaultDate')
-      const time = this.get('defaultTime')
-
+      const value = this.get('value')
       const onSelect = this.get('onSelect')
       if (onSelect) {
-        onSelect({
-          date,
-          time
-        })
+        onSelect(value)
       }
       this.set('error', null)
     },
