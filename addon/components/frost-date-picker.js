@@ -115,7 +115,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
           }
           this.set('didError', null)
         }
-      } else if (!this.get('didError')){
+      } else if (!this.get('didError')) {
         const onError = this.get('onError')
         const e = Error(this.get('GENERIC_ERROR'))
         if (onError && !this.get('onErrorFired')) {

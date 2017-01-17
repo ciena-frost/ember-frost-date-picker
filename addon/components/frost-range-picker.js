@@ -138,8 +138,6 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   didInsertElement () {
     this._super(...arguments)
 
-    const now = moment()
-
     const props = this.get('getDefaultProps.lastObject').call(this)
     const get = (e) => {
       return this.get(e) || props[e]
