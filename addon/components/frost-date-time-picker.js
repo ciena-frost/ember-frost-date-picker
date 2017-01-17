@@ -1,11 +1,16 @@
 /**
  * Component definition for the frost-date-time-picker component
  */
+import Ember from 'ember'
 import PropTypesMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
 import {Component} from 'ember-frost-core'
 import layout from '../templates/components/frost-date-time-picker'
 import computed from 'ember-computed-decorators'
+
+const {
+  run
+} = Ember
 
 const {
   moment
@@ -49,7 +54,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
 
   // == Computed Properties ===================================================
   @computed('defaultDate', 'defaultTime')
-  value: {
+  currentValue: {
     get (date, time) {
       if (!date || !time) {
         return 'Invalid Date'
@@ -64,13 +69,38 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
         .seconds(s[2])
       return d
     },
-    set: value => value
+    set (value) {
+      const df = this.get('dateFormat')
+      const tf = this.get('timeFormat')
+      const now = moment()
+
+      if (value && value._isMomentObject) {
+        this.setProperties({
+          defaultDate: now.format(df),
+          defaultTime: now.format(tf)
+        })
+      }
+      return value
+    }
   },
   // == Functions =============================================================
+  didInsertElement () {
+    this._super(...arguments)
+    const df = this.get('dateFormat')
+    const tf = this.get('timeFormat')
+
+    const now = moment()
+    run.scheduleOnce('sync', this, function () {
+      this.setProperties({
+        defaultDate: this.get('defaultDate') || now.format(df),
+        defaultTime: this.get('defaultTime') || now.format(tf)
+      })
+    })
+  },
   // == Actions ===============================================================
   actions: {
     onSelect () {
-      const value = this.get('value')
+      const value = this.get('currentValue')
       const onSelect = this.get('onSelect')
       if (onSelect) {
         onSelect(value)
@@ -79,6 +109,7 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     },
     onError (e) {
       const onError = this.get('onError')
+
       if (onError) {
         this.set('error', onError(e))
       } else {

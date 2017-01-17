@@ -67,7 +67,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
       const format = this.get('format')
 
       return d
-        .hours(max(0, Math.min(23, +s[0] || 0)))
+        .hours(max(0, min(23, +s[0] || 0)))
         .minutes(max(0, min(59, +s[1] || 0)))
         .seconds(max(0, min(59, +s[2] || 0)))
         .format(format)
@@ -90,7 +90,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     }
     return this.testRegex(value)
   },
-  syncTask (cb) {
+  sync (cb) {
     scheduleOnce('sync', this, cb)
   },
   // == DOM Events ============================================================
@@ -122,14 +122,9 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
     const value = this.$('input').val()
     this.set('value', value)
   },
-  focusOut () {
-    this.syncTask(function () {
-      this.$().clockpicker('hide')
-    })
-  },
   keyPress (e) {
     if (e.keyCode === 13) {
-      this.syncTask(function () {
+      this.sync(function () {
         this.$().clockpicker('hide')
       })
     }
@@ -137,7 +132,7 @@ export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Lifecycle Hooks =======================================================
   didInsertElement () {
     this._super(...arguments)
-    this.syncTask(function () {
+    this.sync(function () {
       const format = this.get('format')
       const value = this.get('currentValue') || moment().format(format)
 

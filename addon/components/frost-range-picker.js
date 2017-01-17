@@ -11,7 +11,8 @@ import layout from '../templates/components/frost-range-picker'
 
 const {
   run: {
-    bind
+    bind,
+    scheduleOnce
   }
 } = Ember
 
@@ -39,6 +40,9 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
     timeRegex: PropTypes.object,
     isVertical: PropTypes.bool,
     separator: PropTypes.object,
+    currentValue: PropTypes.object,
+    currentStart: PropTypes.object,
+    currentEnd: PropTypes.object,
     startDate: PropTypes.string,
     startTime: PropTypes.string,
     startTitle: PropTypes.string,
@@ -54,45 +58,31 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
 
   /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
+    const now = moment()
+
     return {
       hook: 'range-picker',
       timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
       startValidator: this.get('isValid'),
       endValidator: this.get('isValid'),
-      isVertical: false
+      isVertical: false,
+      currentStart: now,
+      currentEnd: now,
+      currentValue: {
+        start: now,
+        end: now
+      }
     }
   },
 
   // == Functions =============================================================
-  validTime (value) {
-    const regex = this.get('timeRegex')
-    return regex.test(value)
-  },
   isValid (value) {
-    const start = moment(this.get('startDate'))
-    const end = moment(this.get('endDate'))
+    const start = moment(this.get('currentStart'))
+    const end = moment(this.get('currentEnd'))
 
-    const startTime = this.get('startTime')
-    const endTime = this.get('endTime')
-
-    if (!this.validTime(startTime) || !this.validTime(endTime)) {
+    if (!start.isValid() || !end.isValid()) {
       return false
     }
-
-    let st = startTime.split(':')
-    let et = endTime.split(':')
-    start
-      .hours(st[0])
-      .minutes(st[1])
-      .seconds(st[2])
-    end
-      .hours(et[0])
-      .minutes(et[1])
-      .seconds(et[2])
-
-    this.set('start', start)
-    this.set('end', end)
-
     if (this.validator) {
       let result = this.validator(start, end)
       if (result !== undefined) {
@@ -109,6 +99,28 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   layoutStyle (isVertical) {
     return isVertical ? 'column' : 'row'
   },
+  @computed('currentStart', 'currentEnd')
+  value: {
+    get (start, end) {
+      return {
+        start,
+        end
+      }
+    },
+    set (value) {
+      return value
+    }
+  },
+
+  @computed('value')
+  currentValue: {
+    get (value) {
+      return value
+    },
+    set (value) {
+      return value
+    }
+  },
   // == Lifecycle Hooks =======================================================
   init () {
     this._super(...arguments)
@@ -123,14 +135,33 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
       bind(this, this.endValidator)
     )
   },
+  didInsertElement () {
+    this._super(...arguments)
+
+    const now = moment()
+
+    const props = this.get('getDefaultProps.lastObject').call(this)
+    const get = (e) => {
+      return this.get(e) || props[e]
+    }
+    scheduleOnce('sync', this, function () {
+      this.setProperties({
+        currentStart: get('currentStart'),
+        currentEnd: get('currentEnd'),
+        value: get('currentValue')
+      })
+    })
+  },
   actions: {
     onSelect () {
       const onSelect = this.get('onSelect')
+      const value = {
+        start: this.get('currentStart'),
+        end: this.get('currentEnd')
+      }
+      this.set('value', value)
       if (onSelect) {
-        onSelect({
-          start: this.get('start'),
-          end: this.get('end')
-        })
+        onSelect(value)
       }
       this.set('error', null)
     },
