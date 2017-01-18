@@ -10,6 +10,11 @@ import {
   $hook,
   initialize as initializeHook
 } from 'ember-hook'
+
+const {
+  moment
+} = window
+
 import { beforeEach } from 'mocha'
 import sinon from 'sinon'
 
