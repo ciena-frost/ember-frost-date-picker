@@ -15,8 +15,8 @@
         <div class='item'>
           <h3>Date</h3>
           {{frost-date-picker
-            hook='my-picker'
-            value=myDate
+            hook='date-picker'
+            currentValue=myDate
             onSelect=(action 'onSelect')
             onOpen=(action 'onOpen')
             onClose=(action 'onClose')
@@ -25,8 +25,10 @@
           }}
           <h3>Time</h3>
           {{frost-time-picker
-            value=myTime
+            hook='time-picker'
+            currentValue=myTime
             onSelect=(action 'onSelect')
+            onError=(action 'onError')
           }}
         </div>
         <div class='item'>

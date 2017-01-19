@@ -14,22 +14,23 @@ export default Controller.extend({
       clearDuration: 1200
     })
   },
-  value: '2010-10-10',
+  myDate: '2010-10-10',
+  myTime: '01:02:03',
   actions: {
-    onSelect (date) {
-      this._notify('success', `DatePickerSelect: ${date}`)
-    },
-    onOpen () {
-      this._notify('info', 'DatePickerOpen')
-    },
-    onClose () {
-      this._notify('warning', 'DatePickerClose')
-    },
-    onDraw () {
-      this._notify('info', 'DatePickerDraw')
+    onSelect (value) {
+      this._notify('success', `DatePickerSelect: ${value}`)
     },
     onError (e) {
       this._notify('error', 'DatePickerError: ' + e)
+    },
+    onOpen () {
+      console.log('DatePickerOpen')
+    },
+    onClose () {
+      console.log('DatePickerClose')
+    },
+    onDraw () {
+      console.log('info', 'DatePickerDraw')
     }
   }
 

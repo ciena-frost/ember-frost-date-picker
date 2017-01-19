@@ -10,22 +10,30 @@
       {{code-snippet name="date_time_template.hbs"}}
     </div>
     <div class='item'>
-      <h3>Rendered</h3>
+      <!-- BEGIN-SNIPPET date_time_template -->
+
+      <div class='item'>
+        <h3>Current Value</h3>
+        {{myValue}}
+      </div>
 
       <div class='row'>
-        <!-- BEGIN-SNIPPET date_time_template -->
         <div class='item'>
+          <h3>Component</h3>
+
           {{frost-date-time-picker
             onSelect=(action 'onSelect')
             onError=(action 'onError')
+            currentValue=myValue
             dateValidator=(action 'myCustomDateValidator')
             timeValidator=(action 'myCustomTimeValidator')
             dateFormat='YYYY-MM-DD'
             timeFormat='HH:mm:ss'
           }}
         </div>
-        <!-- END-SNIPPET -->
       </div>
+      <!-- END-SNIPPET -->
+
     </div>
   </div>
 </div>

@@ -1,11 +1,20 @@
 /**
  * Component definition for the frost-date-time-picker component
  */
+import Ember from 'ember'
 import PropTypesMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
 import {Component} from 'ember-frost-core'
 import layout from '../templates/components/frost-date-time-picker'
+import computed from 'ember-computed-decorators'
 
+const {
+  run
+} = Ember
+
+const {
+  moment
+} = window
 export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 
@@ -44,25 +53,63 @@ export default Component.extend(SpreadMixin, PropTypesMixin, {
   },
 
   // == Computed Properties ===================================================
+  @computed('defaultDate', 'defaultTime')
+  currentValue: {
+    get (date, time) {
+      if (!date || !time) {
+        return 'Invalid Date'
+      }
 
+      const d = moment(date)
+      const s = time.split(':')
+
+      d
+        .hours(s[0])
+        .minutes(s[1])
+        .seconds(s[2])
+      return d
+    },
+    set (value) {
+      const df = this.get('dateFormat')
+      const tf = this.get('timeFormat')
+      const now = moment()
+
+      if (value && value._isMomentObject) {
+        this.setProperties({
+          defaultDate: now.format(df),
+          defaultTime: now.format(tf)
+        })
+      }
+      return value
+    }
+  },
   // == Functions =============================================================
+  didInsertElement () {
+    this._super(...arguments)
+    const df = this.get('dateFormat')
+    const tf = this.get('timeFormat')
+
+    const now = moment()
+    run.scheduleOnce('sync', this, function () {
+      this.setProperties({
+        defaultDate: this.get('defaultDate') || now.format(df),
+        defaultTime: this.get('defaultTime') || now.format(tf)
+      })
+    })
+  },
   // == Actions ===============================================================
   actions: {
     onSelect () {
-      const date = this.get('defaultDate')
-      const time = this.get('defaultTime')
-
+      const value = this.get('currentValue')
       const onSelect = this.get('onSelect')
       if (onSelect) {
-        onSelect({
-          date,
-          time
-        })
+        onSelect(value)
       }
       this.set('error', null)
     },
     onError (e) {
       const onError = this.get('onError')
+
       if (onError) {
         this.set('error', onError(e))
       } else {

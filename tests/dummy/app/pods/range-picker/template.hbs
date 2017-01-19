@@ -10,19 +10,23 @@
       {{code-snippet name="range_template.hbs"}}
     </div>
     <div class='item'>
-      <h3>Rendered</h3>
       <!-- BEGIN-SNIPPET range_template -->
       <div class='row'>
         <div class='item'>
+          <h3>Current Value</h3>
+          {{value.start}} <br/>
+          {{value.end}}
+        </div>
+      </div>
+      <div class='row'>
+        <div class='item'>
+          <h3>Rendered</h3>
+
           {{frost-range-picker
             onSelect=(action 'onSelect')
             onError=(action 'onError')
-            isVertical=false
-            startDate='2012-12-12'
-            startTime='00:00:01'
-            startTitle= 'Custom Start'
-            endDate='2017-01-01'
-            endTime='00:00:00'
+            startTitle='Custom Start'
+            currentValue=value
             endTitle='Custom End'
             separator=(component 'my-separator')
             validator=(action 'myCustomValidator')

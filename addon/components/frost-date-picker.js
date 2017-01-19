@@ -4,11 +4,11 @@ import FrostText from 'ember-frost-core/components/frost-text'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
 import layout from '../templates/components/frost-date-picker'
+import computed from 'ember-computed-decorators'
 
 const {
   run,
-  merge,
-  computed
+  merge
 } = Ember
 
 const {
@@ -22,6 +22,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   propTypes: {
     options: PropTypes.object,
     hook: PropTypes.string,
+    currentValue: PropTypes.string,
     format: PropTypes.string,
     theme: PropTypes.string,
     onSelect: PropTypes.func,
@@ -32,16 +33,19 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     hideIcon: PropTypes.bool,
     GENERIC_ERROR: PropTypes.string
   },
-  field: computed(function () {
+  @computed()
+  field () {
     return this.$('input')[0]
-  }),
+  },
   didInsertElement () {
     this._super(...arguments)
-    run.schedule('sync', this, function () {
-      this.set(
-        'value',
-        this.get('value') || moment().format(this.get('format'))
-      )
+    run.scheduleOnce('sync', this, function () {
+      const fmt = this.get('format')
+      const _value = this.get('currentValue') || moment().format(fmt)
+      this.setProperties({
+        value: _value,
+        currentValue: _value
+      })
       let options = {}
       let _assign = (el, value, type) => {
         if (value) {
@@ -68,9 +72,12 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       )
     })
   },
+  change () {
+    this._actions._onSelect.call(this, null)
+  },
   willDestroyElement () {
-    this._super(...arguments)
     this.get('el').destroy()
+    this._super(...arguments)
   },
   isValid (value) {
     if (this.validator) {
@@ -93,21 +100,30 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   },
   actions: {
     _onSelect (date) {
-      let el = this.get('el')
-      let value = el.toString()
-      this.set('value', value)
+      const attempt = this.$('input').val()
+      const value = this.get('el').toString()
+      const previousValue = this.get('previousValue')
 
-      if (this.isValid(value)) {
+      this.set('currentValue', value)
+
+      if (this.isValid(attempt)) {
         const onSelect = this.get('onSelect')
 
-        if (onSelect) {
-          onSelect(value, el)
+        if (value !== previousValue) {
+          if (onSelect && !this.get('onSelectFired')) {
+            onSelect(value)
+          }
+          this.set('didError', null)
         }
-      } else {
+      } else if (!this.get('didError')) {
         const onError = this.get('onError')
         const e = Error(this.get('GENERIC_ERROR'))
-        onError ? onError(e) : console.warn(e)
+        if (onError && !this.get('onErrorFired')) {
+          onError(e)
+        }
+        this.set('didError', true)
       }
+      this.set('previousValue', value)
     }
   }
 })

@@ -10,23 +10,13 @@ import {
   $hook,
   initialize as initializeHook
 } from 'ember-hook'
+
+const {
+  moment
+} = window
+
 import { beforeEach } from 'mocha'
 import sinon from 'sinon'
-
-const selectorForMonthSelect = '.pika-lendar:visible .pika-select-month option:selected'
-const selectorForYearSelect = '.pika-lendar:visible .pika-select-year option:selected'
-
-function selectedDay () {
-  return $('.pika-single td.is-selected button').html()
-}
-
-function selectedMonth () {
-  return $(selectorForMonthSelect).val()
-}
-
-function selectedYear () {
-  return $(selectorForYearSelect).val()
-}
 
 describeComponent(
   'frost-date-picker',
@@ -72,17 +62,32 @@ describeComponent(
     })
 
     it('sets the date when the value is set', function (done) {
-      this.set('value', '2010-10-10')
+      const mValue = '2010-10-10'
+      this.set('mValue', mValue)
       this.render(hbs`
         {{frost-date-picker
           hook='my-picker'
-          value=value
+          currentValue=mValue
         }}`)
       run.later(() => {
-        $hook('my-picker-input').click()
-        expect(selectedYear(), 'selected year').to.equal('2010')
-        expect(selectedMonth(), 'selected month').to.equal('9')
-        expect(selectedDay(), 'selected day').to.equal('10')
+        const value = $hook('my-picker-input').val()
+        expect(value, 'currentValue').to.equal(mValue)
+        done()
+      })
+    })
+
+    it('fetches now when no date provided', function (done) {
+      const fmt = 'YYYY-MM-DD'
+      this.set('fmt', fmt)
+      this.render(hbs`
+        {{frost-date-picker
+          hook='my-picker'
+          currentValue=mValue
+          format=format
+        }}`)
+      run.later(() => {
+        const mValue = this.get('mValue')
+        expect(mValue, 'currentValue').to.equal(moment().format(fmt))
         done()
       })
     })

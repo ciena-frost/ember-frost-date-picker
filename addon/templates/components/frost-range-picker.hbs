@@ -5,8 +5,7 @@
       {{startTitle}}
     </div>
     {{frost-date-time-picker
-      defaultDate=startDate
-      defaultTime=startTime
+      currentValue=currentStart
       dateValidator=startValidator
       timeValidator=startValidator
       onSelect=(action 'onSelect')
@@ -19,8 +18,7 @@
       {{endTitle}}
     </div>
     {{frost-date-time-picker
-      defaultDate=endDate
-      defaultTime=endTime
+      currentValue=currentEnd
       dateValidator=endValidator
       timeValidator=endValidator
       onSelect=(action 'onSelect')
