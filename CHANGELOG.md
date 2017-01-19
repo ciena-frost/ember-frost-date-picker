@@ -1,3 +1,7 @@
+# 5.1.0
+Please add a description of your change here, it will be automatically prepended to the `CHANGELOG.md` file.
+
+
 # 5.0.1
 - [x] Accessibility
     - [x] bump and pin pikaday to ~1.5.1 (newly added kb features)
