@@ -42,7 +42,6 @@ describeComponent(
 
         return wait()
       })
-
       it('should have an element', function () {
         expect(this.$()).to.have.length(1)
       })

@@ -41,7 +41,11 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     this._super(...arguments)
     run.scheduleOnce('sync', this, function () {
       const fmt = this.get('format')
-      const _value = this.get('currentValue') || moment().format(fmt)
+      // passing null to moment returns Invalid Date
+      let currentValue = this.get('currentValue') || undefined
+
+      const _value = moment(currentValue).format(fmt)
+
       this.setProperties({
         value: _value,
         currentValue: _value
@@ -99,7 +103,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     }
   },
   actions: {
-    _onSelect (date) {
+    _onSelect () {
       const attempt = this.$('input').val()
       const value = this.get('el').toString()
       const previousValue = this.get('previousValue')
@@ -110,7 +114,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
         const onSelect = this.get('onSelect')
 
         if (value !== previousValue) {
-          if (onSelect && !this.get('onSelectFired')) {
+          if (onSelect) {
             onSelect(value)
           }
           this.set('didError', null)
@@ -118,7 +122,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       } else if (!this.get('didError')) {
         const onError = this.get('onError')
         const e = Error(this.get('GENERIC_ERROR'))
-        if (onError && !this.get('onErrorFired')) {
+        if (onError) {
           onError(e)
         }
         this.set('didError', true)

@@ -5,6 +5,7 @@
       {{startTitle}}
     </div>
     {{frost-date-time-picker
+      hook=(concat hook '-start')
       currentValue=currentStart
       dateValidator=startValidator
       timeValidator=startValidator
@@ -18,6 +19,7 @@
       {{endTitle}}
     </div>
     {{frost-date-time-picker
+      hook=(concat hook '-end')
       currentValue=currentEnd
       dateValidator=endValidator
       timeValidator=endValidator
