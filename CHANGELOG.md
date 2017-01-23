@@ -1,3 +1,8 @@
+# 5.1.1
+- Added default separator
+- Cleaner validation for date-picker
+- Fix date-picker test
+
 # 5.1.0
 Please add a description of your change here, it will be automatically prepended to the `CHANGELOG.md` file.
 
