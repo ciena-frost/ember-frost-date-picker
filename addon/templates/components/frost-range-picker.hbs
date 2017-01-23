@@ -13,7 +13,13 @@
       onError=(action 'onError')
     }}
   </div>
-  {{component separator}}
+  <div class='separator'>
+    {{#if separator}}
+      {{component separator}}
+    {{else}}
+      -
+    {{/if}}
+  </div>
   <div class='item end-date'>
     <div class='title'>
       {{endTitle}}
