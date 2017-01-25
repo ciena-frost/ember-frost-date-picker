@@ -1,3 +1,6 @@
+# 5.1.2
+- Remove font-size: 40px
+
 # 5.1.1
 - Added default separator
 - Cleaner validation for date-picker
