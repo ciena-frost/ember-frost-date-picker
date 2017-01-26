@@ -1,3 +1,11 @@
+# 5.2.0
+
+* **Added** additional builds to CI to make sure addon works with latest versions of Ember.
+* **Repalced** `moment` and `pikaday` bower deps with Ember shims/npm deps.
+* **Removed** files from npm package that aren't necessary (all of the various config files).
+* **Updated** dependencies to latest versions.
+
+
 # 5.1.2
 - Remove font-size: 40px
 
