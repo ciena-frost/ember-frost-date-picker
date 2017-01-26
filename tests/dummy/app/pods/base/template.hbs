@@ -30,11 +30,21 @@
             onSelect=(action 'onSelect')
             onError=(action 'onError')
           }}
+          <h3>Originally Empty Date</h3>
+          {{frost-date-picker
+            hook='empty-date-picker'
+            onSelect=(action 'onSelectFromEmpty')
+            onOpen=(action 'onOpen')
+            onClose=(action 'onClose')
+            onDraw=(action 'onDraw')
+            onError=(action 'onError')
+          }}
         </div>
         <div class='item'>
           <h3>Current Values</h3>
-          Date: {{myDate}}
-          Time: {{myTime}}
+          <li>Date: {{myDate}}</li>
+          <li>Time: {{myTime}}</li>
+          <li>Originally Empty Date: {{newDate}}</li>
         </div>
         <!-- END-SNIPPET -->
       </div>

@@ -1,6 +1,6 @@
 import Ember from 'ember'
 const {merge, run} = Ember
-import computed from 'ember-computed-decorators'
+import computed, {readOnly} from 'ember-computed-decorators'
 import FrostText from 'ember-frost-core/components/frost-text'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
@@ -11,8 +11,11 @@ import layout from '../templates/components/frost-date-picker'
 import PikadayOptions from '../utils/pikaday-options'
 
 export default FrostText.extend(SpreadMixin, PropTypeMixin, {
+
   layout,
-  // == Pikaday Options ===========
+
+  // == Properties ===============================================
+
   propTypes: {
     options: PropTypes.object,
     hook: PropTypes.string,
@@ -27,65 +30,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     hideIcon: PropTypes.bool,
     GENERIC_ERROR: PropTypes.string
   },
-  @computed()
-  field () {
-    return this.$('input')[0]
-  },
-  didInsertElement () {
-    this._super(...arguments)
-    run.scheduleOnce('sync', this, function () {
-      const fmt = this.get('format')
-      // passing null to moment returns Invalid Date
-      let currentValue = this.get('currentValue') || undefined
 
-      const _value = moment(currentValue).format(fmt)
-
-      this.setProperties({
-        value: _value,
-        currentValue: _value
-      })
-      let options = {}
-      let _assign = (el, value, type) => {
-        if (value) {
-          if (type === 'callback') {
-            options[el] = run.bind(this, value)
-          } else {
-            options[el] = value
-          }
-        }
-      }
-      PikadayOptions.forEach(v => {
-        switch (typeof v) {
-          case 'object':
-            _assign(v.label, this.get(v.ref), v.type)
-            break
-          case 'string':
-            _assign(v, this.get(v))
-        }
-      })
-      options['onSelect'] = run.bind(this, this.actions._onSelect)
-      this.set(
-        'el',
-        new Pikaday(merge(this.get('options'), options))
-      )
-    })
-  },
-  change () {
-    this.actions._onSelect.call(this, null)
-  },
-  willDestroyElement () {
-    this.get('el').destroy()
-    this._super(...arguments)
-  },
-  isValid (value) {
-    if (this.validator) {
-      let result = this.validator(value)
-      if (result !== undefined) {
-        return result
-      }
-    }
-    return moment(value).isValid()
-  },
   getDefaultProps () {
     return {
       hook: 'date-picker',
@@ -96,6 +41,86 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
       GENERIC_ERROR: 'Invalid Date Format'
     }
   },
+
+  // == Computed Properties =======================================
+
+  @readOnly
+  @computed()
+  field () {
+    return this.$('input')[0]
+  },
+
+  // == Ember Lifecycle hooks =====================================
+
+  didInsertElement () {
+    this._super(...arguments)
+    run.scheduleOnce('sync', this, function () {
+      const fmt = this.get('format')
+      let currentValue = this.get('currentValue')
+
+      if (currentValue) {
+        const _value = moment(currentValue).format(fmt)
+
+        this.setProperties({
+          value: _value,
+          currentValue: _value
+        })
+      }
+
+      let options = {}
+      let _assign = (el, value, type) => {
+        if (value) {
+          if (type === 'callback') {
+            options[el] = run.bind(this, value)
+          } else {
+            options[el] = value
+          }
+        }
+      }
+
+      PikadayOptions.forEach(v => {
+        switch (typeof v) {
+          case 'object':
+            _assign(v.label, this.get(v.ref), v.type)
+            break
+          case 'string':
+            _assign(v, this.get(v))
+        }
+      })
+
+      options['onSelect'] = run.bind(this, this.actions._onSelect)
+      this.set(
+        'el',
+        new Pikaday(merge(this.get('options'), options))
+      )
+    })
+  },
+
+  willDestroyElement () {
+    this.get('el').destroy()
+    this._super(...arguments)
+  },
+
+  // == Events ===================================================
+
+  change () {
+    this.actions._onSelect.call(this, null)
+  },
+
+  // == Functions ================================================
+
+  isValid (value) {
+    if (this.validator) {
+      let result = this.validator(value)
+      if (result !== undefined) {
+        return result
+      }
+    }
+    return moment(value).isValid()
+  },
+
+  // == Actions ==================================================
+
   actions: {
     _onSelect () {
       const attempt = this.$('input').val()
