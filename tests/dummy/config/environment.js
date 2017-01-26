@@ -16,8 +16,15 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
     'ember-cli-notifications': {
       includeFontAwesome: true
+    },
+
+    'ember-prop-types': {
+      spreadProperty: 'options',
+      throwErrors: true,
+      validateOnUpdate: true
     }
   }
 

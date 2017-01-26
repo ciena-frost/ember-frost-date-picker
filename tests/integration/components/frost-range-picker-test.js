@@ -3,10 +3,10 @@
  */
 
 import {expect} from 'chai'
-import {describeComponent, it} from 'ember-mocha'
-import hbs from 'htmlbars-inline-precompile'
 import {$hook, initialize as initializeHook} from 'ember-hook'
+import {describeComponent, it} from 'ember-mocha'
 import wait from 'ember-test-helpers/wait'
+import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe} from 'mocha'
 import sinon from 'sinon'
 

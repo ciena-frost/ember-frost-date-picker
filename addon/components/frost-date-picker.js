@@ -1,20 +1,14 @@
 import Ember from 'ember'
-import PikadayOptions from '../utils/pikaday-options'
+const {merge, run} = Ember
+import computed from 'ember-computed-decorators'
 import FrostText from 'ember-frost-core/components/frost-text'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
+import moment from 'moment'
+import Pikaday from 'pikaday'
+
 import layout from '../templates/components/frost-date-picker'
-import computed from 'ember-computed-decorators'
-
-const {
-  run,
-  merge
-} = Ember
-
-const {
-  moment,
-  Pikaday
-} = window
+import PikadayOptions from '../utils/pikaday-options'
 
 export default FrostText.extend(SpreadMixin, PropTypeMixin, {
   layout,
@@ -77,7 +71,7 @@ export default FrostText.extend(SpreadMixin, PropTypeMixin, {
     })
   },
   change () {
-    this._actions._onSelect.call(this, null)
+    this.actions._onSelect.call(this, null)
   },
   willDestroyElement () {
     this.get('el').destroy()

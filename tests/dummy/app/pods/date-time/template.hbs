@@ -22,6 +22,7 @@
           <h3>Component</h3>
 
           {{frost-date-time-picker
+            hook='myPicker'
             onSelect=(action 'onSelect')
             onError=(action 'onError')
             currentValue=myValue

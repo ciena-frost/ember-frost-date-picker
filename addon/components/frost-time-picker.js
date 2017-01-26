@@ -2,26 +2,16 @@
  * Component definition for the frost-time-picker component
  */
 import Ember from 'ember'
-import PropTypesMixin, {PropTypes} from 'ember-prop-types'
-import FrostText from 'ember-frost-core/components/frost-text'
-import SpreadMixin from 'ember-spread'
+const {run} = Ember
+const {bind, scheduleOnce} = run
 import computed from 'ember-computed-decorators'
+import FrostText from 'ember-frost-core/components/frost-text'
+import PropTypesMixin, {PropTypes} from 'ember-prop-types'
+import SpreadMixin from 'ember-spread'
+import moment from 'moment'
 
-const {
-  run: {
-    scheduleOnce,
-    bind
-  }
-} = Ember
+const {max, min} = Math
 
-const {
-  moment
-} = window
-
-const {
-  max,
-  min
-} = Math
 export default FrostText.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 

@@ -1,24 +1,13 @@
+import {expect} from 'chai'
 import Ember from 'ember'
 const {$, run} = Ember
-import {expect} from 'chai'
-import {
-  describeComponent,
-  it
-} from 'ember-mocha'
-import hbs from 'htmlbars-inline-precompile'
-import {
-  $hook,
-  initialize as initializeHook
-} from 'ember-hook'
-
+import {$hook, initialize as initializeHook} from 'ember-hook'
+import {describeComponent} from 'ember-mocha'
 import wait from 'ember-test-helpers/wait'
-
-import {afterEach, beforeEach, describe} from 'mocha'
+import hbs from 'htmlbars-inline-precompile'
+import {afterEach, beforeEach, describe, it} from 'mocha'
+import moment from 'moment'
 import sinon from 'sinon'
-
-const {
-  moment
-} = window
 
 describeComponent(
   'frost-date-picker',

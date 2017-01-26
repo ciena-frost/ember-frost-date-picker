@@ -1,7 +1,9 @@
 import Ember from 'ember'
+const {Router: EmberRouter} = Ember
+
 import config from './config/environment'
 
-var Router = Ember.Router.extend({
+var Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL
 })
@@ -24,7 +26,7 @@ Router.map(function () {
       })
     })
   })
-  this.route('base', { path: '/' })
+  this.route('base')
   this.route('date-time')
   this.route('range-picker')
 })

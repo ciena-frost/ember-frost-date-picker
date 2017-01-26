@@ -2,23 +2,15 @@
  * Component definition for the frost-range-picker component
  */
 import Ember from 'ember'
-import PropTypesMixin, {PropTypes} from 'ember-prop-types'
-import SpreadMixin from 'ember-spread'
+const {run} = Ember
+const {bind, scheduleOnce} = run
 import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
+import PropTypesMixin, {PropTypes} from 'ember-prop-types'
+import SpreadMixin from 'ember-spread'
+import moment from 'moment'
 
 import layout from '../templates/components/frost-range-picker'
-
-const {
-  run: {
-    bind,
-    scheduleOnce
-  }
-} = Ember
-
-const {
-  moment
-} = window
 
 export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
