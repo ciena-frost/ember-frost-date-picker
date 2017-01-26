@@ -1,3 +1,8 @@
+# 5.2.1
+
+* **Fixed** blueprint to not crash.
+
+
 # 5.2.0
 
 * **Added** additional builds to CI to make sure addon works with latest versions of Ember.
