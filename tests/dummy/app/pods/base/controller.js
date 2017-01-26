@@ -12,9 +12,14 @@ export default Controller.extend({
   },
   myDate: '2010-10-10',
   myTime: '01:02:03',
+  newDate: undefined,
   actions: {
     onSelect (value) {
       this._notify('success', `DatePickerSelect: ${value}`)
+    },
+    onSelectFromEmpty (value) {
+      this._notify('success', `OriginallyEmptyDatePickerSelect: ${value}`)
+      this.set('newDate', value)
     },
     onError (e) {
       this._notify('error', 'DatePickerError: ' + e)

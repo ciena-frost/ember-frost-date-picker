@@ -9,6 +9,16 @@ import {afterEach, beforeEach, describe, it} from 'mocha'
 import moment from 'moment'
 import sinon from 'sinon'
 
+import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
+
+/**
+ * Click outside the date picker to close it
+ * @param {Object} context - the test context
+ */
+function closePikaday (context) {
+  context.$().click()
+}
+
 describeComponent(
   'frost-date-picker',
   'Integration: EmberFrostDatePickerComponent',
@@ -74,24 +84,10 @@ describeComponent(
         })
       })
 
-      it('fetches now when no date provided', function (done) {
-        const fmt = 'YYYY-MM-DD'
-        this.set('fmt', fmt)
-        this.render(hbs`
-          {{frost-date-picker
-            hook='my-picker'
-            currentValue=mValue
-            format=format
-          }}`)
-        run.later(() => {
-          const mValue = this.get('mValue')
-          expect(mValue, 'currentValue').to.equal(moment().format(fmt))
-          done()
-        })
-      })
       it('applies provided format', function (done) {
         const fmt = 'YYYY-MM-DD-[test]'
         this.set('fmt', fmt)
+        this.set('mValue', '2017-01-24')
         this.render(hbs`
           {{frost-date-picker
             hook='my-picker'
@@ -100,7 +96,7 @@ describeComponent(
           }}`)
         run.later(() => {
           const mValue = this.get('mValue')
-          expect(mValue, 'currentValue').to.equal(moment().format(fmt))
+          expect(mValue, 'currentValue').to.equal(moment('2017-01-24').format(fmt))
           done()
         })
       })
@@ -130,7 +126,7 @@ describeComponent(
         })
 
         this.render(hbs`
-          {{frost-date-time-picker
+          {{frost-date-picker
             hook=myHook
           }}
         `)
@@ -143,6 +139,59 @@ describeComponent(
 
       it('should be accessible via the hook', function () {
         expect($hook('myThing')).to.have.length(1)
+      })
+    })
+
+    describe('when passed undefined currentValue', function () {
+      let selectStub
+      beforeEach(function () {
+        selectStub = sandbox.stub()
+        this.setProperties({
+          myCurrentValue: undefined,
+          myHook: 'hook',
+          selectStub: selectStub
+        })
+
+        this.render(hbs`
+          {{frost-date-picker
+            currentValue=myCurrentValue
+            hook=myHook
+            onSelect=selectStub
+          }}
+        `)
+
+        return wait()
+      })
+
+      it('should have null input value', function () {
+        expect($hook('hook-input')).to.have.value('')
+      })
+
+      // This does not work
+      describe.skip('when value is set programmatically', function () {
+        beforeEach(function () {
+          this.set('myCurrentValue', '1999-12-31')
+        })
+
+        it('should update the input value', function () {
+          expect($hook('hook-input')).to.have.value('1999-12-31')
+        })
+      })
+
+      describe('when value is set by user', function () {
+        beforeEach(function () {
+          const interactor = openDatepicker('hook')
+          interactor.selectDate(new Date(2017, 0, 24))
+          closePikaday(this)
+        })
+
+        it('should call onSelect with the updated value', function () {
+          expect(selectStub).to.have.been.calledWith('2017-01-24')
+        })
+
+        it('should display the updated value', function () {
+          expect($hook('hook-input')).to.have.value('2017-01-24')
+        })
       })
     })
   }
