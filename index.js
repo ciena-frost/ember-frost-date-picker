@@ -4,6 +4,7 @@
 
 module.exports = {
   name: 'ember-frost-date-picker',
+
   init: function (app) {
     this.options = this.options || {}
     this.options.babel = this.options.babel || {}
@@ -12,16 +13,14 @@ module.exports = {
     if (this.options.babel.optional.indexOf('es7.decorators') === -1) {
       this.options.babel.optional.push('es7.decorators')
     }
+
+    /* eslint-disable no-unused-expressions */
     this._super.init && this._super.init.apply(this, arguments)
+    /* eslint-enable no-unused-expressions */
   },
+
   included: function (app) {
     this._super.included(app)
-    ;[
-      'moment/moment.js',
-      'pikaday/pikaday.js',
-      'clockpicker-seconds/dist/jquery-clockpicker.min.js'
-    ].forEach(file => {
-      app.import(`${app.bowerDirectory}/${file}`)
-    })
+    app.import(`${app.bowerDirectory}/clockpicker-seconds/dist/jquery-clockpicker.min.js`)
   }
 }

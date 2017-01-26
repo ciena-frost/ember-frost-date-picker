@@ -23,6 +23,7 @@
           <h3>Rendered</h3>
 
           {{frost-range-picker
+            hook='myHook'
             onSelect=(action 'onSelect')
             onError=(action 'onError')
             startTitle='Custom Start'
@@ -38,6 +39,7 @@
         <div class='item'>
           <h3>Custom Validation Test</h3>
           {{frost-toggle
+            hook='invertToggle'
             value=isInverted
             onClick=(mut isInverted)
           }}

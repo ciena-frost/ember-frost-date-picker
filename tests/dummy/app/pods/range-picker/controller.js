@@ -1,11 +1,8 @@
 import Ember from 'ember'
-
-const {
-  inject
-} = Ember
+const {Controller, inject} = Ember
 
 // BEGIN-SNIPPET range_controller
-export default Ember.Controller.extend({
+export default Controller.extend({
   notificationMessages: inject.service(),
 
   actions: {

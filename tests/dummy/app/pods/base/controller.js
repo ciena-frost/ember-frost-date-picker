@@ -1,9 +1,5 @@
 import Ember from 'ember'
-
-const {
-  Controller,
-  inject
-} = Ember
+const {Controller, inject} = Ember
 
 // BEGIN-SNIPPET date_controller
 export default Controller.extend({

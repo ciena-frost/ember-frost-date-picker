@@ -2,19 +2,15 @@
  * Component definition for the frost-date-time-picker component
  */
 import Ember from 'ember'
+const {run} = Ember
+import computed from 'ember-computed-decorators'
+import {Component} from 'ember-frost-core'
 import PropTypesMixin, {PropTypes} from 'ember-prop-types'
 import SpreadMixin from 'ember-spread'
-import {Component} from 'ember-frost-core'
+import moment from 'moment'
+
 import layout from '../templates/components/frost-date-time-picker'
-import computed from 'ember-computed-decorators'
 
-const {
-  run
-} = Ember
-
-const {
-  moment
-} = window
 export default Component.extend(SpreadMixin, PropTypesMixin, {
   // == Dependencies ==========================================================
 
