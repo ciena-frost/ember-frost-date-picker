@@ -1,3 +1,8 @@
+# 6.0.0
+
+* The `frost-date-picker` component now defaults to empty instead of the current date.
+
+
 # 5.2.1
 
 * **Fixed** blueprint to not crash.
