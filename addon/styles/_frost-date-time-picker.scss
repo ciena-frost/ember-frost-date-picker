@@ -1,0 +1,15 @@
+.frost-date-time-picker {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+
+  &.error {
+    .frost-text-input {
+      border: 1px solid $frost-color-danger;
+
+      &:focus {
+        border: 1px solid $frost-color-blue-1;
+      }
+    }
+  }
+}

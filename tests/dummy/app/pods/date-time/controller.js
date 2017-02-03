@@ -10,7 +10,6 @@ export default Controller.extend({
       autoClear: true,
       clearDuration: 1200
     })
-    console.info(msg)
   },
   actions: {
     onSelect (date) {

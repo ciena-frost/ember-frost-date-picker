@@ -28,7 +28,7 @@ describeComponent(
       sandbox.restore()
     })
 
-    describe('after render', function () {
+    describe.skip('after render', function () {
       beforeEach(function () {
         this.setProperties({
           myHook: 'myThing'

@@ -1,5 +1,4 @@
 export default [
-  'field',
   {
     label: 'trigger',
     ref: 'triggerElement',
@@ -36,11 +35,6 @@ export default [
   'numberOfMonths',
   'mainCalendar',
   'theme',
-  {
-    label: 'onSelect',
-    ref: 'onSelect',
-    type: 'callback'
-  },
   {
     label: 'onOpen',
     ref: 'onOpen',

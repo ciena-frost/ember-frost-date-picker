@@ -25,13 +25,10 @@ export default Controller.extend({
       this._notify('error', 'DatePickerError: ' + e)
     },
     onOpen () {
-      console.log('DatePickerOpen')
     },
     onClose () {
-      console.log('DatePickerClose')
     },
     onDraw () {
-      console.log('info', 'DatePickerDraw')
     }
   }
 

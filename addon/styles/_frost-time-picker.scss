@@ -1,0 +1,24 @@
+.frost-time-picker {
+  position: relative;
+  width: 85px;
+  height: 35px;
+
+  &.error {
+    .frost-text-input {
+      border: 1px solid $frost-color-danger;
+
+      &:focus {
+        border: 1px solid $frost-color-blue-1;
+      }
+    }
+  }
+
+  .frost-text-input {
+    padding: 0 0 0 8px;
+    cursor: pointer;
+  }
+
+  .frost-text-clear {
+    display: none;
+  }
+}

@@ -1,167 +1,103 @@
 /**
  * Component definition for the frost-range-picker component
  */
-import Ember from 'ember'
-const {run} = Ember
-const {bind, scheduleOnce} = run
-import computed, {readOnly} from 'ember-computed-decorators'
+
 import {Component} from 'ember-frost-core'
-import PropTypesMixin, {PropTypes} from 'ember-prop-types'
-import SpreadMixin from 'ember-spread'
+import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
 
 import layout from '../templates/components/frost-range-picker'
 
-export default Component.extend(SpreadMixin, PropTypesMixin, {
+export default Component.extend({
+
   // == Dependencies ==========================================================
 
   // == Keyword Properties ====================================================
 
+  classNameBindings: ['isVertical:vertical:horizontal'],
   layout,
-  classNameBindings: ['error:has-errored'],
 
   // == PropTypes =============================================================
 
-  /**
-   * Properties for this component. Options are expected to be (potentially)
-   * passed in to the component. State properties are *not* expected to be
-   * passed in/overwritten.
-   */
   propTypes: {
-    hook: PropTypes.string,
-    timeRegex: PropTypes.object,
-    isVertical: PropTypes.bool,
-    separator: PropTypes.object,
-    currentValue: PropTypes.object,
-    currentStart: PropTypes.object,
-    currentEnd: PropTypes.object,
-    startDate: PropTypes.string,
-    startTime: PropTypes.string,
-    startTitle: PropTypes.string,
-    endDate: PropTypes.string,
-    endTime: PropTypes.string,
+     // Options
+    end: PropTypes.EmberComponent,
     endTitle: PropTypes.string,
-    startValidator: PropTypes.func,
-    endValidator: PropTypes.func,
-    onSelect: PropTypes.func,
-    onError: PropTypes.func,
-    validator: PropTypes.func
+    isVertical: PropTypes.bool,
+    start: PropTypes.EmberComponent,
+    startTitle: PropTypes.string,
+    value: PropTypes.shape({
+      end: PropTypes.string.isRequired,
+      start: PropTypes.string.isRequired
+    }).isRequired,
+
+    // Events
+    onChange: PropTypes.func.isRequired,
+
+    // State
+    _endValueInternal: PropTypes.string,
+    _startValueInternal: PropTypes.string,
+    _valueInvalid: PropTypes.bool
   },
 
-  /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
-    const now = moment()
-
     return {
-      hook: 'range-picker',
-      timeRegex: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
-      startValidator: this.get('isValid'),
-      endValidator: this.get('isValid'),
       isVertical: false,
-      currentStart: now,
-      currentEnd: now,
-      currentValue: {
-        start: now,
-        end: now
-      }
+      _valueInvalid: false
     }
   },
 
-  // == Functions =============================================================
-  isValid (value) {
-    const start = moment(this.get('currentStart'))
-    const end = moment(this.get('currentEnd'))
-
-    if (!start.isValid() || !end.isValid()) {
-      return false
-    }
-    if (this.validator) {
-      let result = this.validator(start, end)
-      if (result !== undefined) {
-        return result
-      }
-    }
-
-    return end.isSameOrAfter(start)
-  },
   // == Computed Properties ===================================================
 
-  @readOnly
-  @computed('isVertical')
-  layoutStyle (isVertical) {
-    return isVertical ? 'column' : 'row'
-  },
-  @computed('currentStart', 'currentEnd')
-  value: {
-    get (start, end) {
-      return {
-        start,
-        end
-      }
-    },
-    set (value) {
-      return value
-    }
-  },
+  // == Functions =============================================================
 
-  @computed('value')
-  currentValue: {
-    get (value) {
-      return value
-    },
-    set (value) {
-      return value
-    }
-  },
+  // == DOM Events ============================================================
+
   // == Lifecycle Hooks =======================================================
-  init () {
-    this._super(...arguments)
 
-    // bind context to both functions
-    this.set(
-      'startValidator',
-      bind(this, this.startValidator)
-    )
-    this.set(
-      'endValidator',
-      bind(this, this.endValidator)
-    )
-  },
-  didInsertElement () {
-    this._super(...arguments)
+  // == Actions ===============================================================
 
-    const props = this.get('getDefaultProps.lastObject').call(this)
-    const get = (e) => {
-      return this.get(e) || props[e]
-    }
-    scheduleOnce('sync', this, function () {
-      this.setProperties({
-        currentStart: get('currentStart'),
-        currentEnd: get('currentEnd'),
-        value: get('currentValue')
-      })
-    })
-  },
   actions: {
-    onSelect () {
-      const onSelect = this.get('onSelect')
-      const value = {
-        start: this.get('currentStart'),
-        end: this.get('currentEnd')
+    _onEndChange (endValue) {
+      const momentEndValue = moment(endValue)
+      const _startValueInternal = this.get('_startValueInternal') || this.get('value.start')
+
+      if (moment(_startValueInternal).isSameOrBefore(momentEndValue)) {
+        this.setProperties({
+          _endValueInternal: endValue,
+          _valueInvalid: false
+        })
+        this.onChange({
+          end: endValue,
+          start: _startValueInternal
+        })
+      } else {
+        this.setProperties({
+          _endValueInternal: endValue,
+          _valueInvalid: true
+        })
       }
-      this.set('value', value)
-      if (onSelect) {
-        onSelect(value)
-      }
-      this.set('error', null)
     },
-    onError (e) {
-      const onError = this.get('onError')
-      this.set('error', true)
-      if (onError) {
-        onError(e)
+
+    _onStartChange (startValue) {
+      const _endValueInternal = this.get('_endValueInternal') || this.get('value.end')
+      const momentStartValue = moment(startValue)
+
+      if (momentStartValue.isSameOrBefore(moment(_endValueInternal))) {
+        this.setProperties({
+          _startValueInternal: startValue,
+          _valueInvalid: false
+        })
+        this.onChange({
+          end: _endValueInternal,
+          start: startValue
+        })
+      } else {
+        this.setProperties({
+          _startValueInternal: startValue,
+          _valueInvalid: true
+        })
       }
-      return false
     }
   }
 })

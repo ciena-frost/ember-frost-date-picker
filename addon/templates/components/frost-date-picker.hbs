@@ -1,61 +1,55 @@
-
-{{input
-  autocapitalize=autocapitalize
-  autocorrect=autocorrect
+{{frost-text
   autofocus=autofocus
-  class='frost-text-input'
-  classNameBindings='align'
   disabled=disabled
   form=form
-  hook=(concat receivedHook '-input')
+  hook=hook
+  isHookEmbedded=true
   maxlength=maxlength
   placeholder=placeholder
   readonly=readonly
   required=required
   selectionDirection=selectionDirection
-  spellcheck=spellcheck
   tabindex=tabindex
   title=title
   type=type
-  value=value
+  value=(readonly value)
 
-  change=_eventProxy.change
-  click=_eventProxy.click
-  contextMenu=_eventProxy.contextMenu
-  doubleClick=_eventProxy.doubleClick
-  drag=_eventProxy.drag
-  dragEnd=_eventProxy.dragEnd
-  dragEnter=_eventProxy.dragEnter
-  dragLeave=_eventProxy.dragLeave
-  dragOver=_eventProxy.dragOver
-  dragStart=_eventProxy.dragStart
-  drop=_eventProxy.drop
-  focusIn=_eventProxy.focusIn
-  focusOut=_eventProxy.focusOut
-  input=(action '_onInput')
-  keyDown=_eventProxy.keyDown
-  keyPress=_eventProxy.keyPress
-  key-up='keyUp'
-  mouseDown=_eventProxy.mouseDown
-  mouseEnter=_eventProxy.mouseEnter
-  mouseLeave=_eventProxy.mouseLeave
-  mouseMove=_eventProxy.mouseMove
-  mouseUp=_eventProxy.mouseUp
-  submit=_eventProxy.submit
-  touchCancel=_eventProxy.touchCancel
-  touchEnd=_eventProxy.touchEnd
-  touchMove=_eventProxy.touchMove
-  touchStart=_eventProxy.touchStart
+  onClick=_eventProxy.click
+  onContextMenu=_eventProxy.contextMenu
+  onDoubleClick=_eventProxy.doubleClick
+  onDrag=_eventProxy.drag
+  onDragEnd=_eventProxy.dragEnd
+  onDragEnter=_eventProxy.dragEnter
+  onDragLeave=_eventProxy.dragLeave
+  onDragOver=_eventProxy.dragOver
+  onDragStart=_eventProxy.dragStart
+  onDrop=_eventProxy.drop
+  onFocusIn=_eventProxy.focusIn
+  onFocusOut=_eventProxy.focusOut
+  onInput=_eventProxy.input
+  onKeyDown=_eventProxy.keyDown
+  onKeyPress=_eventProxy.keyPress
+  onKeyUp=_eventProxy.keyUp
+  onMouseDown=_eventProxy.mouseDown
+  onMouseEnter=_eventProxy.mouseEnter
+  onMouseLeave=_eventProxy.mouseLeave
+  onMouseMove=_eventProxy.mouseMove
+  onMouseUp=_eventProxy.mouseUp
+  onSubmit=_eventProxy.submit
+  onTouchCancel=_eventProxy.touchCancel
+  onTouchEnd=_eventProxy.touchEnd
+  onTouchMove=_eventProxy.touchMove
+  onTouchStart=_eventProxy.touchStart
 
-  escape-press=_eventProxy.escape-press
-  insert-newline=_eventProxy.enter
+  onEnter=_eventProxy.enter
+  onEscape=_eventProxy.escape-press
 }}
-{{#unless hideIcon}}
-{{! Using a div as a click target to workaround https://github.com/emberjs/ember.js/issues/13420 }}
-<div class='calendar' data-test={{hook (concat hook '-cal')}}>
-  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 4 L6 4 L6 2 A2 2 0 0 1 10 2 L10 4 L22 4 L22 2 A2 2 0 0 1 26 2 L26 4 L30 4 L30 10 L2 10 M2 12 L30 12 L30 30 L2 30"/>
-    <path d="M0 0h24v24H0z" fill="none"/>
-  </svg>
-</div>
-{{/unless}}
+{{#if isIconVisible}}
+  {{! Using a div as a click target to workaround https://github.com/emberjs/ember.js/issues/13420 }}
+  <div class='{{css}}-calendar' data-test={{hook (concat hook '-calendar')}}>
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 4 L6 4 L6 2 A2 2 0 0 1 10 2 L10 4 L22 4 L22 2 A2 2 0 0 1 26 2 L26 4 L30 4 L30 10 L2 10 M2 12 L30 12 L30 30 L2 30"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+  </div>
+{{/if}}

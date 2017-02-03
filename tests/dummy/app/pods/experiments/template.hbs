@@ -1,0 +1,40 @@
+{{frost-date-picker
+  hook='demo-date-picker'
+  class=(if dateValueInvalid 'error')
+  value=dateValue
+  onChange=(action 'onDateChange')
+}}
+
+{{frost-time-picker
+  hook='demo-time-picker'
+  class=(if timeValueInvalid 'error')
+  value=timeValue
+  onChange=(action 'onTimeChange')
+}}
+
+{{frost-date-time-picker
+  hook='demo-date-time-picker'
+  class=(if dateTimeValueInvalid 'error')
+  value=dateTimeValue
+  onChange=(action 'onDateTimeChange')
+}}
+
+{{frost-range-picker
+  hook='demo-range-picker'
+  class=(if rangeValueInvalid 'error')
+  endTitle='Custom endTitle'
+  isVertical=false
+  startTitle='Custom startTitle'
+  value=rangeValue
+  onChange=(action 'onRangeChange')
+}}
+
+{{frost-range-picker
+  hook='demo-range-picker'
+  class=(if rangeValueInvalid 'error')
+  endTitle='Custom endTitle'
+  isVertical=true
+  startTitle='Custom startTitle'
+  value=rangeValue
+  onChange=(action 'onRangeChange')
+}}
