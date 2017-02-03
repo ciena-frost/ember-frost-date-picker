@@ -10,7 +10,7 @@ import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe} from 'mocha'
 import sinon from 'sinon'
 
-describeComponent.skip(
+describeComponent(
   'frost-date-time-picker',
   'Integration: EmberFrostDateTimePickerComponent',
   {
@@ -28,7 +28,7 @@ describeComponent.skip(
       sandbox.restore()
     })
 
-    describe('after render', function () {
+    describe.skip('after render', function () {
       beforeEach(function () {
         this.setProperties({
           myHook: 'myThing'
