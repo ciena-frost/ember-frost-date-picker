@@ -10,7 +10,7 @@ import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe} from 'mocha'
 import sinon from 'sinon'
 
-describeComponent(
+describeComponent.skip(
   'frost-date-time-picker',
   'Integration: EmberFrostDateTimePickerComponent',
   {

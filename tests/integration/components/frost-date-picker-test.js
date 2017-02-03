@@ -36,7 +36,7 @@ describeComponent(
       sandbox.restore()
     })
 
-    describe('behaviour', function () {
+    describe.skip('behaviour', function () {
       it('opens on click', function (done) {
         this.render(hbs`
         {{frost-date-picker
@@ -119,7 +119,7 @@ describeComponent(
         })
       })
     })
-    describe('after render', function () {
+    describe.skip('after render', function () {
       beforeEach(function () {
         this.setProperties({
           myHook: 'myThing'
@@ -142,7 +142,7 @@ describeComponent(
       })
     })
 
-    describe('when passed undefined currentValue', function () {
+    describe.skip('when passed undefined currentValue', function () {
       let selectStub
       beforeEach(function () {
         selectStub = sandbox.stub()
