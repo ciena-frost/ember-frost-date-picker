@@ -10,6 +10,11 @@ export default Controller.extend({
   dateTimeValueInvalid: false,
   dateValue: moment().subtract(1, 'day').format(Format.date),
   dateValueInvalid: false,
+  rangeValue: {
+    end: moment().subtract(1, 'day').subtract(1, 'hour').format(Format.dateTime),
+    start: moment().subtract(2, 'day').subtract(1, 'hour').format(Format.dateTime)
+  },
+  rangeValueInvalid: false,
   timeValue: moment().subtract(1, 'hour').format(Format.time),
   timeValueInvalid: false,
 
@@ -26,7 +31,7 @@ export default Controller.extend({
         return
       }
 
-      // Silly example just to show validation - any time after 2015-01-01 is valid
+      // Silly example just to show validation - any date after 2015-01-01 is valid
       const dateValueInvalid = momentDateValue.isBefore(moment('2015-01-01'))
       this.setProperties({
         dateValue,
@@ -46,11 +51,30 @@ export default Controller.extend({
         return
       }
 
-      // Silly example just to show validation - any time after 2015-01-01T10:00:00-00:00 is valid
+      // Silly example just to show validation - any date after 2015-01-01T10:00:00-00:00 is valid
       const dateTimeValueInvalid = momentDateTimeValue.isBefore(moment('2015-01-01T10:00:00-00:00'))
       this.setProperties({
         dateTimeValue,
         dateTimeValueInvalid
+      })
+    },
+
+    onRangeChange (rangeValue) {
+      this.get('notificationMessages').success(`${rangeValue.start} - ${rangeValue.end}`, {
+        autoClear: true,
+        clearDuration: 8000
+      })
+
+      // Silly example just to show validation
+      // - any start date after 2015-01-01T10:00:00-00:00 is valid
+      // - any end date before 2018-01-01T10:00:00-00:00 is valid
+      const rangeValueInvalid =
+        moment(rangeValue.start).isBefore(moment('2015-01-01T10:00:00-00:00')) ||
+        moment(rangeValue.end).isAfter(moment('2018-01-01T10:00:00-00:00'))
+
+      this.setProperties({
+        rangeValue,
+        rangeValueInvalid
       })
     },
 

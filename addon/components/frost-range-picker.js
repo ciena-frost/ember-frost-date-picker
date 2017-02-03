@@ -2,9 +2,6 @@
  * Component definition for the frost-range-picker component
  */
 
-import Ember from 'ember'
-const {get} = Ember
-import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
 import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
@@ -17,113 +14,90 @@ export default Component.extend({
 
   // == Keyword Properties ====================================================
 
+  classNameBindings: ['isVertical:vertical:horizontal'],
   layout,
-  classNameBindings: ['error:has-errored'],
 
   // == PropTypes =============================================================
 
   propTypes: {
-    end: PropTypes.object,
+     // Options
+    end: PropTypes.EmberComponent,
     endTitle: PropTypes.string,
     isVertical: PropTypes.bool,
-    start: PropTypes.object,
+    start: PropTypes.EmberComponent,
     startTitle: PropTypes.string,
-    validator: PropTypes.func,
     value: PropTypes.shape({
-      end: PropTypes.object,
-      start: PropTypes.object
-    }),
+      end: PropTypes.string.isRequired,
+      start: PropTypes.string.isRequired
+    }).isRequired,
 
-    onChange: PropTypes.func,
-    onError: PropTypes.func
+    // Events
+    onChange: PropTypes.func.isRequired,
+
+    // State
+    _endValueInternal: PropTypes.string,
+    _startValueInternal: PropTypes.string,
+    _valueInvalid: PropTypes.bool
   },
 
   getDefaultProps () {
-    const now = moment()
-
     return {
-      endValidator: this.get('isValid'),
       isVertical: false,
-      startValidator: this.get('isValid'),
-      value: {
-        end: now,
-        start: now
-      }
+      _valueInvalid: false
     }
-  },
-
-  // == Functions =============================================================
-
-  isValid () {
-    const value = this.get('value')
-    const end = moment(get(value, 'end'))
-    const start = moment(get(value, 'start'))
-
-    // Validate using moment.js
-    if (!end.isValid() || !start.isValid()) {
-      return false
-    }
-
-    if (this.validator) {
-      let result = this.validator(start, end)
-      if (result !== undefined) {
-        return result
-      }
-    }
-
-    return end.isSameOrAfter(start)
   },
 
   // == Computed Properties ===================================================
 
-  @readOnly
-  @computed('value.end')
-  endTime (end) {
-    const endDate = moment(end)
-    return `${endDate.hours()}:${endDate.minutes()}:${endDate.seconds()}`
-  },
+  // == Functions =============================================================
 
-  @readOnly
-  @computed('value.start')
-  startTime (start) {
-    const startDate = moment(start)
-    return `${startDate.hours()}:${startDate.minutes()}:${startDate.seconds()}`
-  },
+  // == DOM Events ============================================================
 
   // == Lifecycle Hooks =======================================================
 
-  init () {
-    this._super(...arguments)
-
-    // bind context to both functions
-    this.set('startValidator', this.get('startValidator').bind(this))
-    this.set('endValidator', this.get('endValidator').bind(this))
-  },
+  // == Actions ===============================================================
 
   actions: {
-    onEndChange () {
-      this.set('error', null)
-      this.onChange({
-        start: this.get('start'),
-        end: this.get('end')
-      })
-    },
+    _onEndChange (endValue) {
+      const momentEndValue = moment(endValue)
+      const _startValueInternal = this.get('_startValueInternal') || this.get('value.start')
 
-    onStartChange () {
-      this.set('error', null)
-      this.onChange({
-        start: this.get('start'),
-        end: this.get('end')
-      })
-    },
-
-    onError (e) {
-      const onError = this.get('onError')
-      this.set('error', true)
-      if (onError) {
-        onError(e)
+      if (moment(_startValueInternal).isSameOrBefore(momentEndValue)) {
+        this.setProperties({
+          _endValueInternal: endValue,
+          _valueInvalid: false
+        })
+        this.onChange({
+          end: endValue,
+          start: _startValueInternal
+        })
+      } else {
+        this.setProperties({
+          _endValueInternal: endValue,
+          _valueInvalid: true
+        })
       }
-      return false
+    },
+
+    _onStartChange (startValue) {
+      const _endValueInternal = this.get('_endValueInternal') || this.get('value.end')
+      const momentStartValue = moment(startValue)
+
+      if (momentStartValue.isSameOrBefore(moment(_endValueInternal))) {
+        this.setProperties({
+          _startValueInternal: startValue,
+          _valueInvalid: false
+        })
+        this.onChange({
+          end: _endValueInternal,
+          start: startValue
+        })
+      } else {
+        this.setProperties({
+          _startValueInternal: startValue,
+          _valueInvalid: true
+        })
+      }
     }
   }
 })

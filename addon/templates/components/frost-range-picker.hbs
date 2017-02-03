@@ -1,43 +1,45 @@
 {{! Template for the frost-range-picker component }}
 
-<div class='{{css}}{{if isVertical '-vertical' '-horizontal'}}'>
-  <div class='{{css}}-start-date'>
-    <div class='{{css}}-title'>
-      {{startTitle}}
-    </div>
+<div class='{{css}}-start-date'>
+  <div class='{{css}}-title'>
+    {{startTitle}}
+  </div>
+  {{#if start}}
     {{component start
       hook=(concat hookPrefix '-start')
-      date=(component 'frost-date-picker'
-        hook=(concat hookPrefix '-start-date')
-        isIconVisible=false
-        format=dateFormat
-        readonly=readonly
-        validator=dateValidator
-        value=value.start
-      )
-      time=(component 'frost-time-picker'
-        hook=(concat hookPrefix '-start-time')
-        format=timeFormat
-        validator=timeValidator
-        value=value.start
-      )
-      defaultDate=value.start
-      defaultTime=value.start
-      onChange=(action 'onStartChange')
+      class=(if _valueInvalid 'error')
+      value=value.start
+      onChange=(action '_onStartChange')
     }}
+  {{else}}
+    {{frost-date-time-picker
+      hook='demo-date-time-picker'
+      class=(if _valueInvalid 'error')
+      value=value.start
+      onChange=(action '_onStartChange')
+    }}
+  {{/if}}
+</div>
+<div class='{{css}}-separator'>
+  -
+</div>
+<div class='{{css}}-end-date'>
+  <div class='{{css}}-title'>
+    {{endTitle}}
   </div>
-  <div class='{{css}}-separator'>
-    -
-  </div>
-  <div class='{{css}}-end-date'>
-    <div class='{{css}}-title'>
-      {{endTitle}}
-    </div>
+  {{#if end}}
     {{component end
-      hook=(concat hook '-end')
-      defaultDate=value.end
-      defaultTime=value.end
-      onChange=(action 'onEndChange')
+      hook=(concat hookPrefix '-end')
+      class=(if _valueInvalid 'error')
+      value=value.end
+      onChange=(action '_onEndChange')
     }}
-  </div>
+  {{else}}
+    {{frost-date-time-picker
+      hook=(concat hookPrefix '-end')
+      class=(if _valueInvalid 'error')
+      value=value.end
+      onChange=(action '_onEndChange')
+    }}
+  {{/if}}
 </div>

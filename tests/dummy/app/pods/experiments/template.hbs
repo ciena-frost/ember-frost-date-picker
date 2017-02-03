@@ -1,25 +1,3 @@
-{{!frost-date-time-picker
-  dateValidator=startValidator
-  timeValidator=startValidator
-}}
-{{!frost-date-time-picker
-  dateValidator=endValidator
-  timeValidator=endValidator
-}}
-
-{{!frost-range-picker
-  hook='demo-range-picker'
-  end=(component 'frost-date-time-picker')
-  endTitle='Custom endTitle'
-  isVertical=false
-  start=(component 'frost-date-time-picker')
-  startTitle='Custom startTitle'
-  validator=(action 'customValidator')
-  value=value
-  onChange=(action 'onChange')
-  onError=(action 'onError')
-}}
-
 {{frost-date-picker
   hook='demo-date-picker'
   class=(if dateValueInvalid 'error')
@@ -39,4 +17,24 @@
   class=(if dateTimeValueInvalid 'error')
   value=dateTimeValue
   onChange=(action 'onDateTimeChange')
+}}
+
+{{frost-range-picker
+  hook='demo-range-picker'
+  class=(if rangeValueInvalid 'error')
+  endTitle='Custom endTitle'
+  isVertical=false
+  startTitle='Custom startTitle'
+  value=rangeValue
+  onChange=(action 'onRangeChange')
+}}
+
+{{frost-range-picker
+  hook='demo-range-picker'
+  class=(if rangeValueInvalid 'error')
+  endTitle='Custom endTitle'
+  isVertical=true
+  startTitle='Custom startTitle'
+  value=rangeValue
+  onChange=(action 'onRangeChange')
 }}

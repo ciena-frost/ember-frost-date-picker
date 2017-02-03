@@ -1,0 +1,20 @@
+.pika-single {
+  &.frost-theme {
+    .is-selected {
+      .pika-day {
+        border-radius: 2px;
+        background: $frost-color-blue-1;
+      }
+    }
+
+    .pika-day {
+      background: initial;
+      text-align: center;
+
+      &:hover {
+        background: $frost-color-lgrey-3;
+        color: $frost-color-grey-1;
+      }
+    }
+  }
+}

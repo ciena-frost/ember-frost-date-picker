@@ -22,6 +22,8 @@ export default Component.extend({
 
   propTypes: {
     // Options
+    date: PropTypes.EmberComponent,
+    time: PropTypes.EmberComponent,
     value: PropTypes.string.isRequired,
 
     // Events
@@ -79,6 +81,10 @@ export default Component.extend({
 
   // == Functions =============================================================
 
+  // == DOM Events ============================================================
+
+  // == Lifecycle Hooks =======================================================
+
   // == Actions ===============================================================
 
   actions: {
@@ -91,9 +97,9 @@ export default Component.extend({
           _dateValueInvalid: false
         })
 
-        const _timeValue = this.get('_timeValueInternal')
-        if (validateTime(_timeValue) === true) {
-          setTime(momentDateValue, _timeValue)
+        const _timeValueInternal = this.get('_timeValueInternal') || this.get('_timeValue')
+        if (validateTime(_timeValueInternal) === true) {
+          setTime(momentDateValue, _timeValueInternal)
           this.onChange(momentDateValue.format(Format.dateTime))
         }
       } else {
@@ -111,7 +117,8 @@ export default Component.extend({
           _timeValueInvalid: false
         })
 
-        const momentDateValue = moment(this.get('_dateValueInternal'))
+        const _dateValueInternal = this.get('_dateValueInternal')
+        const momentDateValue = _dateValueInternal ? moment(_dateValueInternal) : moment(this.get('_dateValue'))
         if (momentDateValue.isValid()) {
           setTime(momentDateValue, timeValue)
           this.onChange(momentDateValue.format(Format.dateTime))
