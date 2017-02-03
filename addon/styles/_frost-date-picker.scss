@@ -1,0 +1,40 @@
+.frost-date-picker {
+  position: relative;
+  width: 132px;
+  height: 35px;
+
+  &.error {
+    .frost-text-input {
+      border: 1px solid $frost-color-danger;
+
+      &:focus {
+        border: 1px solid $frost-color-blue-1;
+      }
+    }
+  }
+
+  .frost-text {
+    min-width: 140px;
+  }
+
+  .frost-text-input {
+    cursor: pointer;
+  }
+
+  .frost-text-clear {
+    display: none;
+  }
+}
+
+.frost-date-picker-calendar {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  width: 20px;
+  height: 15px;
+  transform: translateY(50%);
+  cursor: pointer;
+  opacity: .8;
+  pointer-events: none;
+  fill: $frost-color-grey-6;
+}

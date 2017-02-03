@@ -1,152 +1,98 @@
 import Ember from 'ember'
-const {merge, run} = Ember
-import computed, {readOnly} from 'ember-computed-decorators'
-import FrostText from 'ember-frost-core/components/frost-text'
-import PropTypeMixin, {PropTypes} from 'ember-prop-types'
-import SpreadMixin from 'ember-spread'
-import moment from 'moment'
+const {run, typeOf} = Ember
+import {Component, EventsProxyMixin} from 'ember-frost-core'
+import {PropTypes} from 'ember-prop-types'
 import Pikaday from 'pikaday'
 
 import layout from '../templates/components/frost-date-picker'
 import PikadayOptions from '../utils/pikaday-options'
 
-export default FrostText.extend(SpreadMixin, PropTypeMixin, {
+export default Component.extend(EventsProxyMixin, {
+
+  // == Dependencies ==========================================================
+
+  // == Keyword Properties ====================================================
 
   layout,
 
-  // == Properties ===============================================
+  // == PropTypes =============================================================
 
   propTypes: {
-    options: PropTypes.object,
-    hook: PropTypes.string,
-    currentValue: PropTypes.string,
-    format: PropTypes.string,
-    theme: PropTypes.string,
-    onSelect: PropTypes.func,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func,
-    onDraw: PropTypes.func,
-    validator: PropTypes.func,
-    hideIcon: PropTypes.bool,
-    GENERIC_ERROR: PropTypes.string
+    // Pikaday has a number of options, see utils/pikaday-options
+
+    // Options
+    isIconVisible: PropTypes.bool,
+    value: PropTypes.string.isRequired,
+
+    // Events
+    onChange: PropTypes.func.isRequired
   },
 
   getDefaultProps () {
     return {
-      hook: 'date-picker',
-      options: {},
-      format: 'YYYY-MM-DD',
+      // Options for Pikaday
       theme: 'frost-theme',
-      hideIcon: false,
-      GENERIC_ERROR: 'Invalid Date Format'
+
+      // Options
+      isIconVisible: true
     }
   },
 
-  // == Computed Properties =======================================
+  // == Computed Properties ===================================================
 
-  @readOnly
-  @computed()
-  field () {
-    return this.$('input')[0]
+  // == Functions =============================================================
+
+  _assignPikadayOption (pikadayOptions, el, value, type) {
+    if (value) {
+      if (type === 'callback') {
+        pikadayOptions[el] = run.bind(this, value)
+      } else {
+        pikadayOptions[el] = value
+      }
+    }
   },
 
-  // == Ember Lifecycle hooks =====================================
+  // Named to match the event from Pikaday
+  _onSelect () {
+    const value = this.$('input').val()
+    this.onChange(value)
+  },
+
+  // == DOM Events ============================================================
+
+  // == Lifecycle Hooks =======================================================
 
   didInsertElement () {
     this._super(...arguments)
+
     run.scheduleOnce('sync', this, function () {
-      const fmt = this.get('format')
-      let currentValue = this.get('currentValue')
-
-      if (currentValue) {
-        const _value = moment(currentValue).format(fmt)
-
-        this.setProperties({
-          value: _value,
-          currentValue: _value
-        })
+      const pikadayOptions = {
+        field: this.$('input')[0],
+        onSelect: run.bind(this, this._onSelect)
       }
 
-      let options = {}
-      let _assign = (el, value, type) => {
-        if (value) {
-          if (type === 'callback') {
-            options[el] = run.bind(this, value)
-          } else {
-            options[el] = value
-          }
-        }
-      }
-
-      PikadayOptions.forEach(v => {
-        switch (typeof v) {
+      // Bind any other applicable local values and functions into the Pikaday options
+      PikadayOptions.forEach(option => {
+        switch (typeOf(option)) {
           case 'object':
-            _assign(v.label, this.get(v.ref), v.type)
+            this._assignPikadayOption(pikadayOptions, option.label, this.get(option.ref), option.type)
             break
           case 'string':
-            _assign(v, this.get(v))
+            this._assignPikadayOption(pikadayOptions, option, this.get(option))
+            break
         }
       })
 
-      options['onSelect'] = run.bind(this, this.actions._onSelect)
-      this.set(
-        'el',
-        new Pikaday(merge(this.get('options'), options))
-      )
+      // Create the Pikaday element
+      this.set('pikadayElement', new Pikaday(pikadayOptions))
     })
   },
 
   willDestroyElement () {
-    this.get('el').destroy()
+    this.get('pikadayElement').destroy()
     this._super(...arguments)
-  },
-
-  // == Events ===================================================
-
-  change () {
-    this.actions._onSelect.call(this, null)
-  },
-
-  // == Functions ================================================
-
-  isValid (value) {
-    if (this.validator) {
-      let result = this.validator(value)
-      if (result !== undefined) {
-        return result
-      }
-    }
-    return moment(value).isValid()
-  },
-
-  // == Actions ==================================================
-
-  actions: {
-    _onSelect () {
-      const attempt = this.$('input').val()
-      const value = this.get('el').toString()
-      const previousValue = this.get('previousValue')
-
-      this.set('currentValue', value)
-
-      if (this.isValid(attempt)) {
-        const onSelect = this.get('onSelect')
-
-        if (value !== previousValue) {
-          if (onSelect) {
-            onSelect(value)
-          }
-          this.set('didError', null)
-        }
-      } else if (!this.get('didError')) {
-        const onError = this.get('onError')
-        const e = Error(this.get('GENERIC_ERROR'))
-        if (onError) {
-          onError(e)
-        }
-        this.set('didError', true)
-      }
-      this.set('previousValue', value)
-    }
   }
+
+  // == Actions ===============================================================
+
 })

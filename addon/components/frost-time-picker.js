@@ -44,7 +44,7 @@ export default Text.extend({
   // == Functions =============================================================
 
   // Named to match the event from https://weareoutman.github.io/clockpicker/
-  afterDone () {
+  _afterDone () {
     const value = this.$('input').val()
     this.onChange(value)
   },
@@ -70,7 +70,7 @@ export default Text.extend({
         donetext: this.get('donetext'),
         format: this.get('format'),
         placement: this.get('placement'),
-        afterDone: run.bind(this, this.afterDone)
+        afterDone: run.bind(this, this._afterDone)
       })
     })
   },
