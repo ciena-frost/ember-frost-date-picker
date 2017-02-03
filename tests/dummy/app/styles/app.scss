@@ -2,8 +2,12 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-app';
 
 .dummy-body {
-  margin-left: 20px;
-  
+  position: relative;
+  top: 50px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   .chip {
     display: inline-block;
     padding: 0 25px;

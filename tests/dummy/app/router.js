@@ -29,6 +29,7 @@ Router.map(function () {
   this.route('base')
   this.route('date-time')
   this.route('range-picker')
+  this.route('experiments')
 })
 
 export default Router

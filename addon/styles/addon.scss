@@ -3,6 +3,7 @@
 @import 'bower_components/clockpicker-seconds/dist/jquery-clockpicker.min';
 
 @import './frost-date-picker';
+@import './frost-date-time-picker';
 @import './frost-time-picker';
 
 $hover-bg: #f6f9fc;
@@ -59,44 +60,6 @@ $hover-bg: #f6f9fc;
     }
 
   }
-}
-
-.frost-date-time-picker {
-  display: inline-block;
-  position: relative;
-  border: 1px solid $frost-color-lgrey-2;
-
-  &.has-errored {
-    border: 1px solid $frost-color-danger;
-  }
-
-  .calendar-icon {
-    position: absolute;
-    top: 0;
-    left: 2px;
-    width: 20px;
-    padding: 9px 1px 0 2px;
-    cursor: pointer;
-    fill: $frost-color-grey-4;
-  }
-
-  .frost-date-picker {
-    width: 130px;
-    border-right: 1px solid $frost-color-lgrey-2;
-
-    .frost-text-input {
-      &:focus {
-        border: 1px solid $frost-color-blue-1;
-      }
-      padding: 0 5px 0 25px;
-      border: 0;
-      color: initial;
-      text-align: center;
-      cursor: pointer;
-    }
-
-  }
-
 }
 
 .pika-single {

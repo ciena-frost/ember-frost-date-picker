@@ -1,27 +1,33 @@
 {{! Template for the frost-date-time-picker component }}
-<div class='row'>
+
+{{#if date}}
+  {{component date
+    hook=(concat hookPrefix '-date-picker')
+    class=(if (or _valueInvalid _dateValueInvalid) 'error')
+    value=(readonly _dateValue)
+    onChange=(action '_onDateChange')
+  }}
+{{else}}
   {{frost-date-picker
-    hook=(concat hook '-date')
-    currentValue=defaultDate
-    format=dateFormat
-    onSelect=(action 'onSelect')
-    onError=(action 'onError')
-    readonly=readonly
-    hideIcon=true
-    validator=dateValidator
+    hook=(concat hookPrefix '-date-picker')
+    class=(if (or _valueInvalid _dateValueInvalid) 'error')
+    value=(readonly _dateValue)
+    onChange=(action '_onDateChange')
   }}
+{{/if}}
+
+{{#if time}}
+  {{component time
+    hook=(concat hookPrefix '-time-picker')
+    class=(if (or _valueInvalid _timeValueInvalid) 'error')
+    value=(readonly _timeValue)
+    onChange=(action '_onTimeChange')
+  }}
+{{else}}
   {{frost-time-picker
-    hook=(concat hook '-time')
-    currentValue=defaultTime
-    format=timeFormat
-    onSelect=(action 'onSelect')
-    onError=(action 'onError')
-    validator=timeValidator
+    hook=(concat hookPrefix '-time-picker')
+    class=(if (or _valueInvalid _timeValueInvalid) 'error')
+    value=(readonly _timeValue)
+    onChange=(action '_onTimeChange')
   }}
-  <div {{action (action 'focusDatePicker') on='click'}} class='calendar-icon' data-test={{hook (concat hook '-cal')}}>
-    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 4 L6 4 L6 2 A2 2 0 0 1 10 2 L10 4 L22 4 L22 2 A2 2 0 0 1 26 2 L26 4 L30 4 L30 10 L2 10 M2 12 L30 12 L30 30 L2 30"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-    </svg>
-  </div>
-</div>
+{{/if}}

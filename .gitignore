@@ -18,3 +18,5 @@ testem.log
 coverage.json
 .idea
 /visual-acceptance
+/typings/*
+jsconfig.json

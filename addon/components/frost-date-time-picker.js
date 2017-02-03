@@ -1,119 +1,113 @@
 /**
  * Component definition for the frost-date-time-picker component
  */
-import Ember from 'ember'
-const {run} = Ember
-import computed from 'ember-computed-decorators'
+
+import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
-import PropTypesMixin, {PropTypes} from 'ember-prop-types'
-import SpreadMixin from 'ember-spread'
+import {Format, setTime, validateTime} from 'ember-frost-date-picker'
+import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
 
 import layout from '../templates/components/frost-date-time-picker'
 
-export default Component.extend(SpreadMixin, PropTypesMixin, {
+export default Component.extend({
+
   // == Dependencies ==========================================================
 
   // == Keyword Properties ====================================================
 
   layout,
-  classNameBindings: ['error:has-errored'],
+
   // == PropTypes =============================================================
 
-  /**
-   * Properties for this component. Options are expected to be (potentially)
-   * passed in to the component. State properties are *not* expected to be
-   * passed in/overwritten.
-   */
   propTypes: {
-    hook: PropTypes.string,
-    readonly: PropTypes.bool,
-    dateFormat: PropTypes.string,
-    timeFormat: PropTypes.string,
-    defaultDate: PropTypes.string,
-    defaultTime: PropTypes.string,
-    dateValidator: PropTypes.func,
-    timeValidator: PropTypes.func,
-    onSelect: PropTypes.func,
-    onError: PropTypes.func
+    // Options
+    value: PropTypes.string.isRequired,
+
+    // Events
+    onChange: PropTypes.func.isRequired,
+
+    // State
+    _dateValueInvalid: PropTypes.bool,
+    _timeValueInvalid: PropTypes.bool
   },
 
-  /** @returns {Object} the default property values when not provided by consumer */
   getDefaultProps () {
     return {
-      hook: 'date-time-picker',
-      readonly: false,
-      dateFormat: 'YYYY-MM-DD',
-      timeFormat: 'HH:mm:ss'
+      _dateValueInvalid: false,
+      _timeValueInvalid: false
     }
   },
 
   // == Computed Properties ===================================================
-  @computed('defaultDate', 'defaultTime')
-  currentValue: {
-    get (date, time) {
-      if (!date || !time) {
-        return 'Invalid Date'
-      }
 
-      const d = moment(date)
-      const s = time.split(':')
-
-      d
-        .hours(s[0])
-        .minutes(s[1])
-        .seconds(s[2])
-      return d
-    },
-    set (value) {
-      const df = this.get('dateFormat')
-      const tf = this.get('timeFormat')
-      const now = moment()
-
-      if (value && value._isMomentObject) {
-        this.setProperties({
-          defaultDate: now.format(df),
-          defaultTime: now.format(tf)
-        })
-      }
-      return value
+  @readOnly
+  @computed('_validatedValue')
+  _dateValue (_validatedValue) {
+    if (_validatedValue) {
+      return _validatedValue.format(Format.date)
     }
+    return 'Invalid'
   },
+
+  @readOnly
+  @computed('_validatedValue')
+  _timeValue (_validatedValue) {
+    if (_validatedValue) {
+      return _validatedValue.format(Format.time)
+    }
+    return 'Invalid'
+  },
+
+  @readOnly
+  @computed('value')
+  _validatedValue (value) {
+    const momentValue = moment(value)
+    if (momentValue.isValid()) {
+      return momentValue
+    }
+    return false
+  },
+
+  @readOnly
+  @computed('_validatedValue')
+  _valueInvalid (_validatedValue) {
+    return _validatedValue === false
+  },
+
   // == Functions =============================================================
-  didInsertElement () {
-    this._super(...arguments)
-    const df = this.get('dateFormat')
-    const tf = this.get('timeFormat')
 
-    const now = moment()
-    run.scheduleOnce('sync', this, function () {
-      this.setProperties({
-        defaultDate: this.get('defaultDate') || now.format(df),
-        defaultTime: this.get('defaultTime') || now.format(tf)
-      })
-    })
-  },
   // == Actions ===============================================================
-  actions: {
-    onSelect () {
-      const value = this.get('currentValue')
-      const onSelect = this.get('onSelect')
-      if (onSelect) {
-        onSelect(value)
-      }
-      this.set('error', null)
-    },
-    onError (e) {
-      const onError = this.get('onError')
 
-      if (onError) {
-        this.set('error', onError(e))
+  actions: {
+    _onDateChange (dateValue) {
+      const momentDateValue = moment(dateValue)
+
+      if (momentDateValue.isValid()) {
+        this.set('_dateValueInvalid', false)
+
+        const _timeValue = this.get('_timeValue')
+        if (validateTime(_timeValue) === true) {
+          setTime(momentDateValue, _timeValue)
+          this.onChange(momentDateValue.format(Format.dateTime))
+        }
       } else {
-        this.set('error', e)
+        this.set('_dateValueInvalid', true)
       }
     },
-    focusDatePicker () {
-      this.$('.frost-date-picker input').click()
+
+    _onTimeChange (timeValue) {
+      if (validateTime(timeValue) === true) {
+        this.set('_timeValueInvalid', false)
+
+        const momentDateValue = moment(this.get('_dateValue'))
+        if (momentDateValue.isValid()) {
+          setTime(momentDateValue, timeValue)
+          this.onChange(momentDateValue.format(Format.dateTime))
+        }
+      } else {
+        this.set('_timeValueInvalid', true)
+      }
     }
   }
 })

@@ -1,0 +1,42 @@
+{{!frost-date-time-picker
+  dateValidator=startValidator
+  timeValidator=startValidator
+}}
+{{!frost-date-time-picker
+  dateValidator=endValidator
+  timeValidator=endValidator
+}}
+
+{{!frost-range-picker
+  hook='demo-range-picker'
+  end=(component 'frost-date-time-picker')
+  endTitle='Custom endTitle'
+  isVertical=false
+  start=(component 'frost-date-time-picker')
+  startTitle='Custom startTitle'
+  validator=(action 'customValidator')
+  value=value
+  onChange=(action 'onChange')
+  onError=(action 'onError')
+}}
+
+{{frost-date-picker
+  hook='demo-date-picker'
+  class=(if dateValueInvalid 'error')
+  value=dateValue
+  onChange=(action 'onDateChange')
+}}
+
+{{frost-time-picker
+  hook='demo-time-picker'
+  class=(if timeValueInvalid 'error')
+  value=timeValue
+  onChange=(action 'onTimeChange')
+}}
+
+{{frost-date-time-picker
+  hook='demo-date-time-picker'
+  class=(if dateTimeValueInvalid 'error')
+  value=dateTimeValue
+  onChange=(action 'onDateTimeChange')
+}}
