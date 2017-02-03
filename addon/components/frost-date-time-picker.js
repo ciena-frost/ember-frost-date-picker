@@ -28,7 +28,9 @@ export default Component.extend({
     onChange: PropTypes.func.isRequired,
 
     // State
+    _dateValueInternal: PropTypes.string,
     _dateValueInvalid: PropTypes.bool,
+    _timeValueInternal: PropTypes.string,
     _timeValueInvalid: PropTypes.bool
   },
 
@@ -84,29 +86,41 @@ export default Component.extend({
       const momentDateValue = moment(dateValue)
 
       if (momentDateValue.isValid()) {
-        this.set('_dateValueInvalid', false)
+        this.setProperties({
+          _dateValueInternal: dateValue,
+          _dateValueInvalid: false
+        })
 
-        const _timeValue = this.get('_timeValue')
+        const _timeValue = this.get('_timeValueInternal')
         if (validateTime(_timeValue) === true) {
           setTime(momentDateValue, _timeValue)
           this.onChange(momentDateValue.format(Format.dateTime))
         }
       } else {
-        this.set('_dateValueInvalid', true)
+        this.setProperties({
+          _dateValueInternal: dateValue,
+          _dateValueInvalid: true
+        })
       }
     },
 
     _onTimeChange (timeValue) {
       if (validateTime(timeValue) === true) {
-        this.set('_timeValueInvalid', false)
+        this.setProperties({
+          _timeValueInternal: timeValue,
+          _timeValueInvalid: false
+        })
 
-        const momentDateValue = moment(this.get('_dateValue'))
+        const momentDateValue = moment(this.get('_dateValueInternal'))
         if (momentDateValue.isValid()) {
           setTime(momentDateValue, timeValue)
           this.onChange(momentDateValue.format(Format.dateTime))
         }
       } else {
-        this.set('_timeValueInvalid', true)
+        this.setProperties({
+          _timeValueInternal: timeValue,
+          _timeValueInvalid: true
+        })
       }
     }
   }

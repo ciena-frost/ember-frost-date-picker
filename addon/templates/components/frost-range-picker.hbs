@@ -1,36 +1,43 @@
 {{! Template for the frost-range-picker component }}
-<div class='{{layoutStyle}}'>
-  <div class='item start-date'>
-    <div class='title'>
+
+<div class='{{css}}{{if isVertical '-vertical' '-horizontal'}}'>
+  <div class='{{css}}-start-date'>
+    <div class='{{css}}-title'>
       {{startTitle}}
     </div>
-    {{frost-date-time-picker
-      hook=(concat hook '-start')
-      currentValue=currentStart
-      dateValidator=startValidator
-      timeValidator=startValidator
-      onSelect=(action 'onSelect')
-      onError=(action 'onError')
+    {{component start
+      hook=(concat hookPrefix '-start')
+      date=(component 'frost-date-picker'
+        hook=(concat hookPrefix '-start-date')
+        isIconVisible=false
+        format=dateFormat
+        readonly=readonly
+        validator=dateValidator
+        value=value.start
+      )
+      time=(component 'frost-time-picker'
+        hook=(concat hookPrefix '-start-time')
+        format=timeFormat
+        validator=timeValidator
+        value=value.start
+      )
+      defaultDate=value.start
+      defaultTime=value.start
+      onChange=(action 'onStartChange')
     }}
   </div>
-  <div class='separator'>
-    {{#if separator}}
-      {{component separator}}
-    {{else}}
-      -
-    {{/if}}
+  <div class='{{css}}-separator'>
+    -
   </div>
-  <div class='item end-date'>
-    <div class='title'>
+  <div class='{{css}}-end-date'>
+    <div class='{{css}}-title'>
       {{endTitle}}
     </div>
-    {{frost-date-time-picker
+    {{component end
       hook=(concat hook '-end')
-      currentValue=currentEnd
-      dateValidator=endValidator
-      timeValidator=endValidator
-      onSelect=(action 'onSelect')
-      onError=(action 'onError')
+      defaultDate=value.end
+      defaultTime=value.end
+      onChange=(action 'onEndChange')
     }}
   </div>
 </div>
