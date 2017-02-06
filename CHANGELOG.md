@@ -1,3 +1,9 @@
+# 7.0.0
+* All interfaces changed to make a `value` and `onChange` required
+* Validation is performed externally and can be bound back via `class=error`
+* Refer to the `experiments` route in the demo for the usage (sorry - this will be cleaned up later)
+
+
 # 6.0.0
 
 * The `frost-date-picker` component now defaults to empty instead of the current date.
