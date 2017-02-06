@@ -1,3 +1,7 @@
+# 7.0.1
+* **Updated** integration tests to remove the deprecated use of `describeComponent()`
+
+
 # 7.0.0
 * All interfaces changed to make a `value` and `onChange` required
 * Validation is performed externally and can be bound back via `class=error`
