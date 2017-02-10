@@ -1,3 +1,7 @@
+# 7.0.2
+**Added** clockpicker styles to override z-index on clockpicker-popover to 9999 (same as the date picker) as the pulled in value (1010) is below that of ember-frost-modal (8000).
+
+
 # 7.0.1
 * **Updated** integration tests to remove the deprecated use of `describeComponent()`
 
