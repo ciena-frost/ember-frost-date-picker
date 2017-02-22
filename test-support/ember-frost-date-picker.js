@@ -1,3 +1,5 @@
+/* global $ */
+
 import {$hook} from 'ember-hook'
 
 // Helpers taken from ember-pickaday
@@ -7,7 +9,7 @@ import {$hook} from 'ember-hook'
  * @param {String} hook - the hook for the date picker component
  * @returns {Object} an object than can selectDate
  */
-export function openDatepicker(hook) {
+export function openDatepicker (hook) {
   hook = hook || 'bunsenForm'
 
   const hookName = `${hook}-input`
@@ -20,7 +22,7 @@ export function openDatepicker(hook) {
 const PikadayInteractor = {
   selectorForMonthSelect: '.pika-lendar:visible .pika-select-month',
   selectorForYearSelect: '.pika-lendar:visible .pika-select-year',
-  selectDate: function(date) {
+  selectDate: function (date) {
     var day = date.getDate()
     var month = date.getMonth()
     var year = date.getFullYear()
@@ -33,24 +35,24 @@ const PikadayInteractor = {
 
     triggerNativeEvent($('td[data-day="' + day + '"] button:visible')[0], selectEvent)
   },
-  selectedDay: function() {
+  selectedDay: function () {
     return $('.pika-single td.is-selected button').html()
   },
-  selectedMonth: function() {
+  selectedMonth: function () {
     return $(this.selectorForMonthSelect + ' option:selected').val()
   },
-  selectedYear: function() {
+  selectedYear: function () {
     return $(this.selectorForYearSelect + ' option:selected').val()
   },
-  minimumYear: function() {
+  minimumYear: function () {
     return $(this.selectorForYearSelect).children().first().val()
   },
-  maximumYear: function() {
+  maximumYear: function () {
     return $(this.selectorForYearSelect).children().last().val()
   }
 }
 
-function triggerNativeEvent(element, eventName) {
+function triggerNativeEvent (element, eventName) {
   if (document.createEvent) {
     var event = document.createEvent('Events')
     event.initEvent(eventName, true, false)
