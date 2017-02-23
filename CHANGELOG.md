@@ -1,3 +1,12 @@
+# 7.0.3
+* **Updated** to use latest pr-bumper which supports being able to set a PR to `none` when publishing a new version is not desired.
+
+<!-- Reviewable:start -->
+---
+This change is [<img src="https://reviewable.io/review_button.svg" height="34" align="absmiddle" alt="Reviewable"/>](https://reviewable.io/reviews/ciena-frost/ember-frost-date-picker/41)
+<!-- Reviewable:end -->
+
+
 # 7.0.2
 **Added** clockpicker styles to override z-index on clockpicker-popover to 9999 (same as the date picker)
 as the pulled in value (1010) is below that of ember-frost-modal (8000).
