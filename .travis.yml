@@ -1,55 +1,54 @@
-language: node_js
 sudo: required
 dist: trusty
+language: node_js
+
 node_js:
-- '6.9'
+- '6.9.1'
 - 'stable'
-branches:
-  except:
-  - "/^v[0-9\\.]+/"
+
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
+    - google-chrome
     packages:
+    - google-chrome-stable
     - g++-4.8
   firefox: 'latest-esr'
+
 env:
   matrix:
-    - EMBER_TRY_SCENARIO=ember-2-3
-    - EMBER_TRY_SCENARIO=ember-2-8
-    - EMBER_TRY_SCENARIO=default
-    - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-2-3
+  - EMBER_TRY_SCENARIO=ember-2-8
+  - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=ember-release
   global:
     - CXX=g++-4.8
     - secure: ZgbCFKOA9m43srH923FSoIJP51NMX4N8eo+OgbKfxgDIu7ZWi73KLDFkmh0vENVYN///Ucu9cc+tGR89EwKdtd7SVA30BSsgLddiheqHjVND8i2iGZVJN5ybc2s10miAEvbzF8dpPswO48gw/Pjj5Y1Ha3lxIGoD+3CO2c7o4QFmm+ewajoMb7IieEPt8GaHT75MAY0QnxczgeHGVVkkYLUuEVKDg1XpN64y5qwCTmMXrTmDEGlUN8+jnYC/JTtd8o13IinCiKMtU5Nwf40SzVHp+JJEmzBI22YGWbIbkEvZGLDZklrAJutKP5NpqCJGQHug3zSfdbgALRc1mHrNskNAH4QtLi5JOWQ99+eVtsgY3q2wJjtw4kaifH8BdaY45WlYx3tP1khrE8lVgpNhn1XjtW2407WsHwh6Q3PyZupt491D6J9XKO9bScG8QrGxcJT8ISQ4ZdHv3gmXLYvLmFcckgKKEnjrAl/QnESLKa/iTHa6LFlxF//L1nk+PpFhw1gJDTVDQoaVmiFR/53EvHlJPkme96c1JZ+gIwE522lU0K4lGfFKbyYNZpJ6V3FEoW/b06izHC0Cs/4DHpQhaeF6S6wtqwV9wZXrVnkJXlW00lmK516X6WOJjQisfqVugKdLvGC4exIpmb7JuUc/D+d+ex4zkwg5j2HIMSSYNjE=
+
 matrix:
   fast_finish: true
   allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-release
+  - env: EMBER_TRY_SCENARIO=ember-release
+
 before_install:
-- npm config set spin false
-- npm install -g coveralls pr-bumper
-- pr-bumper check
-before_script:
 - export CHROME_BIN=/usr/bin/google-chrome
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
-- sudo apt-get update
-- sudo apt-get install -y libappindicator1 fonts-liberation
-- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-- sudo dpkg -i google-chrome*.deb
-script:
-- npm run lint
-- ember try:one $EMBER_TRY_SCENARIO --- ember tva --push-var='false' --msg-on=$EMBER_TRY_SCENARIO
+- npm config set spin false
+- npm install -g coveralls pr-bumper
+
 install:
-- npm install
-- bower install
+- $(npm root -g)/pr-bumper/.travis/maybe-install.sh
+
+script:
+- $(npm root -g)/pr-bumper/.travis/maybe-test.sh
+- if [ $EMBER_TRY_SCENARIO == "default" ]; then $(npm root -g)/pr-bumper/.travis/maybe-bump-version.sh; fi
+
 after_success:
-- .travis/publish-coverage.sh
-before_deploy:
-- pr-bumper bump
+- $(npm root -g)/pr-bumper/.travis/maybe-publish-coverage.sh
+
 deploy:
   provider: npm
   email: npm.ciena@gmail.com
@@ -57,12 +56,14 @@ deploy:
   api_key:
     secure: fAKcuxwN7AGBclbLZP86mW3YZDfNfTB42yBI1LqkBBCfIALnR/kF1kLIdZfd2bkoTwGal462FNyIUNACSwNGS+ur8Z3thDvc0AWg/tKJR/+6N2YZECnnE67C+i6majeqzaIxp3AOoCiVOMl/MIwCqg/pj3HE8YcX/6qk2sz3gG49TifhD5AQctWxD4bPzgc/J84wvWlEBYcPGNwANBalbO+SywrPgV7ODS6fi+/X/m13WQ3ArjEyPVoyvAfCZVO2WVTQ53CpNIhFmPozqo9YpaueL/4WGf72QGuZAVBACTJZhnfweeh5HUDywBZMTK7aUAX+Ezb3dqajuzVR4+Zpir0lI7gXrWL4IWc2fIt2zcmpJrkdUgcLE06eixgKL85K9spSuyqYcEIKyqcqWE5KOdIWzOg0trMGb18oS9Kqoh4QKlHzSvN4Sq4TMR6Iztjnk6L9Dux5wUAlkDen2kmYWKh3hR5EzaGHiL0RM3z77Wm8iFLMYkEG5lVb2cp4lmYEIzvJdaiU8az4rQsx4zVJ213B2ETQzbQcug7uuOkSllP7Zqs0YelSGzh2zxpkPLQ5b81gut/6lIJD72aKDMuCxPutBHNh/Om/bWBsnClMUMeDFbcta9H5PzSlj+G9keNOuvc5Xas4N0UQ2zIwRxHB2vLBOflEOTsM4OhasOPHVdE=
   on:
-    branch: master
+    all_branches: true
     condition: "$EMBER_TRY_SCENARIO = 'default'"
     node: 'stable'
     tags: true
+
 after_deploy:
 - .travis/publish-gh-pages.sh
+
 notifications:
   slack:
     secure: iPkQk/J/PxB3S2v1vh4P/LwWWDWX1f8nS/EmeAqN0eLy1B5rdaDP4yxykxnxIfAWJ/F1Cwh2uTs+etX8Nqsx2OcMi+gwPjluUD7re9fhcuWSp4FmEzi3LaaWmBctmTcH+1NNQx1vu3cpLceE9Btind2qFXdDPidq8CJjD4gvaBZCVFNicmWbqpo2dE8EsVMibj4dLKUc1sauysMOeVQh0DlBFLEBbcd5XvdhZ44qy2DRwACHGeQAOm9XyB/E4DkYXttiKVZjHvpO3ugtwHQqtIk1XHeXFjIeyDuQjJJA44BYWKr7RU3Ofj4Wri7yYQWrlleRpXysUHIuqHIs/iQRd019fUnNwYuTI3FOa5UFMgePyg1+OjedyVoT3wFoAxptwJUpngQP0ZJrnhPDEHLuPu3IHfIv/EcfyVI9YNOG8V348YKpyLEGitjYcRsKoxggtn2GpSNJ0Gj96rEiyETZRC1sTldCQ0m9hbWhaPtkFquiZz4AHEhVrhCKAzT45QNTFuwOfT3lIbFwTUOC23f/SMvL0r+YcBibF1G7V+/RPNSuCFxlUK8dvWHRcJ4wl+NiBq8gxC258ON97MiGoFpyATcNibnVleXtQdQoyJh/TZ9nAJ9lJdGudEm2JsBwH55Ws9dDbx4dayPGgmyOcAWx0zh4QodJXWuJpbGXv5/gKKg=

@@ -1,5 +1,6 @@
 # 7.0.2
-**Added** clockpicker styles to override z-index on clockpicker-popover to 9999 (same as the date picker) as the pulled in value (1010) is below that of ember-frost-modal (8000).
+**Added** clockpicker styles to override z-index on clockpicker-popover to 9999 (same as the date picker)
+as the pulled in value (1010) is below that of ember-frost-modal (8000).
 
 
 # 7.0.1
@@ -50,7 +51,7 @@ Please add a description of your change here, it will be automatically prepended
 - [x] Fix calendar icon positioning
 - [x] Improve validation to account for kb inputs
 
-Closes #19 #20 
+Closes #19 #20
 
 # 5.0.0
 - `frost-date-time-picker`
