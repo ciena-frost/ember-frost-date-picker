@@ -12,7 +12,8 @@
     "lint": "lint-all-the-things",
     "publish": ".scripts/deploy.sh",
     "start": "ember serve",
-    "test": "npm run lint && COVERAGE=true ember test"
+    "test": "npm run lint && npm run test-addon",
+    "test-addon": "EMBER_TRY_SCENARIO=${EMBER_TRY_SCENARIO:=default} && ember try:one $EMBER_TRY_SCENARIO --- COVERAGE=true ember test"
   },
   "repository": "git@github.com:ciena-frost/ember-frost-date-picker.git",
   "engines": {
