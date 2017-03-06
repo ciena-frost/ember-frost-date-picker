@@ -1,3 +1,6 @@
+# 7.0.4
+* **Updated** the travis scripts used for bumping and publishing
+
 # 7.0.3
 * **Updated** to use latest pr-bumper which supports being able to set a PR to `none` when publishing a new version is not desired.
 
