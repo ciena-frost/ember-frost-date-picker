@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "ember build",
+    "coverage": "COVERAGE=true ember test -r 'dot'",
     "lint": "lint-all-the-things",
     "publish": ".scripts/deploy.sh",
     "start": "ember serve",
