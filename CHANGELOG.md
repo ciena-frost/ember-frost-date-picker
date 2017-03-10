@@ -1,3 +1,6 @@
+# 7.0.5
+* **Updated** the travis.yml and package.json to run code coverage
+
 # 7.0.4
 * **Updated** the travis scripts used for bumping and publishing
 
