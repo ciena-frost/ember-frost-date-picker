@@ -3,10 +3,8 @@ const blueprintHelper = require('ember-frost-core/blueprint-helper')
 module.exports = {
   afterInstall: function (options) {
     const addonsToAdd = [
-      {name: 'ember-frost-core', target: '^1.14.3'},
-      {name: 'ember-prop-types', target: '^3.0.0'},
-      {name: 'ember-hook', target: '^1.3.5'},
       {name: 'ember-cli-moment-shim', target: '^3.0.1'},
+      {name: 'ember-frost-core', target: '^1.14.3'},
       {name: 'ember-pikaday-shim', target: '0.1.0'}
     ]
 
