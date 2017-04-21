@@ -1,3 +1,6 @@
+# 7.0.7 (2017-04-21)
+* **Added** blueprint check
+
 # 7.0.6 (2017-03-23)
 * **Fixed** `ember` and `ember-cli` dependencies
 
