@@ -52,7 +52,6 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-elsewhere": "0.4.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-frost-core": "^1.7.5",
     "ember-frost-navigation": "^7.1.0",
     "ember-frost-test": "^1.0.1",
     "ember-hook": "^1.4.1",
@@ -79,6 +78,7 @@
     "ember-cli-htmlbars": "^1.0.1",
     "ember-cli-sass": "^5.2.0",
     "ember-computed-decorators": "0.3.0",
+    "ember-frost-core": "^1.14.3",
     "ember-prop-types": "^3.0.0"
   },
   "ember-addon": {
