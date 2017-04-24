@@ -1,3 +1,6 @@
+# 7.0.8 (2017-04-24)
+* **Removed** unecessary dependencies blueprint
+
 # 7.0.7 (2017-04-21)
 * **Added** blueprint check
 
