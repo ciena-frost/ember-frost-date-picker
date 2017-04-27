@@ -19,8 +19,25 @@ module.exports = {
     /* eslint-enable no-unused-expressions */
   },
 
-  included: function (app) {
-    this._super.included(app)
-    app.import(`${app.bowerDirectory}/clockpicker-seconds/dist/jquery-clockpicker.min.js`)
+  _findHost: function () {
+    var current = this
+    var app
+
+    // Keep iterating upward until we don't have a grandparent.
+    // Has to do this grandparent check because at some point we hit the project.
+    do {
+      app = current.app || app
+    } while (current.parent.parent && (current = current.parent))
+    return app
+  },
+
+  included: function () {
+    var app = this._findHost()
+
+    if (!app.bowerDirectory) {
+      app.import('bower_components/clockpicker-seconds/dist/jquery-clockpicker.min.js')
+    } else {
+      app.import(`${app.bowerDirectory}/clockpicker-seconds/dist/jquery-clockpicker.min.js`)
+    }
   }
 }
