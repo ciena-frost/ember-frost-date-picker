@@ -1,3 +1,7 @@
+# 7.0.9 (2017-04-27)
+* for the bower directory search to work in an engine env, **added** code to climb the tree to find the real parent `app`
+
+
 # 7.0.8 (2017-04-24)
 * **Removed** unecessary dependencies blueprint
 
