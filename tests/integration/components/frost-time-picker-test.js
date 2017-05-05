@@ -3,10 +3,12 @@
  */
 
 import {expect} from 'chai'
+import {Format} from 'ember-frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
+import moment from 'moment'
 import sinon from 'sinon'
 
 import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
@@ -15,6 +17,7 @@ const test = integration('frost-time-picker')
 describe(test.label, function () {
   test.setup()
 
+  const timeValue = moment().subtract(1, 'hour').format(Format.time)
   let sandbox
 
   beforeEach(function () {
@@ -26,27 +29,27 @@ describe(test.label, function () {
     sandbox.restore()
   })
 
-  describe.skip('after render', function () {
+  describe('default rendered state', function () {
     beforeEach(function () {
       this.setProperties({
-        myHook: 'myThing'
+        myHook: 'myHook',
+        onChange: function () {},
+        timeValue
       })
 
       this.render(hbs`
         {{frost-time-picker
           hook=myHook
+          onChange=onChange
+          value=timeValue
         }}
       `)
 
       return wait()
     })
 
-    it('should have an element', function () {
-      expect(this.$()).to.have.length(1)
-    })
-
     it('should be accessible via the hook', function () {
-      expect($hook('myThing')).to.have.length(1)
+      expect($hook('myHook-input')).to.have.value(timeValue)
     })
   })
 })
