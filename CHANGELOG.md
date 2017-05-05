@@ -1,3 +1,10 @@
+# 7.0.10 (2017-05-05)
+* **Added** - new tests
+* **Added** - hooks for the startTitle and endTitle of the range-picker component
+* **Added** - functionality to enable test validation regression
+* **Updated** - existing tests so that they are working again
+* **Updated** - name of validateTime method (it had a copy/paste mistake)
+
 # 7.0.9 (2017-04-27)
 * for the bower directory search to work in an engine env, **added** code to climb the tree to find the real parent `app`
 
