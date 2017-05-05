@@ -1,7 +1,7 @@
 {{! Template for the frost-range-picker component }}
 
 <div class='{{css}}-start-date'>
-  <div class='{{css}}-title'>
+  <div class='{{css}}-title' data-test={{hook (concat hook '-start-title')}}>
     {{startTitle}}
   </div>
   {{#if start}}
@@ -24,7 +24,7 @@
   -
 </div>
 <div class='{{css}}-end-date'>
-  <div class='{{css}}-title'>
+  <div class='{{css}}-title' data-test={{hook (concat hook '-end-title')}}>
     {{endTitle}}
   </div>
   {{#if end}}
