@@ -6,13 +6,12 @@ import {expect} from 'chai'
 import {Format} from 'ember-frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
+import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
+import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
-import {registerMockComponent, unregisterMockComponent} from '../../helpers/mock-component'
 import moment from 'moment'
 import sinon from 'sinon'
-
-import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
 
 const test = integration('frost-range-picker')
 describe(test.label, function () {
@@ -165,7 +164,7 @@ describe(test.label, function () {
     })
 
     afterEach(function () {
-      unregisterMockComponent(this)
+      unregisterMockComponent(this, 'mock-start')
     })
 
     it('should use provided start component', function () {
@@ -198,7 +197,7 @@ describe(test.label, function () {
     })
 
     afterEach(function () {
-      unregisterMockComponent(this)
+      unregisterMockComponent(this, 'mock-end')
     })
 
     it('should use provided end component', function () {
