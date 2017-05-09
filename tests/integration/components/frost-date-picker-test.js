@@ -4,13 +4,13 @@ const {$} = Ember
 import {Format} from 'ember-frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
+import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import moment from 'moment'
 import sinon from 'sinon'
 
 import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
-import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
 
 /**
  * Click outside the date picker to close it
