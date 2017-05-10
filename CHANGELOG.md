@@ -1,3 +1,6 @@
+# 7.0.11 (2017-05-10)
+* **Updated** the secure tokens in `.travis.yml`
+
 # 7.0.10 (2017-05-05)
 * **Added** - new tests
 * **Added** - hooks for the startTitle and endTitle of the range-picker component
