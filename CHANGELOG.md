@@ -1,3 +1,6 @@
+# 7.0.12 (2017-06-08)
+* **Fixed** `pikaday` memory leak on `_onKeyChange`
+
 # 7.0.11 (2017-05-10)
 * **Updated** the secure tokens in `.travis.yml`
 
