@@ -89,6 +89,8 @@ export default Component.extend(EventsProxyMixin, {
   },
 
   willDestroyElement () {
+    // TODO: This will not be necessary once https://github.com/dbushell/Pikaday/issues/630 is fixed - @dafortin 2017.06.08
+    document.removeEventListener('keydown', this.get('pikadayElement')._onKeyChange)
     this.get('pikadayElement').destroy()
     this._super(...arguments)
   }
