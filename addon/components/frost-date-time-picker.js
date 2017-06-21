@@ -10,6 +10,10 @@ import moment from 'moment'
 
 import layout from '../templates/components/frost-date-time-picker'
 
+const DEFAULT_DATE_FORMAT = Format.date
+const DEFAULT_TIME_FORMAT = Format.time
+const DEFAULT_DATE_TIME_FORMAT = Format.dateTime
+
 export default Component.extend({
 
   // == Dependencies ==========================================================
@@ -25,6 +29,9 @@ export default Component.extend({
     date: PropTypes.EmberComponent,
     time: PropTypes.EmberComponent,
     value: PropTypes.string.isRequired,
+    dateFormat: PropTypes.string,
+    timeFormat: PropTypes.string,
+    dateTimeFormat: PropTypes.string,
 
     // Events
     onChange: PropTypes.func.isRequired,
@@ -38,6 +45,9 @@ export default Component.extend({
 
   getDefaultProps () {
     return {
+      dateFormat: DEFAULT_DATE_FORMAT,
+      timeFormat: DEFAULT_TIME_FORMAT,
+      dateTimeFormat: DEFAULT_DATE_TIME_FORMAT,
       _dateValueInvalid: false,
       _timeValueInvalid: false
     }
@@ -48,8 +58,8 @@ export default Component.extend({
   @readOnly
   @computed('_validatedValue')
   _dateValue (_validatedValue) {
-    if (_validatedValue) {
-      return _validatedValue.format(Format.date)
+    if (_validatedValue && _validatedValue.isValid()) {
+      return this._formattedDate(_validatedValue, false)
     }
     return 'Invalid'
   },
@@ -57,8 +67,8 @@ export default Component.extend({
   @readOnly
   @computed('_validatedValue')
   _timeValue (_validatedValue) {
-    if (_validatedValue) {
-      return _validatedValue.format(Format.time)
+    if (_validatedValue && _validatedValue.isValid()) {
+      return this._formattedTime(_validatedValue, false)
     }
     return 'Invalid'
   },
@@ -81,6 +91,22 @@ export default Component.extend({
 
   // == Functions =============================================================
 
+  _dateMoment (_dateValue) {
+    return moment(_dateValue, this.get('dateFormat'))
+  },
+
+  _formattedDate (_dateValue, useDefaultFormat) {
+    return this._timeMoment(_dateValue).format(useDefaultFormat ? DEFAULT_DATE_FORMAT : this.get('dateFormat'))
+  },
+
+  _timeMoment (_timeValue) {
+    return moment(_timeValue, this.get('timeFormat'))
+  },
+
+  _formattedTime (_timeValue, useDefaultFormat) {
+    return this._timeMoment(_timeValue).format(useDefaultFormat ? DEFAULT_TIME_FORMAT : this.get('timeFormat'))
+  },
+
   // == DOM Events ============================================================
 
   // == Lifecycle Hooks =======================================================
@@ -89,18 +115,17 @@ export default Component.extend({
 
   actions: {
     _onDateChange (dateValue) {
-      const momentDateValue = moment(dateValue)
-
+      const momentDateValue = this._dateMoment(dateValue)
       if (momentDateValue.isValid()) {
         this.setProperties({
           _dateValueInternal: dateValue,
           _dateValueInvalid: false
         })
 
-        const _timeValueInternal = this.get('_timeValueInternal') || this.get('_timeValue')
+        const _timeValueInternal = this._formattedTime(this.get('_timeValueInternal') || this.get('_timeValue'), true)
         if (validateTime(_timeValueInternal) === true) {
           setTime(momentDateValue, _timeValueInternal)
-          this.onChange(momentDateValue.format(Format.dateTime))
+          this.onChange(momentDateValue.format(this.get('dateTimeFormat')))
         }
       } else {
         this.setProperties({
@@ -111,17 +136,18 @@ export default Component.extend({
     },
 
     _onTimeChange (timeValue) {
-      if (validateTime(timeValue) === true) {
+      let defaultFormattedTime = this._formattedTime(timeValue, true)
+      if (validateTime(defaultFormattedTime) === true) {
         this.setProperties({
           _timeValueInternal: timeValue,
           _timeValueInvalid: false
         })
 
         const _dateValueInternal = this.get('_dateValueInternal')
-        const momentDateValue = _dateValueInternal ? moment(_dateValueInternal) : moment(this.get('_dateValue'))
+        const momentDateValue = this._dateMoment(_dateValueInternal || this.get('_dateValue'))
         if (momentDateValue.isValid()) {
-          setTime(momentDateValue, timeValue)
-          this.onChange(momentDateValue.format(Format.dateTime))
+          setTime(momentDateValue, defaultFormattedTime)
+          this.onChange(momentDateValue.format(this.get('dateTimeFormat')))
         }
       } else {
         this.setProperties({

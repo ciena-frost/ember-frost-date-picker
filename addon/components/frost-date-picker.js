@@ -1,11 +1,16 @@
 import Ember from 'ember'
 const {run, typeOf} = Ember
+import computed, {readOnly} from 'ember-computed-decorators'
 import {Component, EventsProxyMixin} from 'ember-frost-core'
+import {Format} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
+import moment from 'moment'
 import Pikaday from 'pikaday'
 
 import layout from '../templates/components/frost-date-picker'
 import PikadayOptions from '../utils/pikaday-options'
+
+const DEFAULT_DATE_FORMAT = Format.date
 
 export default Component.extend(EventsProxyMixin, {
 
@@ -23,6 +28,7 @@ export default Component.extend(EventsProxyMixin, {
     // Options
     isIconVisible: PropTypes.bool,
     value: PropTypes.string.isRequired,
+    format: PropTypes.string,
 
     // Events
     onChange: PropTypes.func.isRequired
@@ -32,6 +38,7 @@ export default Component.extend(EventsProxyMixin, {
     return {
       // Options for Pikaday
       theme: 'frost-theme',
+      format: DEFAULT_DATE_FORMAT,
 
       // Options
       isIconVisible: true
@@ -39,6 +46,24 @@ export default Component.extend(EventsProxyMixin, {
   },
 
   // == Computed Properties ===================================================
+
+  @readOnly
+  @computed('value')
+  _validatedValue (value) {
+    if (value) {
+      return moment(value, this.get('format'))
+    }
+    return false
+  },
+
+  @readOnly
+  @computed('_validatedValue')
+  _value (_validatedValue) {
+    if (_validatedValue && _validatedValue.isValid()) {
+      return _validatedValue.format(this.get('format'))
+    }
+    return 'Invalid'
+  },
 
   // == Functions =============================================================
 
@@ -55,6 +80,7 @@ export default Component.extend(EventsProxyMixin, {
   // Named to match the event from Pikaday
   _onSelect () {
     const value = this.$('input').val()
+    this.$('input').val(this.get('_value'))
     this.onChange(value)
   },
 
@@ -68,7 +94,8 @@ export default Component.extend(EventsProxyMixin, {
     run.scheduleOnce('sync', this, function () {
       const pikadayOptions = {
         field: this.$('input')[0],
-        onSelect: run.bind(this, this._onSelect)
+        onSelect: run.bind(this, this._onSelect),
+        format: this.get('format')
       }
 
       // Bind any other applicable local values and functions into the Pikaday options

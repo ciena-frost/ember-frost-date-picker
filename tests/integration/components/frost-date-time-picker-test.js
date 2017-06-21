@@ -13,6 +13,8 @@ import {afterEach, beforeEach, describe, it} from 'mocha'
 import moment from 'moment'
 import sinon from 'sinon'
 
+import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
+
 const test = integration('frost-date-time-picker')
 describe(test.label, function () {
   test.setup()
@@ -148,6 +150,92 @@ describe(test.label, function () {
 
     it('should error class on frost-date-picker', function () {
       expect($hook('myHook-time-picker')).to.have.class('error')
+    })
+  })
+
+  describe('dateFormat is set', function () {
+    const dateTimeValue = moment('2017 01 01 01 23 45', 'YYYY MM DD hh mm ss').format(Format.dateTime)
+    beforeEach(function () {
+      this.setProperties({
+        myHook: 'myHook',
+        dateTimeValue: dateTimeValue,
+        onChange: function () {},
+        dateFormat: 'MM/DD/YY'
+      })
+
+      this.render(hbs`
+        {{frost-date-time-picker
+          hook=myHook
+          onChange=onChange
+          value=dateTimeValue
+          dateFormat=dateFormat
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('date picker should format selected date with provided date format', function () {
+      expect($hook('myHook-date-picker-input').val()).to.equal('01/01/17')
+    })
+  })
+
+  describe('timeFormat is set', function () {
+    const dateTimeValue = moment('2017 01 01 01 23 45', 'YYYY MM DD hh mm ss').format(Format.dateTime)
+    beforeEach(function () {
+      this.setProperties({
+        myHook: 'myHook',
+        dateTimeValue: dateTimeValue,
+        onChange: function () {},
+        timeFormat: 'hh-mm-ss'
+      })
+
+      this.render(hbs`
+        {{frost-date-time-picker
+          hook=myHook
+          onChange=onChange
+          value=dateTimeValue
+          timeFormat=timeFormat
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('time picker should format selected time with provided time format', function () {
+      expect($hook('myHook-time-picker-input').val()).to.equal('01-23-45')
+    })
+  })
+
+  describe('dateTimeFormat is set', function () {
+    const dateTimeValue = moment('2017 01 01 01 23 45', 'YYYY MM DD hh mm ss').format(Format.dateTime)
+    let changeStub
+    beforeEach(function () {
+      changeStub = sandbox.stub()
+      this.setProperties({
+        myHook: 'myHook',
+        dateTimeValue: dateTimeValue,
+        onChange: changeStub,
+        dateTimeFormat: 'MM/DD/YY :: hh-mm-ss'
+      })
+      this.render(hbs`
+        {{frost-date-time-picker
+          hook=myHook
+          onChange=onChange
+          value=dateTimeValue
+          dateTimeFormat=dateTimeFormat
+        }}
+      `)
+
+      return wait().then(() => {
+        const interactor = openDatepicker('myHook-date-picker')
+        interactor.selectDate(new Date(2017, 0, 24))
+        this.$().click() // Click outside date picker to close it
+      })
+    })
+
+    it('selected time passed to onChange should use provided dateTimeFormat', function () {
+      expect(changeStub).to.have.been.calledWith('01/24/17 :: 01-23-45')
     })
   })
 })
