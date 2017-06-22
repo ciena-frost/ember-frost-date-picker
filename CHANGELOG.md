@@ -1,3 +1,7 @@
+# 7.1.0 (2017-06-22)
+ * **Added** ability to format date and time strings
+
+
 # 7.0.12 (2017-06-08)
 * **Fixed** `pikaday` memory leak on `_onKeyChange`
 
