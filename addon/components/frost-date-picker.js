@@ -49,18 +49,10 @@ export default Component.extend(EventsProxyMixin, {
 
   @readOnly
   @computed('value')
-  _validatedValue (value) {
-    if (value) {
-      return moment(value, this.get('format'))
-    }
-    return false
-  },
-
-  @readOnly
-  @computed('_validatedValue')
-  _value (_validatedValue) {
-    if (_validatedValue && _validatedValue.isValid()) {
-      return _validatedValue.format(this.get('format'))
+  _value (value) {
+    const validatedValue = moment(value, this.get('format'))
+    if (validatedValue.isValid()) {
+      return validatedValue.format(this.get('format'))
     }
     return 'Invalid'
   },
@@ -80,7 +72,6 @@ export default Component.extend(EventsProxyMixin, {
   // Named to match the event from Pikaday
   _onSelect () {
     const value = this.$('input').val()
-    this.$('input').val(this.get('_value'))
     this.onChange(value)
   },
 

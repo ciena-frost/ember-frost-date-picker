@@ -37,10 +37,10 @@ export default Component.extend({
     onChange: PropTypes.func.isRequired,
 
     // State
-    _dateValueInternal: PropTypes.string,
-    _dateValueInvalid: PropTypes.bool,
-    _timeValueInternal: PropTypes.string,
-    _timeValueInvalid: PropTypes.bool
+    _selectedDateValue: PropTypes.string,
+    _selectedDateValueInvalid: PropTypes.bool,
+    _selectedTimeValue: PropTypes.string,
+    _selectedTimeValueInvalid: PropTypes.bool
   },
 
   getDefaultProps () {
@@ -48,64 +48,40 @@ export default Component.extend({
       dateFormat: DEFAULT_DATE_FORMAT,
       timeFormat: DEFAULT_TIME_FORMAT,
       dateTimeFormat: DEFAULT_DATE_TIME_FORMAT,
-      _dateValueInvalid: false,
-      _timeValueInvalid: false
+      _selectedDateValueInvalid: false,
+      _selectedTimeValueInvalid: false
     }
   },
 
   // == Computed Properties ===================================================
 
   @readOnly
-  @computed('_validatedValue')
-  _dateValue (_validatedValue) {
-    if (_validatedValue && _validatedValue.isValid()) {
-      return this._formattedDate(_validatedValue, false)
-    }
-    return 'Invalid'
-  },
-
-  @readOnly
-  @computed('_validatedValue')
-  _timeValue (_validatedValue) {
-    if (_validatedValue && _validatedValue.isValid()) {
-      return this._formattedTime(_validatedValue, false)
+  @computed('value')
+  _dateValue (value) {
+    const momentValue = moment(value)
+    if (momentValue.isValid()) {
+      return momentValue.format(this.get('dateFormat'))
     }
     return 'Invalid'
   },
 
   @readOnly
   @computed('value')
-  _validatedValue (value) {
+  _timeValue (value) {
     const momentValue = moment(value)
     if (momentValue.isValid()) {
-      return momentValue
+      return momentValue.format(this.get('timeFormat'))
     }
-    return false
+    return 'Invalid'
   },
 
   @readOnly
-  @computed('_validatedValue')
-  _valueInvalid (_validatedValue) {
-    return _validatedValue === false
+  @computed('_dateValue', '_timeValue')
+  _valueInvalid (_dateValue, _timeValue) {
+    return _dateValue === 'Invalid' || _timeValue === 'Invalid'
   },
 
   // == Functions =============================================================
-
-  _dateMoment (_dateValue) {
-    return moment(_dateValue, this.get('dateFormat'))
-  },
-
-  _formattedDate (_dateValue, useDefaultFormat) {
-    return this._timeMoment(_dateValue).format(useDefaultFormat ? DEFAULT_DATE_FORMAT : this.get('dateFormat'))
-  },
-
-  _timeMoment (_timeValue) {
-    return moment(_timeValue, this.get('timeFormat'))
-  },
-
-  _formattedTime (_timeValue, useDefaultFormat) {
-    return this._timeMoment(_timeValue).format(useDefaultFormat ? DEFAULT_TIME_FORMAT : this.get('timeFormat'))
-  },
 
   // == DOM Events ============================================================
 
@@ -115,44 +91,47 @@ export default Component.extend({
 
   actions: {
     _onDateChange (dateValue) {
-      const momentDateValue = this._dateMoment(dateValue)
+      const momentDateValue = moment(dateValue, this.get('dateFormat'))
       if (momentDateValue.isValid()) {
         this.setProperties({
-          _dateValueInternal: dateValue,
-          _dateValueInvalid: false
+          _selectedDateValue: dateValue,
+          _selectedDateValueInvalid: false
         })
 
-        const _timeValueInternal = this._formattedTime(this.get('_timeValueInternal') || this.get('_timeValue'), true)
-        if (validateTime(_timeValueInternal) === true) {
-          setTime(momentDateValue, _timeValueInternal)
+        // Need to convert the time value to being in the default format just for validation
+        const _selectedTimeValue = moment(this.get('_selectedTimeValue') || this.get('_timeValue'),
+                                          this.get('timeFormat')).format(DEFAULT_TIME_FORMAT)
+        if (validateTime(_selectedTimeValue) === true) {
+          setTime(momentDateValue, _selectedTimeValue)
           this.onChange(momentDateValue.format(this.get('dateTimeFormat')))
         }
       } else {
         this.setProperties({
-          _dateValueInternal: dateValue,
-          _dateValueInvalid: true
+          _selectedDateValue: dateValue,
+          _selectedDateValueInvalid: true
         })
       }
     },
 
     _onTimeChange (timeValue) {
-      let defaultFormattedTime = this._formattedTime(timeValue, true)
+      // Need to convert the time value to being in the default format just for validation
+      let defaultFormattedTime = moment(timeValue, this.get('timeFormat')).format(DEFAULT_TIME_FORMAT)
       if (validateTime(defaultFormattedTime) === true) {
         this.setProperties({
-          _timeValueInternal: timeValue,
-          _timeValueInvalid: false
+          _selectedTimeValue: timeValue,
+          _selectedTimeValueInvalid: false
         })
 
-        const _dateValueInternal = this.get('_dateValueInternal')
-        const momentDateValue = this._dateMoment(_dateValueInternal || this.get('_dateValue'))
+        const _selectedDateValue = this.get('_selectedDateValue')
+        const momentDateValue = moment(_selectedDateValue || this.get('_dateValue'), this.get('dateFormat'))
         if (momentDateValue.isValid()) {
           setTime(momentDateValue, defaultFormattedTime)
           this.onChange(momentDateValue.format(this.get('dateTimeFormat')))
         }
       } else {
         this.setProperties({
-          _timeValueInternal: timeValue,
-          _timeValueInvalid: true
+          _selectedTimeValue: timeValue,
+          _selectedTimeValueInvalid: true
         })
       }
     }

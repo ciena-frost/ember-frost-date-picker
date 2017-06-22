@@ -1,5 +1,3 @@
-/* global $ */
-
 /**
  * Integration test for the frost-time-picker component
  */

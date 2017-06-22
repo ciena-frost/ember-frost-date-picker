@@ -233,8 +233,8 @@ describe(test.label, function () {
       expect(changeStub).to.have.been.calledWith('2017-06-24')
     })
 
-    it('input text should be unchanged', function () {
-      expect($hook('myHook-input')).to.have.value('2017-06-19')
+    it('input text should be changed', function () {
+      expect($hook('myHook-input')).to.have.value('2017-06-24')
     })
   })
 

@@ -48,25 +48,17 @@ export default Text.extend({
 
   @readOnly
   @computed('value')
-  _validatedValue (value) {
-    if (value) {
-      return moment(value, this.get('format'))
-    }
-    return false
-  },
-
-  @readOnly
-  @computed('_validatedValue')
-  _value (_validatedValue) {
-    if (_validatedValue && _validatedValue.isValid()) {
-      return _validatedValue.format(this.get('format'))
+  _value (value) {
+    const momentValue = moment(value, this.get('format'))
+    if (momentValue.isValid()) {
+      return momentValue.format(this.get('format'))
     }
     return 'Invalid'
   },
 
   // == Functions =============================================================
 
-  _clockpickerFormat (value) {
+  _clockPickerFormat (value) {
     return moment(value, this.get('format')).format(DEFAULT_TIME_FORMAT)
   },
 
@@ -77,14 +69,13 @@ export default Text.extend({
   // Named to match the event from https://weareoutman.github.io/clockpicker/
   _afterDone () {
     const value = this.$('input').val()
-    this.$('input').val(this.get('_value'))
     this.onChange(this._displayFormat(value))
   },
 
   // Named to match the event from https://weareoutman.github.io/clockpicker/
   _beforeShow () {
     let value = this.$('input').val()
-    this.$('input').val(this._clockpickerFormat(value))
+    this.$('input').val(this._clockPickerFormat(value)) // Clock picker only works with this format
   },
 
   // Named to match the event from https://weareoutman.github.io/clockpicker/

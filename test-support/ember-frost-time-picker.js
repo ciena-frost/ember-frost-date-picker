@@ -60,10 +60,12 @@ const ClockpickerInteractor = {
     // Event options
     const options = {bubbles: false, clientX: xMiddle, clientY: yMiddle}
 
+    /* eslint-disable */
     element.dispatchEvent(new MouseEvent('mouseover', options))
     element.dispatchEvent(new MouseEvent('mousedown', options))
     element.dispatchEvent(new MouseEvent('mouseup', options))
     element.dispatchEvent(new MouseEvent('click', options))
+    /* eslint-enable */
     setTimeout(function () { }, 150)
   }
 }

@@ -3,7 +3,7 @@
 {{#if date}}
   {{component date
     hook=(concat hookPrefix '-date-picker')
-    class=(if (or _valueInvalid _dateValueInvalid) 'error')
+    class=(if (or _valueInvalid _selectedDateValueInvalid) 'error')
     value=(readonly _dateValue)
     onChange=(action '_onDateChange')
     format=(readonly dateFormat)
@@ -11,7 +11,7 @@
 {{else}}
   {{frost-date-picker
     hook=(concat hookPrefix '-date-picker')
-    class=(if (or _valueInvalid _dateValueInvalid) 'error')
+    class=(if (or _valueInvalid _selectedDateValueInvalid) 'error')
     value=(readonly _dateValue)
     onChange=(action '_onDateChange')
     format=(readonly dateFormat)
@@ -21,7 +21,7 @@
 {{#if time}}
   {{component time
     hook=(concat hookPrefix '-time-picker')
-    class=(if (or _valueInvalid _timeValueInvalid) 'error')
+    class=(if (or _valueInvalid _selectedTimeValueInvalid) 'error')
     value=(readonly _timeValue)
     onChange=(action '_onTimeChange')
     format=(readonly timeFormat)
@@ -29,7 +29,7 @@
 {{else}}
   {{frost-time-picker
     hook=(concat hookPrefix '-time-picker')
-    class=(if (or _valueInvalid _timeValueInvalid) 'error')
+    class=(if (or _valueInvalid _selectedTimeValueInvalid) 'error')
     value=(readonly _timeValue)
     onChange=(action '_onTimeChange')
     format=(readonly timeFormat)
