@@ -209,7 +209,7 @@ describe(test.label, function () {
     beforeEach(function () {
       changeStub = sandbox.stub()
       this.setProperties({
-        dateValue,
+        dateValue: '2017-06-19',
         myHook: 'myHook',
         onChange: changeStub
       })
@@ -224,17 +224,111 @@ describe(test.label, function () {
 
       return wait().then(() => {
         const interactor = openDatepicker('myHook')
-        interactor.selectDate(new Date(2017, 0, 24))
+        interactor.selectDate(new Date(2017, 5, 24))
         closePikaday(this)
       })
     })
 
     it('should call onChange with the updated value', function () {
-      expect(changeStub).to.have.been.calledWith('2017-01-24')
+      expect(changeStub).to.have.been.calledWith('2017-06-24')
     })
 
-    it('should display the updated value', function () {
-      expect($hook('myHook-input')).to.have.value('2017-01-24')
+    it('input text should be changed', function () {
+      expect($hook('myHook-input')).to.have.value('2017-06-24')
+    })
+  })
+
+  describe('uses specified format', function () {
+    let changeStub
+
+    beforeEach(function () {
+      changeStub = function (val) {
+        this.setProperties({
+          dateValue: val
+        })
+      }
+      this.setProperties({
+        dateValue: '1995/02/27',
+        myHook: 'myHook',
+        dateFormat: 'YYYY/MM/DD',
+        onChange: changeStub
+      })
+
+      this.render(hbs`
+        {{frost-date-picker
+          hook=myHook
+          onChange=onChange
+          value=dateValue
+          format=dateFormat
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should display the formatted value', function () {
+      expect($hook('myHook-input')).to.have.value('1995/02/27')
+    })
+  })
+
+  describe('value does not match specified format', function () {
+    beforeEach(function () {
+      this.setProperties({
+        dateValue,
+        myHook: 'myHook',
+        dateFormat: 'abcdefgh',
+        onChange: function () {}
+      })
+
+      this.render(hbs`
+        {{frost-date-picker
+          hook=myHook
+          onChange=onChange
+          value=dateValue
+          format=dateFormat
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should display the invalid value', function () {
+      expect($hook('myHook-input')).to.have.value('Invalid')
+    })
+  })
+
+  describe('updates using specified format', function () {
+    beforeEach(function () {
+      let changeStub = (val) => {
+        this.setProperties({
+          dateValue: val
+        })
+      }
+      this.setProperties({
+        dateValue: '2017/01/01',
+        myHook: 'myHook',
+        dateFormat: 'YYYY/MM/DD',
+        onChange: changeStub
+      })
+
+      this.render(hbs`
+        {{frost-date-picker
+          hook=myHook
+          onChange=onChange
+          value=dateValue
+          format=dateFormat
+        }}
+      `)
+
+      return wait().then(() => {
+        const interactor = openDatepicker('myHook')
+        interactor.selectDate(new Date(2017, 0, 24))
+        closePikaday(this)
+      })
+    })
+
+    it('should display the updated, formatted value', function () {
+      expect($hook('myHook-input')).to.have.value('2017/01/24')
     })
   })
 })
