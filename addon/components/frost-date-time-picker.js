@@ -29,8 +29,7 @@ export default Component.extend({
     date: PropTypes.EmberComponent,
     dateFormat: PropTypes.string,
     dateTimeFormat: PropTypes.string,
-    // FIXME: we should implement a date type in prop types - @dafortin 2017.06.24
-    minDate: PropTypes.instanceOf(Date),
+    minDate: PropTypes.date,
     time: PropTypes.EmberComponent,
     timeFormat: PropTypes.string,
     value: PropTypes.string.isRequired,
