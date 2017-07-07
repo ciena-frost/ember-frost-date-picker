@@ -2,6 +2,7 @@
   hook='demo-date-picker'
   class=(if dateValueInvalid 'error')
   value=dateValue
+  minDate=now
   onChange=(action 'onDateChange')
 }}
 
@@ -16,6 +17,7 @@
   hook='demo-date-time-picker'
   class=(if dateTimeValueInvalid 'error')
   value=dateTimeValue
+  minDate=now
   onChange=(action 'onDateTimeChange')
 }}
 
@@ -38,3 +40,4 @@
   value=rangeValue
   onChange=(action 'onRangeChange')
 }}
+

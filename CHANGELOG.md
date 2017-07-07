@@ -1,3 +1,13 @@
+# 7.2.1 (2017-06-26)
+* **Use** date prop type for date-time-picker
+
+# 7.2.0 (2017-06-23)
+* **Add** support for `minDate` in `date-time-picker`
+
+# 7.1.0 (2017-06-22)
+ * **Added** ability to format date and time strings
+
+
 # 7.0.12 (2017-06-08)
 * **Fixed** `pikaday` memory leak on `_onKeyChange`
 
