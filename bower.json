@@ -1,5 +1,10 @@
 {
   "name": "ember-frost-date-picker",
   "dependencies": {
+    "sinonjs": "1.17.1",
+    "clockpicker-seconds": "~0.1.6"
+  },
+  "devDependencies": {
+    "font-awesome": "^4.6.3"
   }
 }

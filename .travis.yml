@@ -24,7 +24,7 @@ env:
   matrix:
   - EMBER_TRY_SCENARIO=ember-lts-2.8
   - EMBER_TRY_SCENARIO=ember-default
-  
+
   global:
     - CXX=g++-4.8
     - secure: I/ChUVtO5O9OjCsiV9fQ7Lt2D2jCMnqzheyzuzMg7xzRBkxIcNxYxR5HvW8e8q6b/IJolo2xbcqGONBksuXoLvu/BxTSq64FHJeZNj7UK/qZ/SyhJDFyat8N/eokPUQPSw+zRs97xg/dSta287XIKskSszxddwQyVus/lWI9Y9VFNIuLBUw6hL5napPjV/EiJdBzNZV0XoU/NHvL7fSg8nSQmnewvOt+kJNt4ElAMhV9+dXccqYUPmQYBxyCLhygdzaKuzNIDe2kgrewRhvgDARJPUS6QN/ZuMxgTOxan6M6G04YiYMKX0SHLziaD7egX0b7hw4MUjvNrOMvUOatb23IqZiQeQq4kAKTNX/cIBEipMuO1OMGkowlNSfkD8EvLL5N2bAzJVGBNObkx149OKusV/0uSmvf+9A7UGiGY58Wn3O7dAhww9Vjt9FyuXReLrN693ihWxe0xNyvPTlOX7CE0qyy5zbxNDwKKznJfSoPG6M5OZzOWfFBwTfJvR4glMU3Il+kNQmefqW+EWUL41+KMdf91o51hqUSunoPwqAjL3+Ydm8ZStjnKWs1SEPZ3A2Xntduu4nnl8sjsx82c3Ck3ukqbUozX2UDAhqpzhfhJoDrV1rUeEdIufGkBmZlqBa/Q24R40KMNwdTvImogQ47nXGEBvcMCVto5uBAF7g=
@@ -32,7 +32,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-  - env: EMBER_TRY_SCENARIO=ember-release
+    - node_js: 'stable'
 
 before_install:
 - npm config set spin false
@@ -49,7 +49,6 @@ before_script:
 
 script:
 - $(npm root -g)/pr-bumper/.travis/maybe-test.sh
-- $(npm root -g)/pr-bumper/.travis/maybe-test.sh coverage
 - .travis/maybe-check-coverage.sh
 - .travis/maybe-bump-version.sh
 
