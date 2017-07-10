@@ -44,7 +44,6 @@
     "ember-cli-release": "0.2.9",
     "ember-cli-shims": "^1.0.2",
     "ember-cli-sri": "^2.0.0",
-    "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-code-snippet": "^1.4.0",
     "ember-computed-decorators": "0.3.0",
@@ -77,7 +76,7 @@
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.7",
-    "ember-cli-htmlbars": "^1.0.1",
+    "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "^5.2.0",
     "ember-frost-core": "^1.14.3",
     "ember-pikaday-shim": "^0.1.0"
