@@ -1,3 +1,7 @@
+# 7.2.3 (2017-07-11)
+* **Updated** added code coverage validation
+
+
 # 7.2.2 (2017-07-11)
 Upgrade Ember-cli to 2.12.3
 
