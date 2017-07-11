@@ -1,8 +1,6 @@
 {
   "name": "ember-frost-date-picker",
   "dependencies": {
-    "ember-mocha-adapter": "~0.3.1",
-    "sinonjs": "1.17.1",
     "clockpicker-seconds": "~0.1.6"
   },
   "devDependencies": {
