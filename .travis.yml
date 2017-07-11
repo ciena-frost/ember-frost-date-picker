@@ -53,6 +53,7 @@ script:
 
 after_success:
 - .travis/maybe-publish-coverage.sh
+- .travis/maybe-check-coverage.sh
 - .travis/maybe-publish-gh-pages.sh
 
 deploy:
