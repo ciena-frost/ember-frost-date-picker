@@ -1,3 +1,7 @@
+# 7.2.4 (2017-07-24)
+* **Updated** to pr-bumper version 2
+
+
 # 7.2.3 (2017-07-11)
 * **Updated** added code coverage validation
 
