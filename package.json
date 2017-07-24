@@ -61,7 +61,7 @@
     "liquid-fire": "0.27.0",
     "loader.js": "^4.2.3",
     "pikaday": "^1.5.1",
-    "pr-bumper": "^1.11.0",
+    "pr-bumper": "^2.0.1",
     "sinon-chai": "^2.8.0"
   },
   "keywords": [
@@ -79,6 +79,6 @@
     "configPath": "tests/dummy/config"
   },
   "pr-bumper": {
-    "coverage": 85.47
+    "coverage": 82.52
   }
 }
