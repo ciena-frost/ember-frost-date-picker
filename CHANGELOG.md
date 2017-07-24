@@ -1,3 +1,6 @@
+# 7.2.5 (2017-07-24)
+* **Reverted** changes to gh-pages scripts because demo app was not updated on the gh-pages branch
+
 # 7.2.4 (2017-07-24)
 * **Updated** to pr-bumper version 2
 
