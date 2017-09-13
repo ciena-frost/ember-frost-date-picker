@@ -27,7 +27,7 @@ export default Component.extend(EventsProxyMixin, {
 
     // Options
     isIconVisible: PropTypes.bool,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,  // No longer required, because UX requires us to be able to present empty selections
     format: PropTypes.string,
 
     // Events
@@ -50,6 +50,10 @@ export default Component.extend(EventsProxyMixin, {
   @readOnly
   @computed('value')
   _value (value) {
+    if (value === undefined) {
+      // UX requires us to support date pickers that do not yet have a date picked.
+      return undefined  // explicitly allow empty values for un-picked date values.
+    }
     const validatedValue = moment(value, this.get('format'))
     if (validatedValue.isValid()) {
       return validatedValue.format(this.get('format'))

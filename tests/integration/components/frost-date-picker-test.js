@@ -72,6 +72,33 @@ describe(test.label, function () {
     })
   })
 
+  describe('when no value is provided', function () {
+    // Note: UX requires us to be able to show a date input which has no date selected.
+    // Auto-defaulting undefined date values to the current date will break any form that
+    // wants to have an optional date field.
+    beforeEach(function () {
+      this.setProperties({
+        dateValue: undefined,
+        myHook: 'myHook',
+        onChange: function () {}
+      })
+
+      this.render(hbs`
+        {{frost-date-picker
+          hook=myHook
+          onChange=onChange
+          value=dateValue
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should show a blank value', function () {
+      expect($hook('myHook-input')).to.have.value('')
+    })
+  })
+
   describe('when clicking inside the <input>', function () {
     beforeEach(function () {
       this.setProperties({
