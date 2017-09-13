@@ -1,3 +1,11 @@
+# 7.3.0 (2017-09-13)
+- The `value` property of `frost-date-picker` is again optional, so that
+  it will work correctly with Bunsen forms which require _optional_ date
+  fields.
+- Added demo styling and headings to clarify examples
+- Added code samples to widget demo
+- Pinned more dependencies to fix the build
+
 # 7.2.7 (2017-08-11)
 * **Updated** move `coverage.js` config file to be in the correct location
 
