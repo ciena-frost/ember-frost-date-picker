@@ -99,6 +99,30 @@ describe(test.label, function () {
     })
   })
 
+  describe('when empty string is provided', function () {
+    beforeEach(function () {
+      this.setProperties({
+        dateValue: '',
+        myHook: 'myHook',
+        onChange: function () {}
+      })
+
+      this.render(hbs`
+        {{frost-date-picker
+          hook=myHook
+          onChange=onChange
+          value=dateValue
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should show a blank value', function () {
+      expect($hook('myHook-input')).to.have.value('')
+    })
+  })
+
   describe('when clicking inside the <input>', function () {
     beforeEach(function () {
       this.setProperties({

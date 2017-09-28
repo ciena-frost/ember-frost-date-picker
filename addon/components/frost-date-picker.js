@@ -50,7 +50,7 @@ export default Component.extend(EventsProxyMixin, {
   @readOnly
   @computed('value')
   _value (value) {
-    if (value === undefined) {
+    if (!value) {
       // UX requires us to support date pickers that do not yet have a date picked.
       return undefined  // explicitly allow empty values for un-picked date values.
     }
