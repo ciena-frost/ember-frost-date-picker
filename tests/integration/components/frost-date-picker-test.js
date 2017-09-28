@@ -145,7 +145,6 @@ describe(test.label, function () {
     })
   })
 
-
   describe('when clicking inside the <input>', function () {
     beforeEach(function () {
       this.setProperties({
