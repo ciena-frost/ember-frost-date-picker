@@ -1,3 +1,8 @@
+# 7.3.1 (2017-09-28)
+
+* Passing `null` or `''` to `frost-date-picker` will now show as empty instead of invalid
+
+
 # 7.3.0 (2017-09-13)
 - The `value` property of `frost-date-picker` is again optional, so that
   it will work correctly with Bunsen forms which require _optional_ date
