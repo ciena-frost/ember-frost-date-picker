@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {run, typeOf} = Ember
+const {isEmpty, run, typeOf} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {Component, EventsProxyMixin} from 'ember-frost-core'
 import {Format} from 'ember-frost-date-picker'
@@ -27,7 +27,10 @@ export default Component.extend(EventsProxyMixin, {
 
     // Options
     isIconVisible: PropTypes.bool,
-    value: PropTypes.string,  // No longer required, because UX requires us to be able to present empty selections
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.null
+    ]),  // No longer required, because UX requires us to be able to present empty selections
     format: PropTypes.string,
 
     // Events
@@ -50,7 +53,7 @@ export default Component.extend(EventsProxyMixin, {
   @readOnly
   @computed('value')
   _value (value) {
-    if (value === undefined) {
+    if (isEmpty(value)) {
       // UX requires us to support date pickers that do not yet have a date picked.
       return undefined  // explicitly allow empty values for un-picked date values.
     }
