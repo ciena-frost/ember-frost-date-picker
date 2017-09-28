@@ -78,7 +78,6 @@ describe(test.label, function () {
     // wants to have an optional date field.
     beforeEach(function () {
       this.setProperties({
-        dateValue: undefined,
         myHook: 'myHook',
         onChange: function () {}
       })
@@ -87,7 +86,6 @@ describe(test.label, function () {
         {{frost-date-picker
           hook=myHook
           onChange=onChange
-          value=dateValue
         }}
       `)
 
@@ -122,6 +120,31 @@ describe(test.label, function () {
       expect($hook('myHook-input')).to.have.value('')
     })
   })
+
+  describe('when null is provided', function () {
+    beforeEach(function () {
+      this.setProperties({
+        dateValue: null,
+        myHook: 'myHook',
+        onChange: function () {}
+      })
+
+      this.render(hbs`
+        {{frost-date-picker
+          hook=myHook
+          onChange=onChange
+          value=dateValue
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should show a blank value', function () {
+      expect($hook('myHook-input')).to.have.value('')
+    })
+  })
+
 
   describe('when clicking inside the <input>', function () {
     beforeEach(function () {
