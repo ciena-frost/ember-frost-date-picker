@@ -14,6 +14,7 @@
 # 7.2.7 (2017-08-11)
 * **Updated** move `coverage.js` config file to be in the correct location
 
+
 # 7.2.6 (2017-08-09)
 * **Updated** internal frost dependencies to match 2.12.3 versions
 * **Updated** `ember-cli-htmlbars-inline-precompile` to pin to version 0.3.12 until ember-cli/ember-cli-htmlbars-inline-precompile#90 is resolved. (See issue: #488)
