@@ -4,7 +4,7 @@ module.exports = {
   afterInstall: function (options) {
     const addonsToAdd = [
       {name: 'ember-cli-moment-shim', target: '3.3.3'},
-      {name: 'ember-frost-core', target: '1.23.10'},
+      {name: 'ember-frost-core', target: '^3.0.1'},
       {name: 'ember-pikaday-shim', target: '0.1.0'}
     ]
 
