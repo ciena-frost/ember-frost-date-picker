@@ -1,3 +1,7 @@
+# 8.0.0 (2017-11-08)
+* Use the latest `ember-frost-core`, with a flexible minor version (`^3.0.1`)
+
+
 # 7.3.1 (2017-09-28)
 
 * Passing `null` or `''` to `frost-date-picker` will now show as empty instead of invalid
