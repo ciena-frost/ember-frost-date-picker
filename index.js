@@ -31,8 +31,10 @@ module.exports = {
     return app
   },
 
-  included: function () {
-    var app = this._findHost()
+  included: function (app) {
+    this._super.included.apply(this, app)
+
+    // var app = this._findHost()
 
     if (!app.bowerDirectory) {
       app.import('bower_components/clockpicker-seconds/dist/jquery-clockpicker.min.js')
