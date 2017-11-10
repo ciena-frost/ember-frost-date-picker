@@ -1,3 +1,10 @@
+# 8.0.1 (2017-11-10)
+* **Updated** to latest version of `ember-pikaday-shim` which now includes `pikaday` and `ember-cli-moment-shim` in its dependencies.
+* **Removed** no longer needed `pikaday`
+* **Removed** no longer needed `ember-cli-moment-shim`
+* **Updated** blueprints to no longer include dependencies being provided by `ember-pikaday-shim`
+* **Updated** `index.js` to correctly bind context to call of this._super.included()
+
 # 8.0.0 (2017-11-08)
 * Use the latest `ember-frost-core`, with a flexible minor version (`^3.0.1`)
 
