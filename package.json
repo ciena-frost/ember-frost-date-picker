@@ -74,7 +74,7 @@
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "5.6.0",
     "ember-frost-core": "^3.0.1",
-    "ember-pikaday-shim": "git://github.com/notmessenger/ember-pikaday-shim#Issue4"
+    "ember-pikaday-shim": "0.1.3"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
