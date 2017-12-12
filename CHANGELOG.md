@@ -1,3 +1,8 @@
+# 8.0.2 (2017-12-12)
+* **Updated** version of `ember-pikaday-shim` to `0.1.4`
+* **Added** bower since it is no longer included by Ember CLI
+
+
 # 8.0.1 (2017-11-10)
 * **Updated** to latest version of `ember-pikaday-shim` which now includes `pikaday` and `ember-cli-moment-shim` in its dependencies.
 * **Removed** no longer needed `pikaday`
