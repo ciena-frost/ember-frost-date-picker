@@ -75,7 +75,7 @@
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "5.6.0",
     "ember-frost-core": "^3.0.1",
-    "ember-pikaday-shim": "0.1.4"
+    "ember-pikaday-shim": "1.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
