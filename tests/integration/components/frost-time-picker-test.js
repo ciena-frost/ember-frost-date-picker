@@ -3,6 +3,7 @@
  */
 
 import {expect} from 'chai'
+import {openTimepicker} from 'dummy/tests/ember-frost-time-picker'
 import {Format} from 'ember-frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
@@ -11,8 +12,6 @@ import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import moment from 'moment'
 import sinon from 'sinon'
-
-import {openTimepicker} from 'dummy/tests/ember-frost-time-picker'
 
 const test = integration('frost-time-picker')
 describe(test.label, function () {
@@ -75,7 +74,7 @@ describe(test.label, function () {
       return wait()
     })
 
-    it('time value format matches custom format', function () {
+    it('should have time value format matches custom format', function () {
       expect($hook('myHook-input').val()).to.equal('01-23-45')
     })
   })
@@ -101,7 +100,7 @@ describe(test.label, function () {
       return wait()
     })
 
-    it('displays invalid string', function () {
+    it('should display invalid string', function () {
       expect($hook('myHook-input').val()).to.equal('Invalid')
     })
   })
@@ -127,7 +126,7 @@ describe(test.label, function () {
       return wait()
     })
 
-    it('displays invalid string', function () {
+    it('should display invalid string', function () {
       expect($hook('myHook-input').val()).to.equal('Invalid')
     })
   })
@@ -153,7 +152,7 @@ describe(test.label, function () {
       return wait()
     })
 
-    it('displays invalid string', function () {
+    it('should display invalid string', function () {
       expect($hook('myHook-input').val()).to.equal('Invalid')
     })
   })
@@ -187,7 +186,7 @@ describe(test.label, function () {
       })
     })
 
-    it('clockpicker opens to last selected time', function () {
+    it('should have clockpicker open to last selected time', function () {
       expect(selectedTime.hour).to.equal('01')
       expect(selectedTime.minute).to.equal('23')
       expect(selectedTime.second).to.equal('45')
@@ -228,7 +227,7 @@ describe(test.label, function () {
       })
     })
 
-    it('onChange method called with formatted time string', function () {
+    it('should have onChange method called with formatted time string', function () {
       expect(changeStub).to.have.been.calledWith('05-10-15')
     })
   })
@@ -265,7 +264,7 @@ describe(test.label, function () {
       })
     })
 
-    it('input text is updated', function () {
+    it('should show input text as updated', function () {
       expect($hook('myHook-input').val()).to.equal('05-10-15')
     })
   })

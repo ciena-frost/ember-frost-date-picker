@@ -3,6 +3,7 @@
  */
 
 import {expect} from 'chai'
+import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
 import {Format} from 'ember-frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
@@ -12,8 +13,6 @@ import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import moment from 'moment'
 import sinon from 'sinon'
-
-import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
 
 const test = integration('frost-date-time-picker')
 describe(test.label, function () {
@@ -153,7 +152,7 @@ describe(test.label, function () {
     })
   })
 
-  describe('dateFormat is set', function () {
+  describe('date pickers dateFormat is set', function () {
     const dateTimeValue = moment('2017 01 01 01 23 45', 'YYYY MM DD hh mm ss').format(Format.dateTime)
     beforeEach(function () {
       this.setProperties({
@@ -175,12 +174,12 @@ describe(test.label, function () {
       return wait()
     })
 
-    it('date picker should format selected date with provided date format', function () {
+    it('should format selected date with provided date format', function () {
       expect($hook('myHook-date-picker-input').val()).to.equal('01/01/17')
     })
   })
 
-  describe('timeFormat is set', function () {
+  describe('time pickers timeFormat is set', function () {
     const dateTimeValue = moment('2017 01 01 01 23 45', 'YYYY MM DD hh mm ss').format(Format.dateTime)
     beforeEach(function () {
       this.setProperties({
@@ -202,7 +201,7 @@ describe(test.label, function () {
       return wait()
     })
 
-    it('time picker should format selected time with provided time format', function () {
+    it('should format selected time with provided time format', function () {
       expect($hook('myHook-time-picker-input').val()).to.equal('01-23-45')
     })
   })
@@ -234,7 +233,7 @@ describe(test.label, function () {
       })
     })
 
-    it('selected time passed to onChange should use provided dateTimeFormat', function () {
+    it('should have selected time passed to onChange using provided dateTimeFormat', function () {
       expect(changeStub).to.have.been.calledWith('01/24/17 :: 01-23-45')
     })
   })

@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import Ember from 'ember'
 const {$} = Ember
+import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
 import {Format} from 'ember-frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
@@ -9,8 +10,6 @@ import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import moment from 'moment'
 import sinon from 'sinon'
-
-import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
 
 /**
  * Click outside the date picker to close it
@@ -306,7 +305,7 @@ describe(test.label, function () {
       expect(changeStub).to.have.been.calledWith('2017-06-24')
     })
 
-    it('input text should be changed', function () {
+    it('should show input text changed', function () {
       expect($hook('myHook-input')).to.have.value('2017-06-24')
     })
   })

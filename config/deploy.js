@@ -1,5 +1,5 @@
 module.exports = function (deployTarget) {
-  var ENV = {
+  let ENV = {
     build: {}
     // include other plugin configuration that applies to all deploy targets here
   }
