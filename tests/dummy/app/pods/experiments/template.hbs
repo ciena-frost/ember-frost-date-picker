@@ -1,24 +1,56 @@
+<h3>frost-date-picker</h3>
+<h5>with a date value:</h5>
+{{! BEGIN-SNIPPET date-picker-example }}
+{{! value may be undefined }}
 {{frost-date-picker
   hook='demo-date-picker'
   class=(if dateValueInvalid 'error')
   value=dateValue
+  minDate=now
   onChange=(action 'onDateChange')
 }}
+{{! END-SNIPPET }}
+<h5>with an undefined value:</h5>
+{{frost-date-picker
+  hook='demo-date-picker'
+  class=(if dateValueInvalid 'error')
+  minDate=now
+  onChange=(action 'onDateChange')
+}}
+<div>
+  {{code-snippet name="date-picker-example.hbs"}}
+</div>
 
+<h3>frost-time-picker</h3>
+{{! BEGIN-SNIPPET time-picker-example }}
 {{frost-time-picker
   hook='demo-time-picker'
   class=(if timeValueInvalid 'error')
   value=timeValue
   onChange=(action 'onTimeChange')
 }}
+{{! END-SNIPPET }}
+<div>
+  {{code-snippet name="time-picker-example.hbs"}}
+</div>
 
+<h3>frost-date-time-picker</h3>
+{{! BEGIN-SNIPPET date-time-picker-example }}
 {{frost-date-time-picker
   hook='demo-date-time-picker'
   class=(if dateTimeValueInvalid 'error')
   value=dateTimeValue
+  minDate=now
   onChange=(action 'onDateTimeChange')
 }}
+{{! END-SNIPPET }}
+<div>
+  {{code-snippet name="date-time-picker-example.hbs"}}
+</div>
 
+<h3>frost-range-picker</h3>
+<h5>horizontal layout</h5>
+{{! BEGIN-SNIPPET range-picker-example }}
 {{frost-range-picker
   hook='demo-range-picker'
   class=(if rangeValueInvalid 'error')
@@ -28,7 +60,9 @@
   value=rangeValue
   onChange=(action 'onRangeChange')
 }}
+{{! END-SNIPPET }}
 
+<h5>vertical layout</h5>
 {{frost-range-picker
   hook='demo-range-picker'
   class=(if rangeValueInvalid 'error')
@@ -38,3 +72,7 @@
   value=rangeValue
   onChange=(action 'onRangeChange')
 }}
+
+<div>
+  {{code-snippet name="range-picker-example.hbs"}}
+</div>

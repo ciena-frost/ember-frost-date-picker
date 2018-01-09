@@ -1,0 +1,10 @@
+{
+  "features": {
+    "changelog": {
+      "enabled": true
+    },
+    "coverage": {
+      "enabled": true
+    }
+  }
+}

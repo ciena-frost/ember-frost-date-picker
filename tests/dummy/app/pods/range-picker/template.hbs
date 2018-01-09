@@ -10,11 +10,11 @@
       {{code-snippet name="range_template.hbs"}}
     </div>
     <div class='item'>
-      <!-- BEGIN-SNIPPET range_template -->
+      {{! BEGIN-SNIPPET range_template }}
       <div class='row'>
         <div class='item'>
           <h3>Current Value</h3>
-          {{value.start}} <br/>
+          {{value.start}} <br>
           {{value.end}}
         </div>
       </div>
@@ -33,7 +33,7 @@
           }}
         </div>
       </div>
-      <!-- END-SNIPPET -->
+      {{! END-SNIPPET }}
 
       <div class='row'>
         <div class='item'>
@@ -45,9 +45,9 @@
           }}
           <p>
             For demo purposes -
-              If state is on, it will use custom validator i.e <code>(action 'myCustomValidator')</code>
-              <br/>
-              Otherwise it will use the normal validation
+            If state is on, it will use custom validator i.e <code>(action 'myCustomValidator')</code>
+            <br>
+            Otherwise it will use the normal validation
           </p>
         </div>
       </div>

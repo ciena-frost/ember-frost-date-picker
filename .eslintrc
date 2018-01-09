@@ -1,6 +1,0 @@
-{
-  "extends": ["frost-standard"],
-  "rules": {
-      "complexity": [2, 6]
-  }
-}

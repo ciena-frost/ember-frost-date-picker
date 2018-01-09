@@ -1,3 +1,4 @@
+/* eslint-env node */
 import Ember from 'ember'
 const {run} = Ember
 

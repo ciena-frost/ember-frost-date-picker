@@ -1,11 +1,16 @@
 import Ember from 'ember'
-const {run, typeOf} = Ember
+const {isEmpty, run, typeOf} = Ember
+import computed, {readOnly} from 'ember-computed-decorators'
 import {Component, EventsProxyMixin} from 'ember-frost-core'
+import {Format} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
+import moment from 'moment'
 import Pikaday from 'pikaday'
 
 import layout from '../templates/components/frost-date-picker'
 import PikadayOptions from '../utils/pikaday-options'
+
+const DEFAULT_DATE_FORMAT = Format.date
 
 export default Component.extend(EventsProxyMixin, {
 
@@ -22,7 +27,11 @@ export default Component.extend(EventsProxyMixin, {
 
     // Options
     isIconVisible: PropTypes.bool,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.null
+    ]),  // No longer required, because UX requires us to be able to present empty selections
+    format: PropTypes.string,
 
     // Events
     onChange: PropTypes.func.isRequired
@@ -32,6 +41,7 @@ export default Component.extend(EventsProxyMixin, {
     return {
       // Options for Pikaday
       theme: 'frost-theme',
+      format: DEFAULT_DATE_FORMAT,
 
       // Options
       isIconVisible: true
@@ -39,6 +49,20 @@ export default Component.extend(EventsProxyMixin, {
   },
 
   // == Computed Properties ===================================================
+
+  @readOnly
+  @computed('value')
+  _value (value) {
+    if (isEmpty(value)) {
+      // UX requires us to support date pickers that do not yet have a date picked.
+      return undefined  // explicitly allow empty values for un-picked date values.
+    }
+    const validatedValue = moment(value, this.get('format'))
+    if (validatedValue.isValid()) {
+      return validatedValue.format(this.get('format'))
+    }
+    return 'Invalid'
+  },
 
   // == Functions =============================================================
 
@@ -68,7 +92,8 @@ export default Component.extend(EventsProxyMixin, {
     run.scheduleOnce('sync', this, function () {
       const pikadayOptions = {
         field: this.$('input')[0],
-        onSelect: run.bind(this, this._onSelect)
+        onSelect: run.bind(this, this._onSelect),
+        format: this.get('format')
       }
 
       // Bind any other applicable local values and functions into the Pikaday options
@@ -89,6 +114,8 @@ export default Component.extend(EventsProxyMixin, {
   },
 
   willDestroyElement () {
+    // TODO: This will not be necessary once https://github.com/dbushell/Pikaday/issues/630 is fixed - @dafortin 2017.06.08
+    document.removeEventListener('keydown', this.get('pikadayElement')._onKeyChange)
     this.get('pikadayElement').destroy()
     this._super(...arguments)
   }

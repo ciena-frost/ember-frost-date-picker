@@ -5,8 +5,8 @@ import moment from 'moment'
 
 export default Controller.extend({
   notificationMessages: inject.service(),
-
-  dateTimeValue: moment().subtract(1, 'day').subtract(1, 'hour').format(Format.dateTime),
+  now: moment().toDate(),
+  dateTimeValue: moment().add(2, 'day').subtract(5, 'hour').format(Format.dateTime),
   dateTimeValueInvalid: false,
   dateValue: moment().subtract(1, 'day').format(Format.date),
   dateValueInvalid: false,

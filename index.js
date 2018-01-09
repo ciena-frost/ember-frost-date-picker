@@ -1,4 +1,4 @@
-/* globals module */
+/* eslint-env node */
 
 'use strict'
 
@@ -20,7 +20,8 @@ module.exports = {
   },
 
   included: function (app) {
-    this._super.included(app)
-    app.import(`${app.bowerDirectory}/clockpicker-seconds/dist/jquery-clockpicker.min.js`)
+    this._super.included.apply(this, app)
+
+    app.import('bower_components/clockpicker-seconds/dist/jquery-clockpicker.min.js')
   }
 }

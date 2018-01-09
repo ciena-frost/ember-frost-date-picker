@@ -1,5 +1,6 @@
 /bower_components
 /config
+/config/ember-try.js
 /dist
 /tests
 /tmp
@@ -8,18 +9,13 @@
 .editorconfig
 .ember-cli
 .eslintignore
-.eslintrc
-.github
+.eslintrc.js
 .gitignore
-.jshintrc
 .pullapprove.yml
 .scripts
 .travis
 .watchmanconfig
 .travis.yml
 bower.json
-dependency-snapshot.json
 ember-cli-build.js
-testem.json
-.idea
-/visual-acceptance
+testem.js
