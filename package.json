@@ -49,7 +49,6 @@
     "ember-export-application-global": "^1.0.5",
     "ember-frost-navigation": "^7.5.4",
     "ember-frost-test": "^4.0.0",
-    "ember-hook": "1.4.2",
     "ember-load-initializers": "^0.6.0",
     "ember-prop-types": "^3.14.1",
     "ember-resolver": "^2.0.3",
@@ -72,6 +71,7 @@
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "7.1.1",
     "ember-frost-core": "^3.0.1",
+    "ember-hook": "1.4.2",
     "ember-pikaday-shim": "1.0.0"
   },
   "ember-addon": {
