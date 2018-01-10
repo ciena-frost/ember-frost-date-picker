@@ -44,7 +44,6 @@
     "ember-cli-shims": "^1.0.2",
     "ember-cli-uglify": "^1.2.0",
     "ember-code-snippet": "1.7.0",
-    "ember-elsewhere": "1.0.1",
     "ember-export-application-global": "^1.0.5",
     "ember-frost-navigation": "^7.5.4",
     "ember-frost-test": "^4.0.0",
