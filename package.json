@@ -50,7 +50,6 @@
     "ember-frost-navigation": "^7.5.4",
     "ember-frost-test": "^4.0.0",
     "ember-load-initializers": "^0.6.0",
-    "ember-prop-types": "^3.14.1",
     "ember-resolver": "^2.0.3",
     "ember-sinon": "^0.7.0",
     "ember-source": "~2.12.0",
@@ -71,7 +70,8 @@
     "ember-cli-sass": "7.1.1",
     "ember-frost-core": "^5.0.0",
     "ember-hook": "1.4.2",
-    "ember-pikaday-shim": "1.0.0"
+    "ember-pikaday-shim": "1.0.0",
+    "ember-prop-types": "^6.0.1"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
