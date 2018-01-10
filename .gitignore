@@ -13,10 +13,10 @@
 /connect.lock
 /coverage/*
 /libpeerconnection.log
-npm-debug.log*
+npm-debug.log
+package-lock.json
 testem.log
 coverage.json
 .idea
-/visual-acceptance
 /typings/*
 jsconfig.json

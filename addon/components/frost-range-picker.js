@@ -20,7 +20,7 @@ export default Component.extend({
   // == PropTypes =============================================================
 
   propTypes: {
-     // Options
+    // Options
     end: PropTypes.EmberComponent,
     endTitle: PropTypes.string,
     isVertical: PropTypes.bool,

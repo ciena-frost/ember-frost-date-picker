@@ -2,13 +2,12 @@
  * Component definition for the frost-date-time-picker component
  */
 
+import layout from '../templates/components/frost-date-time-picker'
 import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
 import {Format, setTime, validateTime} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
-
-import layout from '../templates/components/frost-date-time-picker'
 
 const DEFAULT_DATE_FORMAT = Format.date
 const DEFAULT_TIME_FORMAT = Format.time
@@ -101,7 +100,7 @@ export default Component.extend({
 
         // Need to convert the time value to being in the default format just for validation
         const _selectedTimeValue = moment(this.get('_selectedTimeValue') || this.get('_timeValue'),
-                                          this.get('timeFormat')).format(DEFAULT_TIME_FORMAT)
+          this.get('timeFormat')).format(DEFAULT_TIME_FORMAT)
         if (validateTime(_selectedTimeValue) === true) {
           setTime(momentDateValue, _selectedTimeValue)
           this.onChange(momentDateValue.format(this.get('dateTimeFormat')))
