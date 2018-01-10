@@ -2,6 +2,10 @@
 
 'use strict'
 
+const path = require('path')
+const MergeTrees = require('broccoli-merge-trees')
+const Funnel = require('broccoli-funnel')
+
 module.exports = {
   name: 'ember-frost-date-picker',
 
@@ -24,6 +28,14 @@ module.exports = {
   included: function (app) {
     this._super.included.apply(this, app)
 
-    app.import('bower_components/clockpicker-seconds/dist/jquery-clockpicker.min.js')
+    app.import(path.join('vendor', 'jquery-clockpicker.min.js'))
+  },
+
+  treeForVendor: function (vendorTree) {
+    const packageTree = new Funnel(path.join(this.project.root, 'node_modules', 'clockpicker-seconds', 'dist'), {
+      files: ['jquery-clockpicker.min.js']
+    })
+
+    return new MergeTrees([vendorTree, packageTree])
   }
 }

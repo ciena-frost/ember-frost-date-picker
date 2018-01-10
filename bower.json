@@ -1,8 +1,6 @@
 {
   "name": "ember-frost-date-picker",
-  "dependencies": {
-    "clockpicker-seconds": "~0.1.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "font-awesome": "^4.6.3"
   }
