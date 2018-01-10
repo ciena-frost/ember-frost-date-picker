@@ -1,3 +1,38 @@
+# 9.0.0 (2018-01-10)
+* **Added** `ember-frost-test` @ `^4.0.0`
+* **Updated** `ember-cli-chai` to `0.4.3`
+* **Updated** `ember-cli-mocha` to `0.14.4`
+* **Added** `ember-hook` @ `1.4.2`
+* **Added** `ember-sinon` @ `^0.7.0`
+* **Updated** `ember-test-utils` to `^8.1.0`
+* **Added** `sinon-chai` @ `^2.14.0`
+* **Updated** `ember-cli-frost-blueprints` to `^5.0.1`
+* **Added** ignoring of `package-lock` until we are ready to move to node 8
+* **Removed** useLintTree ember-cli-mocha configuration from `ember-cli-build.js`
+* **Added** ignoring of linting `CHANGELOG.md`
+* **Removed** `.remarkrc` file since it is now provided by `ember-test-utils`
+* **Added** `broccoli-funnel` to `^2.0.1`
+* **Added** `broccoli-merge-trees` to `^2.0.0`
+* **Added** `ember-browserify` @ `^1.2.0`
+* **Updated** pin `ember-code-snippet` to `1.7.0`
+* **Updated** `ember-frost-navigation` to `^8.0.0`
+* **Removed** `clockpicker-seconds` bower dependency and migrated to npm package.
+* **Added** `clockpicker-seconds` npm package and updated `index.js` to provide with add-on.
+* **Updated** `ember-cli-sass` to `7.1.1`
+* **Updated** `ember-computed-decorators` to be a dependency instead of a devDependency
+* **Updated** `ember-frost-core` to `^5.0.0`
+* **Updated** `ember-hook` to `1.4.2` and moved to a dependency instead of a devDependency
+* **Updated** `ember-pikaday-shim` to `1.0.0`
+* **Updated** `ember-prop-types` to `^6.0.0` and moved to a dependency instead of a devDependency
+* **Updated** `ember-truth-helpers` to `^1.3.0` and moved to a dependency instead of a devDependency
+* **Removed** unused `ember-concurrency` package
+* **Removed** unused `ember-elsewhere` package
+* **Removed** unused `estraverse-fb` package
+* **Removed** unused `liquid-fire` package
+* **Removed** blueprint files since packages are now provided via dependencies
+
+
+
 # 8.0.2 (2017-12-12)
 * **Updated** version of `ember-pikaday-shim` to `0.1.4`
 * **Added** bower since it is no longer included by Ember CLI
