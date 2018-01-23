@@ -1,3 +1,6 @@
+# 9.0.1 (2018-01-23)
+* **Updated** to provide the clockpicker-seconds css via the index.js hook (was getting a missing file path error in consumer of this add-on's builds when the import of the css was inside the add-on.scss file)
+
 # 9.0.0 (2018-01-10)
 * **Added** `ember-frost-test` @ `^4.0.0`
 * **Updated** `ember-cli-chai` to `0.4.3`
