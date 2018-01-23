@@ -29,11 +29,15 @@ module.exports = {
     this._super.included.apply(this, app)
 
     app.import(path.join('vendor', 'jquery-clockpicker.min.js'))
+    app.import(path.join('vendor', 'jquery-clockpicker.min.css'))
   },
 
   treeForVendor: function (vendorTree) {
     const packageTree = new Funnel(path.join(this.project.root, 'node_modules', 'clockpicker-seconds', 'dist'), {
-      files: ['jquery-clockpicker.min.js']
+      files: [
+        'jquery-clockpicker.min.js',
+        'jquery-clockpicker.min.css'
+      ]
     })
 
     return new MergeTrees([vendorTree, packageTree])
