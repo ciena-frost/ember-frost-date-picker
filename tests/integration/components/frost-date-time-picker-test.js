@@ -3,8 +3,8 @@
  */
 
 import {expect} from 'chai'
-import {openDatepicker} from 'dummy/tests/ember-frost-date-picker'
 import {Format} from 'ember-frost-date-picker'
+import {openDatepicker} from 'ember-frost-date-picker/test-support/frost-date-picker'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
 import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
