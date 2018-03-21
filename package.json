@@ -1,6 +1,6 @@
 {
   "name": "ember-frost-date-picker",
-  "version": "9.0.1",
+  "version": "10.0.0",
   "description": "",
   "frostGuideDirectory": "design-patterns/date:time-input",
   "directories": {

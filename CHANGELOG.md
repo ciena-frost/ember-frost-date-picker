@@ -1,3 +1,23 @@
+# 10.0.0 (2018-03-21)
+* **Updated** pull request template
+* **Added** issue template
+* **Updated** to `pr-bumper` version `3`
+* **Updated** to node 8
+* **Added** slack integration
+* **Updated** `ember-frost-test` to `^4.0.1`
+* **Updated** `ember-test-utils` to `^8.1.1`
+* **Updated** `ember-cli-frost-blueprints` to `^5.0.2`
+* **Updated** `ember-frost-navigation` to `^9.0.0`
+* **Updated** `pr-bumper` to `^3.7.0`
+* **Updated** `ember-prop-types` to `^7.0.1`
+* **Updated** `ember-frost-core` to `^7.0.0`
+* **Updated** `ember-pikaday-shim` to `^1.0.1`
+* **Removed** ignoring of `package-lock.json` file
+* **Added** `package-lock.json` file
+* **Updated** Travis CI scripts to allow non-exact node version
+* **Updated** test helpers to now be provided from addon-test-support. For example, test helpers previously available at dummy/tests/helpers/ember-frost-date-picker/<ember-frost-date-picker> are now available via ember-frost-date-picker/test-support/<frost-date-picker>
+* **Updated** add information to README.md about test helpers
+
 # 9.0.1 (2018-01-23)
 * **Updated** to provide the clockpicker-seconds css via the index.js hook (was getting a missing file path error in consumer of this add-on's builds when the import of the css was inside the add-on.scss file)
 
