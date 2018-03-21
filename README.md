@@ -59,3 +59,9 @@ visit the app at http://localhost:4200.
 ### Testing
 Run `npm test` from the root of the project to run linting checks as well as execute the test suite
 and output code coverage.
+
+### Test Helpers
+The following test helpers are provided at `ember-frost-date-picker/test-support/<frost-component-name>` to assist with writing tests for code that uses ember-frost-date-picker components:
+
+* [frost-date-picker](addon-test-support/frost-date-picker.js)
+* [frost-time-picker](addon-test-support/frost-time-picker.js)
