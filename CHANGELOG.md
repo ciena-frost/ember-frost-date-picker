@@ -1,3 +1,8 @@
+# 11.0.0 (2018-04-16)
+
+* Updated `ember-frost-core` to version `^8.0.0`
+* Updated `ember-frost-navigation` to version `^10.0.0`
+
 # 10.0.0 (2018-03-21)
 * **Updated** pull request template
 * **Added** issue template
