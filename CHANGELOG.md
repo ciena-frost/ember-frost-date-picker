@@ -1,3 +1,6 @@
+# 11.0.1 (2018-05-30)
+* **Updated** Pin `ember-cli-notifications` to version `4.2.1` to fix broken demo app
+
 # 11.0.0 (2018-04-16)
 
 * Updated `ember-frost-core` to version `^8.0.0`
