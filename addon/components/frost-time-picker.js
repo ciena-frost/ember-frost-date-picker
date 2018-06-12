@@ -85,12 +85,47 @@ export default Text.extend({
 
   // == DOM Events ============================================================
 
-  keyPress (e) {
-    if (e.keyCode === utils.keyCodes.ENTER) {
-      run.scheduleOnce('sync', this, function () {
-        this.$().clockpicker('hide')
-      })
+  keyUp (e) {
+    const keyCodes = [
+      utils.keyCodes.KEY_0,
+      utils.keyCodes.KEY_1,
+      utils.keyCodes.KEY_2,
+      utils.keyCodes.KEY_3,
+      utils.keyCodes.KEY_4,
+      utils.keyCodes.KEY_5,
+      utils.keyCodes.KEY_6,
+      utils.keyCodes.KEY_7,
+      utils.keyCodes.KEY_8,
+      utils.keyCodes.KEY_9,
+      utils.keyCodes.NUMPAD_0,
+      utils.keyCodes.NUMPAD_1,
+      utils.keyCodes.NUMPAD_2,
+      utils.keyCodes.NUMPAD_3,
+      utils.keyCodes.NUMPAD_4,
+      utils.keyCodes.NUMPAD_5,
+      utils.keyCodes.NUMPAD_6,
+      utils.keyCodes.NUMPAD_7,
+      utils.keyCodes.NUMPAD_8,
+      utils.keyCodes.NUMPAD_9,
+      utils.keyCodes.FORWARD_SLASH,
+      utils.keyCodes.DASH
+    ]
+
+    if (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode == 186)) {
+      run.debounce(this.$(), 'clockpicker', 'update', 700);
     }
+  },
+
+  onEnter() {
+    run.scheduleOnce('sync', this, function () {
+      this.$().clockpicker('hide')
+    })
+  },
+
+  onEscape() {
+    run.scheduleOnce('sync', this, function () {
+      this.$().clockpicker('hide')
+    })
   },
 
   // == Lifecycle Hooks =======================================================
