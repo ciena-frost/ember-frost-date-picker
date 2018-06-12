@@ -67,7 +67,7 @@
   "dependencies": {
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^2.0.0",
-    "clockpicker-seconds": "git://github.com/srowhani/clockpicker-seconds#c1fc13ac30f7982822da0ea5736ecc01a62eb680",
+    "clockpicker-seconds": "git://github.com/srowhani/clockpicker-seconds.git#3c6d35868a0e180d75fc8c3e506ca3cbf3b9f7f7",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "7.1.1",
