@@ -121,7 +121,7 @@ export default Component.extend({
 
     if (
       e.target.parentElement.className.split(' ').includes(timePickerClass) &&
-      (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === 186))
+      (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === utils.keyCodes.SEMICOLON))
     ) {
       if (testing) {
         this.$(`.${timePickerClass} > input`).clockpicker('update')

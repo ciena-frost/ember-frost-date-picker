@@ -113,7 +113,7 @@ export default Text.extend({
       utils.keyCodes.DASH
     ]
 
-    if (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === 186)) {
+    if (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === utils.keyCodes.SEMICOLON)) {
       if (testing) {
         this.$().clockpicker('update')
       } else {
