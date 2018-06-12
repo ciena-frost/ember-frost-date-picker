@@ -33,6 +33,7 @@
     hook=(concat hookPrefix '-time-picker')
     class=(if (or _valueInvalid _selectedTimeValueInvalid) 'error')
     value=(readonly _timeValue)
+    timeDebounceInterval=timeDebounceInterval
     onChange=(action '_onTimeChange')
     format=(readonly timeFormat)
   }}

@@ -4,7 +4,7 @@
 
 import Ember from 'ember'
 import computed, {readOnly} from 'ember-computed-decorators'
-const {run} = Ember
+const {run, testing} = Ember
 import {Text, utils} from 'ember-frost-core'
 import {Format} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
@@ -26,6 +26,7 @@ export default Text.extend({
     donetext: PropTypes.string,
     format: PropTypes.string,
     placement: PropTypes.string,
+    timeDebounceInterval: PropTypes.number,
 
     // Options
     value: PropTypes.string.isRequired,
@@ -40,7 +41,8 @@ export default Text.extend({
       autoclose: false,
       donetext: 'Set',
       format: DEFAULT_TIME_FORMAT,
-      placement: 'right'
+      placement: 'right',
+      timeDebounceInterval: 700
     }
   },
 
@@ -111,18 +113,22 @@ export default Text.extend({
       utils.keyCodes.DASH
     ]
 
-    if (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode == 186)) {
-      run.debounce(this.$(), 'clockpicker', 'update', 700);
+    if (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === 186)) {
+      if (testing) {
+        this.$().clockpicker('update')
+      } else {
+        run.debounce(this.$(), 'clockpicker', 'update', this.timeDebounceInterval)
+      }
     }
   },
 
-  onEnter() {
+  onEnter () {
     run.scheduleOnce('sync', this, function () {
       this.$().clockpicker('hide')
     })
   },
 
-  onEscape() {
+  onEscape () {
     run.scheduleOnce('sync', this, function () {
       this.$().clockpicker('hide')
     })

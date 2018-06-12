@@ -2,6 +2,7 @@
  * Component definition for the frost-date-time-picker component
  */
 
+import Ember from 'ember'
 import layout from '../templates/components/frost-date-time-picker'
 import computed, {readOnly} from 'ember-computed-decorators'
 import {Component, utils} from 'ember-frost-core'
@@ -9,7 +10,7 @@ import {Format, setTime, validateTime} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
 
-const {run} = Ember
+const {run, testing} = Ember
 
 const DEFAULT_DATE_FORMAT = Format.date
 const DEFAULT_TIME_FORMAT = Format.time
@@ -34,6 +35,7 @@ export default Component.extend({
     time: PropTypes.EmberComponent,
     timeFormat: PropTypes.string,
     value: PropTypes.string.isRequired,
+    timeDebounceInterval: PropTypes.number,
 
     // Events
     onChange: PropTypes.func.isRequired,
@@ -50,6 +52,7 @@ export default Component.extend({
       dateFormat: DEFAULT_DATE_FORMAT,
       timeFormat: DEFAULT_TIME_FORMAT,
       dateTimeFormat: DEFAULT_DATE_TIME_FORMAT,
+      timeDebounceInterval: 700,
       _selectedDateValueInvalid: false,
       _selectedTimeValueInvalid: false
     }
@@ -87,6 +90,7 @@ export default Component.extend({
 
   // == DOM Events ============================================================
 
+  /* eslint complexity: [2, 6] */
   keyUp (e) {
     const timePickerClass = 'frost-time-picker'
 
@@ -117,9 +121,13 @@ export default Component.extend({
 
     if (
       e.target.parentElement.className.split(' ').includes(timePickerClass) &&
-      (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode == 186))
+      (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === 186))
     ) {
-      run.debounce(this.$(`.${timePickerClass} > input`), 'clockpicker', 'update', 700);
+      if (testing) {
+        this.$(`.${timePickerClass} > input`).clockpicker('update')
+      } else {
+        run.debounce(this.$(`.${timePickerClass} > input`), 'clockpicker', 'update', this.timeDebounceInterval)
+      }
     }
   },
 
