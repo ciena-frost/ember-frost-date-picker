@@ -269,8 +269,16 @@ describe(test.label, function () {
       })
     })
 
+    it('should initially display expected hour value', function () {
+      expect(timepicker.getSelectedTime().hour).to.eql('01')
+    })
+
     it('should initially display expected minute value', function () {
       expect(timepicker.getSelectedTime().minute).to.eql('23')
+    })
+
+    it('should initially display expected second value', function () {
+      expect(timepicker.getSelectedTime().second).to.eql('45')
     })
 
     describe('when enter new time', function () {
