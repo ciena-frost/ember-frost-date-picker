@@ -1,3 +1,9 @@
+# 11.1.0 (2018-06-13)
+
+* Support manual time entry in input field
+  * Debounce interval for entry is configurable property
+* Bugfix: now close clock picker UI when ESC key is pressed
+
 # 11.0.1 (2018-05-30)
 * **Updated** Pin `ember-cli-notifications` to version `4.2.1` to fix broken demo app
 
