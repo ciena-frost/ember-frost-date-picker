@@ -15,6 +15,7 @@
     {{frost-date-time-picker
       hook='demo-date-time-picker'
       class=(if _valueInvalid 'error')
+      timeDebounceInterval=timeDebounceInterval
       value=value.start
       onChange=(action '_onStartChange')
     }}
@@ -38,6 +39,7 @@
     {{frost-date-time-picker
       hook=(concat hookPrefix '-end')
       class=(if _valueInvalid 'error')
+      timeDebounceInterval=timeDebounceInterval
       value=value.end
       onChange=(action '_onEndChange')
     }}

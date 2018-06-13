@@ -2,12 +2,15 @@
  * Component definition for the frost-date-time-picker component
  */
 
+import Ember from 'ember'
 import layout from '../templates/components/frost-date-time-picker'
 import computed, {readOnly} from 'ember-computed-decorators'
-import {Component} from 'ember-frost-core'
+import {Component, utils} from 'ember-frost-core'
 import {Format, setTime, validateTime} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
+
+const {run, testing} = Ember
 
 const DEFAULT_DATE_FORMAT = Format.date
 const DEFAULT_TIME_FORMAT = Format.time
@@ -32,6 +35,7 @@ export default Component.extend({
     time: PropTypes.EmberComponent,
     timeFormat: PropTypes.string,
     value: PropTypes.string.isRequired,
+    timeDebounceInterval: PropTypes.number,
 
     // Events
     onChange: PropTypes.func.isRequired,
@@ -48,6 +52,7 @@ export default Component.extend({
       dateFormat: DEFAULT_DATE_FORMAT,
       timeFormat: DEFAULT_TIME_FORMAT,
       dateTimeFormat: DEFAULT_DATE_TIME_FORMAT,
+      timeDebounceInterval: 700,
       _selectedDateValueInvalid: false,
       _selectedTimeValueInvalid: false
     }
@@ -84,6 +89,47 @@ export default Component.extend({
   // == Functions =============================================================
 
   // == DOM Events ============================================================
+
+  /* eslint complexity: [2, 6] */
+  keyUp (e) {
+    const timePickerClass = 'frost-time-picker'
+
+    const keyCodes = [
+      utils.keyCodes.KEY_0,
+      utils.keyCodes.KEY_1,
+      utils.keyCodes.KEY_2,
+      utils.keyCodes.KEY_3,
+      utils.keyCodes.KEY_4,
+      utils.keyCodes.KEY_5,
+      utils.keyCodes.KEY_6,
+      utils.keyCodes.KEY_7,
+      utils.keyCodes.KEY_8,
+      utils.keyCodes.KEY_9,
+      utils.keyCodes.NUMPAD_0,
+      utils.keyCodes.NUMPAD_1,
+      utils.keyCodes.NUMPAD_2,
+      utils.keyCodes.NUMPAD_3,
+      utils.keyCodes.NUMPAD_4,
+      utils.keyCodes.NUMPAD_5,
+      utils.keyCodes.NUMPAD_6,
+      utils.keyCodes.NUMPAD_7,
+      utils.keyCodes.NUMPAD_8,
+      utils.keyCodes.NUMPAD_9,
+      utils.keyCodes.FORWARD_SLASH,
+      utils.keyCodes.DASH
+    ]
+
+    if (
+      e.target.parentElement.className.split(' ').includes(timePickerClass) &&
+      (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === utils.keyCodes.SEMICOLON))
+    ) {
+      if (testing) {
+        this.$(`.${timePickerClass} > input`).clockpicker('update')
+      } else {
+        run.debounce(this.$(`.${timePickerClass} > input`), 'clockpicker', 'update', this.timeDebounceInterval)
+      }
+    }
+  },
 
   // == Lifecycle Hooks =======================================================
 

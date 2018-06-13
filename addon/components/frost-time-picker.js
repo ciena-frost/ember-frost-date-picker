@@ -4,7 +4,7 @@
 
 import Ember from 'ember'
 import computed, {readOnly} from 'ember-computed-decorators'
-const {run} = Ember
+const {run, testing} = Ember
 import {Text, utils} from 'ember-frost-core'
 import {Format} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
@@ -26,6 +26,7 @@ export default Text.extend({
     donetext: PropTypes.string,
     format: PropTypes.string,
     placement: PropTypes.string,
+    timeDebounceInterval: PropTypes.number,
 
     // Options
     value: PropTypes.string.isRequired,
@@ -40,7 +41,8 @@ export default Text.extend({
       autoclose: false,
       donetext: 'Set',
       format: DEFAULT_TIME_FORMAT,
-      placement: 'right'
+      placement: 'right',
+      timeDebounceInterval: 700
     }
   },
 
@@ -85,12 +87,51 @@ export default Text.extend({
 
   // == DOM Events ============================================================
 
-  keyPress (e) {
-    if (e.keyCode === utils.keyCodes.ENTER) {
-      run.scheduleOnce('sync', this, function () {
-        this.$().clockpicker('hide')
-      })
+  keyUp (e) {
+    const keyCodes = [
+      utils.keyCodes.KEY_0,
+      utils.keyCodes.KEY_1,
+      utils.keyCodes.KEY_2,
+      utils.keyCodes.KEY_3,
+      utils.keyCodes.KEY_4,
+      utils.keyCodes.KEY_5,
+      utils.keyCodes.KEY_6,
+      utils.keyCodes.KEY_7,
+      utils.keyCodes.KEY_8,
+      utils.keyCodes.KEY_9,
+      utils.keyCodes.NUMPAD_0,
+      utils.keyCodes.NUMPAD_1,
+      utils.keyCodes.NUMPAD_2,
+      utils.keyCodes.NUMPAD_3,
+      utils.keyCodes.NUMPAD_4,
+      utils.keyCodes.NUMPAD_5,
+      utils.keyCodes.NUMPAD_6,
+      utils.keyCodes.NUMPAD_7,
+      utils.keyCodes.NUMPAD_8,
+      utils.keyCodes.NUMPAD_9,
+      utils.keyCodes.FORWARD_SLASH,
+      utils.keyCodes.DASH
+    ]
+
+    if (keyCodes.includes(e.keyCode) || (e.shiftKey && e.keyCode === utils.keyCodes.SEMICOLON)) {
+      if (testing) {
+        this.$().clockpicker('update')
+      } else {
+        run.debounce(this.$(), 'clockpicker', 'update', this.timeDebounceInterval)
+      }
     }
+  },
+
+  onEnter () {
+    run.scheduleOnce('sync', this, function () {
+      this.$().clockpicker('hide')
+    })
+  },
+
+  onEscape () {
+    run.scheduleOnce('sync', this, function () {
+      this.$().clockpicker('hide')
+    })
   },
 
   // == Lifecycle Hooks =======================================================

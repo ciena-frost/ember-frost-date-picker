@@ -27,6 +27,7 @@
   hook='demo-time-picker'
   class=(if timeValueInvalid 'error')
   value=timeValue
+  timeDebounceInterval=700
   onChange=(action 'onTimeChange')
 }}
 {{! END-SNIPPET }}
@@ -41,6 +42,7 @@
   class=(if dateTimeValueInvalid 'error')
   value=dateTimeValue
   minDate=now
+  timeDebounceInterval=700
   onChange=(action 'onDateTimeChange')
 }}
 {{! END-SNIPPET }}
@@ -58,6 +60,7 @@
   isVertical=false
   startTitle='Custom startTitle'
   value=rangeValue
+  timeDebounceInterval=700
   onChange=(action 'onRangeChange')
 }}
 {{! END-SNIPPET }}
@@ -70,6 +73,7 @@
   isVertical=true
   startTitle='Custom startTitle'
   value=rangeValue
+  timeDebounceInterval=700
   onChange=(action 'onRangeChange')
 }}
 
