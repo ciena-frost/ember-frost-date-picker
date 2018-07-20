@@ -1,3 +1,8 @@
+# 11.1.1 (2018-07-20)
+
+* **Fixed** Travis API key.
+
+
 # 11.1.0 (2018-06-13)
 
 * Support manual time entry in input field
