@@ -10,7 +10,7 @@ import {Format, setTime, validateTime} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
 
-const {run, testing} = Ember
+const {isEmpty, run, testing} = Ember
 
 const DEFAULT_DATE_FORMAT = Format.date
 const DEFAULT_TIME_FORMAT = Format.time
@@ -34,7 +34,7 @@ export default Component.extend({
     minDate: PropTypes.date,
     time: PropTypes.EmberComponent,
     timeFormat: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     timeDebounceInterval: PropTypes.number,
 
     // Events
@@ -63,6 +63,9 @@ export default Component.extend({
   @readOnly
   @computed('value')
   _dateValue (value) {
+    if (isEmpty(value)) {
+      return undefined
+    }
     const momentValue = moment(value)
     if (momentValue.isValid()) {
       return momentValue.format(this.get('dateFormat'))
@@ -73,6 +76,9 @@ export default Component.extend({
   @readOnly
   @computed('value')
   _timeValue (value) {
+    if (isEmpty(value)) {
+      return undefined
+    }
     const momentValue = moment(value)
     if (momentValue.isValid()) {
       return momentValue.format(this.get('timeFormat'))

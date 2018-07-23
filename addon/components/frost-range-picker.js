@@ -27,9 +27,9 @@ export default Component.extend({
     start: PropTypes.EmberComponent,
     startTitle: PropTypes.string,
     value: PropTypes.shape({
-      end: PropTypes.string.isRequired,
-      start: PropTypes.string.isRequired
-    }).isRequired,
+      end: PropTypes.string,
+      start: PropTypes.string
+    }),
 
     // Events
     onChange: PropTypes.func.isRequired,
