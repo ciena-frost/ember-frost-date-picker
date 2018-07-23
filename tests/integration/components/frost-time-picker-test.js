@@ -61,15 +61,13 @@ describe(test.label, function () {
     beforeEach(function () {
       this.setProperties({
         myHook: 'myHook',
-        onChange: function () {},
-        value: undefined
+        onChange: function () {}
       })
 
       this.render(hbs`
         {{frost-time-picker
           hook=myHook
           onChange=onChange
-          value=value
         }}
       `)
 

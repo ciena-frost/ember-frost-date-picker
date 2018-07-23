@@ -133,7 +133,6 @@ describe(test.label, function () {
     beforeEach(function () {
       this.setProperties({
         myHook: 'myHook',
-        dateTimeValue: undefined,
         onChange: function () {}
       })
 
@@ -141,17 +140,18 @@ describe(test.label, function () {
         {{frost-date-time-picker
           hook=myHook
           onChange=onChange
-          value=dateTimeValue
         }}
       `)
+
+      return wait()
     })
 
     it('should show a blank date value', function () {
-      expect($hook('myHook-date-picker')).to.have.value('')
+      expect($hook('myHook-date-picker-input')).to.have.value('')
     })
 
     it('should show a blank time value', function () {
-      expect($hook('myHook-time-picker')).to.have.value('')
+      expect($hook('myHook-time-picker-input')).to.have.value('')
     })
   })
 
