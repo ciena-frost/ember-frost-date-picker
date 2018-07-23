@@ -129,6 +129,32 @@ describe(test.label, function () {
     })
   })
 
+  describe('when no value is provided', function () {
+    beforeEach(function () {
+      this.setProperties({
+        myHook: 'myHook',
+        dateTimeValue: undefined,
+        onChange: function () {}
+      })
+
+      this.render(hbs`
+        {{frost-date-time-picker
+          hook=myHook
+          onChange=onChange
+          value=dateTimeValue
+        }}
+      `)
+    })
+
+    it('should show a blank date value', function () {
+      expect($hook('myHook-date-picker')).to.have.value('')
+    })
+
+    it('should show a blank time value', function () {
+      expect($hook('myHook-time-picker')).to.have.value('')
+    })
+  })
+
   describe('value is invalid', function () {
     beforeEach(function () {
       this.setProperties({

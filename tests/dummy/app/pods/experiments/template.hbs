@@ -45,7 +45,9 @@
 </div>
 
 <h3>frost-date-time-picker</h3>
+<h5>with a datetime value</h5>
 {{! BEGIN-SNIPPET date-time-picker-example }}
+{{! value may be undefined}}
 {{frost-date-time-picker
   hook='demo-date-time-picker'
   class=(if dateTimeValueInvalid 'error')
@@ -55,6 +57,14 @@
   onChange=(action 'onDateTimeChange')
 }}
 {{! END-SNIPPET }}
+<h5>with an undefined value</h5>
+{{frost-date-time-picker
+  hook='demo-date-time-picker-undefined'
+  class=(if dateTimeValueInvalid 'error')
+  minDate=now
+  timeDebounceInterval=700
+  onChange=(action 'onDateTimeChange')
+}}
 <div>
   {{code-snippet name="date-time-picker-example.hbs"}}
 </div>
