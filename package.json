@@ -1,6 +1,6 @@
 {
   "name": "ember-frost-date-picker",
-  "version": "11.1.1",
+  "version": "11.2.0",
   "description": "",
   "frostGuideDirectory": "design-patterns/date:time-input",
   "directories": {
@@ -82,6 +82,6 @@
     "configPath": "tests/dummy/config"
   },
   "pr-bumper": {
-    "coverage": 78.14
+    "coverage": 79.18
   }
 }
