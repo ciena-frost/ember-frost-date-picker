@@ -4,12 +4,12 @@
 
 import Ember from 'ember'
 import computed, {readOnly} from 'ember-computed-decorators'
-const {run, testing} = Ember
 import {Text, utils} from 'ember-frost-core'
 import {Format} from 'ember-frost-date-picker'
 import {PropTypes} from 'ember-prop-types'
 import moment from 'moment'
 
+const {isEmpty, run, testing} = Ember
 const DEFAULT_TIME_FORMAT = Format.time
 
 export default Text.extend({
@@ -29,7 +29,7 @@ export default Text.extend({
     timeDebounceInterval: PropTypes.number,
 
     // Options
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
 
     // Events
     onChange: PropTypes.func.isRequired
@@ -51,6 +51,9 @@ export default Text.extend({
   @readOnly
   @computed('value')
   _value (value) {
+    if (isEmpty(value)) {
+      return undefined
+    }
     const momentValue = moment(value, this.get('format'))
     if (momentValue.isValid()) {
       return momentValue.format(this.get('format'))

@@ -57,6 +57,54 @@ describe(test.label, function () {
     })
   })
 
+  describe('when no value is provided', function () {
+    beforeEach(function () {
+      this.setProperties({
+        myHook: 'myHook',
+        onChange: function () {},
+        value: undefined
+      })
+
+      this.render(hbs`
+        {{frost-time-picker
+          hook=myHook
+          onChange=onChange
+          value=value
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should show a blank value', function () {
+      expect($hook('myHook-input')).to.have.value('')
+    })
+  })
+
+  describe('when empty string is provided', function () {
+    beforeEach(function () {
+      this.setProperties({
+        myHook: 'myHook',
+        onChange: function () {},
+        value: ''
+      })
+
+      this.render(hbs`
+        {{frost-time-picker
+          hook=myHook
+          onChange=onChange
+          value=value
+        }}
+      `)
+
+      return wait()
+    })
+
+    it('should show a blank value', function () {
+      expect($hook('myHook-input')).to.have.value('')
+    })
+  })
+
   describe('format is set', function () {
     beforeEach(function () {
       this.setProperties({

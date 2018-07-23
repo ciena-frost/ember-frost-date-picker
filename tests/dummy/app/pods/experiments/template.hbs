@@ -22,7 +22,9 @@
 </div>
 
 <h3>frost-time-picker</h3>
+<h5>with a time value</h5>
 {{! BEGIN-SNIPPET time-picker-example }}
+{{! value may be undefined }}
 {{frost-time-picker
   hook='demo-time-picker'
   class=(if timeValueInvalid 'error')
@@ -31,6 +33,13 @@
   onChange=(action 'onTimeChange')
 }}
 {{! END-SNIPPET }}
+<h5>with an undefined value</h5>
+{{frost-time-picker
+  hook='demo-time-picker'
+  class=(if timeValueInvalid 'error')
+  timeDebounceInterval=700
+  onChange=(action 'onTimeChange')
+}}
 <div>
   {{code-snippet name="time-picker-example.hbs"}}
 </div>
