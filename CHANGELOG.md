@@ -1,3 +1,8 @@
+# 11.3.0 (2018-09-06)
+
+* Allow empty values in the frost-time-picker, frost-date-time-picker, and frost-range-picker components
+
+
 # 11.2.0 (2018-07-23)
 
 * Allow empty values in the frost-time-picker, frost-date-time-picker, and frost-range-picker components
